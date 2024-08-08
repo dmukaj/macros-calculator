@@ -1,12 +1,11 @@
-import { DatePickerWithRange } from "@/components/DatePickerWithRange";
-import Hero from "@/components/Hero";
+import { Dashboard } from "@/components/Dashboard";
+import { TableDemo } from "@/components/Table";
 
 export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center">
-      <Hero />
-
-      {/* <DatePickerWithRange /> */}
+      {/* <Dashboard /> */}
+      <TableDemo />
     </main>
   );
 }
