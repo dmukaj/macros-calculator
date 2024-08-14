@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
   Calculator,
@@ -19,8 +20,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { logout } from "@/actions/auth";
 
-const NavBar = () => {
+function NavBar({ session }) {
+  const handleSignOut = async () => {
+    await logout();
+  };
+
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[77px] lg:px-6  py-6 ">
       <Sheet>
@@ -87,12 +93,20 @@ const NavBar = () => {
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
+          <div className="flex gap-2">
+            <p>Hello</p>
+            {session?.user.name}
+          </div>
+
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+
+          <Button variant="ghost" onClick={handleSignOut}>
+            Sign Out
+          </Button>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
   );
-};
+}
 
 export default NavBar;

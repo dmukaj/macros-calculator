@@ -1,8 +1,7 @@
 "use client";
-
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,22 +14,24 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Lottie from "react-lottie";
-import animationData from "../../../src/lottiefiles/signIn";
-
-const formSchema = z.object({
-  email: z.string().min(1, { message: "Please select your goal" }),
-  password: z.string().min(1, { message: "Please select your goal" }),
-});
+import animationData from "../../../src/lottiefiles/signin";
+import { loginWithCreds } from "@/actions/auth";
+import { signInSchema } from "@/lib/schema";
 
 export default function SignIn() {
+  const [error, setError] = useState("");
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
-  const onSubmit = (data) => console.log(data);
+
+  const handleSubmit = async (data) => {
+    const result = await loginWithCreds(data);
+    setError(result);
+  };
 
   const defaultOptions = {
     loop: true,
@@ -52,17 +53,21 @@ export default function SignIn() {
         </div>
         <Form {...form} className="w-[70vw]">
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(handleSubmit)}
             className="p-10 space-y-8"
           >
             <FormField
               control={form.control}
               name="email"
-              render={() => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="user@domain.com" type="email" />
+                    <Input
+                      placeholder="user@domain.com"
+                      type="email"
+                      {...field}
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -72,17 +77,19 @@ export default function SignIn() {
             <FormField
               control={form.control}
               name="password"
-              render={() => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password" type="password" />
+                    <Input placeholder="password" type="password" {...field} />
                   </FormControl>
 
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <Button type="submit" variant="outline">
               Sign In

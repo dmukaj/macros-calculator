@@ -1,10 +1,13 @@
-import NavBar from "@/components/NavBar";
-import SideBar from "@/components/SideBar";
+import { auth } from "@/auth";
 import { TableDemo } from "@/components/Table";
+import { redirect } from "next/navigation";
 import React from "react";
 
-const page = () => {
-  return <TableDemo />;
-};
+export default async function page() {
+  const session = await auth();
 
-export default page;
+  if (!session?.user) {
+    redirect("/welcome");
+  }
+  return <TableDemo />;
+}
