@@ -7,6 +7,7 @@ const protectedRoutes = ["/dashboard"];
 
 export default async function middleware(request) {
   const session = await auth();
+  console.log("here");
 
   const isProtected = protectedRoutes.some((route) =>
     request.nextUrl.pathname.startsWith(route)

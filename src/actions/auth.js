@@ -3,16 +3,7 @@
 import { signIn, signOut } from "@/auth";
 import { signInSchema } from "../lib/schema";
 import { revalidatePath } from "next/cache";
-import saltAndHashPassword from "../utils/helper";
-import db from "@/db";
-import getUserFromDb from "../utils/getUser";
-import Credentials from "next-auth/providers/credentials";
 import { AuthError } from "next-auth";
-
-export async function signInFn(signInSchema) {
-  await signIn("credentials", signInSchema, { redirectTo: "/" });
-  revalidatePath("/");
-}
 
 export async function logout() {
   await signOut({ redirectTo: "/welcome" });
@@ -20,7 +11,8 @@ export async function logout() {
 }
 
 export const loginWithCreds = async (credentials) => {
-  const { email, password } = await signInSchema.parseAsync(credentials);
+  console.log("credentials", credentials);
+  await signInSchema.parseAsync(credentials);
 
   try {
     await signIn("credentials", {
