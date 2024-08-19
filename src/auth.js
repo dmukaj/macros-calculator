@@ -2,10 +2,7 @@ import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import db from "./db";
 import Credentials from "next-auth/providers/credentials";
-import { ZodError } from "zod";
-import { signInSchema } from "@/lib/schema";
 import { verifyPassword } from "./utils/helper";
-import getUserFromDb from "./utils/getUser";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(db),

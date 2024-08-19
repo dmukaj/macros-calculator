@@ -3,13 +3,12 @@
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { searchFood } from "@/lib/api/foodApi";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -19,8 +18,14 @@ const SearchBar = () => {
     setError(null);
 
     try {
-      const data = await searchFood(query);
-      setResult(data);
+      const response = await fetch(
+        `/api/food?query=${encodeURIComponent(query)}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json();
+      setResult(Array.isArray(data.foods) ? data.foods : []);
       setLoading(false);
     } catch (error) {
       setError("error :((", error);
@@ -45,10 +50,14 @@ const SearchBar = () => {
       <div>
         {result &&
           result.map((item) => (
-            <div key={item.id}>
+            <div key={item.fdcId}>
               <p>
-                {item.name} - {item.calories} - {item.protein} - {item.fat} -{" "}
-                {item.carbo}
+                {item.description} -{" "}
+                {
+                  item.foodNutrients.find((n) => n.nutrientName === "Energy")
+                    ?.value
+                }{" "}
+                kcal
               </p>
             </div>
           ))}
