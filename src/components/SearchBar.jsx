@@ -25,12 +25,14 @@ const SearchBar = () => {
         throw new Error("Failed to fetch data");
       }
       const data = await response.json();
-      setResult(Array.isArray(data.foods) ? data.foods : []);
+      setResult(data.foods.food);
+      console.log(data.foods.food);
       setLoading(false);
     } catch (error) {
       setError("error :((", error);
     }
   };
+
   return (
     <div>
       <form onSubmit={handleSearch}>
@@ -47,18 +49,19 @@ const SearchBar = () => {
       </form>
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
-      <div>
+      <div className="flex flex-col justify-center space-y-2 mt-4 ">
         {result &&
           result.map((item) => (
-            <div key={item.fdcId}>
-              <p>
-                {item.description} -{" "}
-                {
-                  item.foodNutrients.find((n) => n.nutrientName === "Energy")
-                    ?.value
-                }{" "}
-                kcal
-              </p>
+            <div key={item.food_id}>
+              <div
+                key={item.food_id}
+                className="bg-gray-300 rounded-lg p-4 text-xs"
+                onClick={console.log("clicked")}
+              >
+                <p className="font-semibold">{item.food_name}</p>
+                <p>{item.food_description}</p>
+                <p>{item.brand_name}</p>
+              </div>
             </div>
           ))}
       </div>

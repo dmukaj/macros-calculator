@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { logout } from "@/actions/auth";
-import SearchBar from "./SearchBar";
 
 function NavBar({ session }) {
   const handleSignOut = async () => {
@@ -26,7 +25,7 @@ function NavBar({ session }) {
   };
 
   return (
-    <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[77px] lg:px-6  py-6 ">
+    <header className="flex h-14 justify-between items-center border-b bg-muted/40 px-4 lg:h-[77px] lg:px-6  py-6 ">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 md:hidden">
@@ -68,32 +67,29 @@ function NavBar({ session }) {
           </nav>
         </SheetContent>
       </Sheet>
-      <div className="w-full flex-1">
+      {/* <div className="w-full flex-1">
         <SearchBar />
+      </div> */}
+
+      <div className="flex items-center gap-2">
+        <p>Hello {session?.user.name}</p>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="secondary" size="icon" className="rounded-full">
+              <CircleUser className="h-5 w-5" />
+              <span className="sr-only">Toggle user menu</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+
+            <Button variant="ghost" onClick={handleSignOut}>
+              Sign Out
+            </Button>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="secondary" size="icon" className="rounded-full">
-            <CircleUser className="h-5 w-5" />
-            <span className="sr-only">Toggle user menu</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-
-          <div className="flex gap-2">
-            <p>Hello</p>
-            {session?.user.name}
-          </div>
-
-          <DropdownMenuSeparator />
-
-          <Button variant="ghost" onClick={handleSignOut}>
-            Sign Out
-          </Button>
-        </DropdownMenuContent>
-      </DropdownMenu>
     </header>
   );
 }

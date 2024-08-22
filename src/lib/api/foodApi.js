@@ -1,6 +1,6 @@
 import axios from "axios";
 const BASE_URL =
-  "https://api.nal.usda.gov/fdc/v1/foods/search?query=feta cheese&pageSize=10";
+  "https://api.nal.usda.gov/fdc/v1/foods/search?query=feta cheese&pageSize=5";
 
 export async function searchFood() {
   try {
