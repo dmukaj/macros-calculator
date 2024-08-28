@@ -1,5 +1,4 @@
 "use server";
-import { compare } from "bcryptjs";
 import db from "../db";
 
 async function getUserFromDb(email) {

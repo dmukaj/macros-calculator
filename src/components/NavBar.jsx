@@ -67,9 +67,6 @@ function NavBar({ session }) {
           </nav>
         </SheetContent>
       </Sheet>
-      {/* <div className="w-full flex-1">
-        <SearchBar />
-      </div> */}
 
       <div className="flex items-center gap-2">
         <p>Hello {session?.user.name}</p>

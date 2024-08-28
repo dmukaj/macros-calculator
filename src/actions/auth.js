@@ -11,7 +11,7 @@ export async function logout() {
 }
 
 export const loginWithCreds = async (credentials) => {
-  console.log("credentials", credentials);
+  // console.log("credentials", credentials);
   await signInSchema.parseAsync(credentials);
 
   try {

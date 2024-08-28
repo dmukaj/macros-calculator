@@ -34,7 +34,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             throw new Error("Invalid username or password.");
           }
         }
-        console.log("user", user);
+        // console.log("user", user);
         if (user) return user;
         return null;
       },
@@ -43,6 +43,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
+  },
+  callbacks: {
+    session: ({ session, token }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          _id: token.id,
+        },
+      };
+    },
+    jwt: ({ user, token }) => {
+      if (user) return { ...token, ...user };
+      return token;
+    },
   },
   // debug: process.env.NODE_ENV !== "production",
 });

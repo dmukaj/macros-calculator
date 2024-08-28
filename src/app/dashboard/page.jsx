@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
-import { TableDemo } from "@/components/Table";
+import HomePage from "@/components/HomePage";
 import { redirect } from "next/navigation";
-import React from "react";
 
 export default async function page() {
   const session = await auth();
@@ -9,5 +8,5 @@ export default async function page() {
   if (!session?.user) {
     redirect("/welcome");
   }
-  return <TableDemo />;
+  return <HomePage />;
 }

@@ -1,4 +1,3 @@
-import PieChartComponent from "./PieChartComponent";
 import {
   Table,
   TableBody,
@@ -7,28 +6,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { MdAddCircleOutline } from "react-icons/md";
-import SearchBar from "./SearchBar";
+import Link from "next/link";
 
 export function TableComponent() {
   return (
     <div className=" flex flex-col w-auto lg:w-2/3">
-      <Popover>
-        <PopoverTrigger className="flex items-center text-lg bg-white py-2 px-4 rounded-lg">
-          Add food
-          <MdAddCircleOutline size={20} className="ml-2" />
-        </PopoverTrigger>
-        <PopoverContent>
-          <SearchBar />
-        </PopoverContent>
-      </Popover>
+      <div className=" flex items-center justify-center text-lg bg-white py-2 px-4 rounded-lg hover:text-blue-700">
+        <Link href="/dashboard/search"> Add Food</Link>
+      </div>
 
-      <div className="relative shadow-md sm:rounded-lg w-full mt-4 ">
+      <div className="relative shadow-md sm:rounded-lg w-full mt-4 bg-gray-200 ">
         <Table>
           <TableHeader>
             <TableRow>
@@ -56,8 +43,6 @@ export function TableDemo() {
   return (
     <main className="flex flex-col items-center">
       <div className="flex flex-col lg:gap-6 gap-14 w-3/4 lg:w-2/3">
-        <PieChartComponent />
-
         <div className=" flex flex-col w-full md:space-y-0 md:gap-8 space-y-8 xl:grid xl:grid-cols-2 items-center justify-center">
           <div className="flex flex-col items-center justify-center p-10 rounded-lg border border-dashed  shadow-lg bg-gray-100 hover:bg-gray-50">
             <h1 className="text-lg font-semibold md:text-2xl my-4">
@@ -66,10 +51,7 @@ export function TableDemo() {
 
             <TableComponent />
           </div>
-          <div
-            className="flex flex-col items-center justify-center p-10  rounded-lg border border-dashed shadow-lg bg-gray-100 hover:bg-gray-50"
-            // x-chunk="dashboard-02-chunk-1"
-          >
+          <div className="flex flex-col items-center justify-center p-10  rounded-lg border border-dashed shadow-lg bg-gray-100 hover:bg-gray-50">
             <h1 className="text-lg font-semibold md:text-2xl my-4">Lunch</h1>
 
             <TableComponent />
