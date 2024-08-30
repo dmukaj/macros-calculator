@@ -5,12 +5,6 @@ import { Label, Pie, PieChart } from "recharts";
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { ChartContainer } from "@/components/ui/chart";
 
-const chartData = [
-  { browser: "protein", calories: 275, fill: "var(--color-protein)" },
-  { browser: "fats", calories: 200, fill: "var(--color-fats)" },
-  { browser: "carbs", calories: 287, fill: "var(--color-carbs)" },
-];
-
 export const chartConfig = {
   protein: {
     label: "Protein",
@@ -26,11 +20,22 @@ export const chartConfig = {
   },
 };
 
-export default function PieChartComponent({ width = 180, height = 180 }) {
-  const totalCalories = useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.calories, 0);
-  }, []);
-
+export default function PieChartComponent({
+  width = 180,
+  height = 180,
+  totalCalories,
+  protein,
+  carbs,
+  fats,
+}) {
+  const chartData = useMemo(
+    () => [
+      { browser: "protein", calories: protein, fill: "var(--color-protein)" },
+      { browser: "fats", calories: fats, fill: "var(--color-fats)" },
+      { browser: "carbs", calories: carbs, fill: "var(--color-carbs)" },
+    ],
+    [protein, fats, carbs]
+  );
   return (
     <ChartContainer
       config={chartConfig}
@@ -46,7 +51,7 @@ export default function PieChartComponent({ width = 180, height = 180 }) {
           data={chartData}
           dataKey="calories"
           nameKey="browser"
-          innerRadius={width * 0.3}
+          innerRadius={width * 0.27}
           outerRadius={width * 0.5 - 5} // Adjust outer radius based on size
           strokeWidth={5}
         >
@@ -62,14 +67,14 @@ export default function PieChartComponent({ width = 180, height = 180 }) {
                   >
                     <tspan
                       x={viewBox.cx}
-                      y={viewBox.cy || 0}
+                      y={(viewBox.cy || 0) - 5}
                       className="fill-foreground text-xl font-bold"
                     >
-                      {totalCalories.toLocaleString()}
+                      {totalCalories?.toLocaleString()}
                     </tspan>
                     <tspan
                       x={viewBox.cx}
-                      y={(viewBox.cy || 0) + 20}
+                      y={(viewBox.cy || 0) + 15}
                       className="fill-muted-foreground"
                     >
                       calories

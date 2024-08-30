@@ -4,21 +4,31 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   const data = await request.json();
 
+  let { name, userId, calories, carbs, protein, fat, mealType } = data.body;
+
+  calories = parseInt(calories);
+  carbs = parseInt(carbs);
+  protein = parseInt(protein);
+  fat = parseInt(fat);
+
   try {
     const food = await db.meal.create({
       data: {
-        name: data.name,
-        userId: data.user,
-        calories: data.calories,
-        carbs: data.carbs,
-        protein: data.protein,
-        fat: data.fat,
+        name,
+        calories,
+        carbs,
+        protein,
+        fat,
+        userId,
+        mealType,
       },
     });
-    console.log("food", food);
+
+    console.log("Food added to meal:", food);
+
     return NextResponse.json({ message: "Food added successfully!" });
   } catch (error) {
     console.error("Error adding food to meal:", error);
-    return NextResponse.json(error);
+    return NextResponse.json({ error: "error" });
   }
 }

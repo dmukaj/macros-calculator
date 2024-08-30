@@ -102,6 +102,7 @@ model Meal {
   carbs       Int?
   protein     Int?
   fat         Int?
+  mealType    String?
   userId     String @db.ObjectId
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
