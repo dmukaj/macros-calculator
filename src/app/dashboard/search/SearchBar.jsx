@@ -3,9 +3,11 @@
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { useSession } from "next-auth/react";
 import { useFood } from "@/context/FoodContext";
+import { Button } from "@/components/ui/button";
+import { addFood } from "@/utils/foodUtils";
+import { useSession } from "next-auth/react";
+
 import Link from "next/link";
 
 const SearchBar = () => {
@@ -16,9 +18,7 @@ const SearchBar = () => {
   const [showAllResults, setShowAllResults] = useState(false);
 
   const session = useSession();
-
   const { setSelectedFood } = useFood();
-
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query) return;
@@ -36,9 +36,9 @@ const SearchBar = () => {
         throw new Error("Failed to fetch data");
       }
       const data = await response.json();
-      console.log("Fetched food items", data);
 
       const foodItem = data.foods_search.results.food;
+      console.log(foodItem);
       setResult(Array.isArray(foodItem) ? foodItem : []);
       setLoading(false);
     } catch (error) {
@@ -49,32 +49,6 @@ const SearchBar = () => {
 
   const handleShowMore = () => {
     setShowAllResults(true);
-  };
-
-  const handleAddFood = async (item) => {
-    try {
-      const response = await fetch(`/api/addFood`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: item.food_name,
-          user: session.data.user._id,
-          calories: item.calories,
-          carbs: item.carbs,
-          protein: item.protein,
-          fat: item.fat,
-        }),
-      });
-      if (response.ok) {
-        console.log("Food added to meal successfully!");
-      } else {
-        console.error("Failed to add food to meal.");
-      }
-    } catch (error) {
-      console.error("Error adding food to meal:", error);
-    }
   };
 
   return (
@@ -103,24 +77,27 @@ const SearchBar = () => {
             >
               <div>
                 <p className="font-semibold">{item.food_name}</p>
-                <div className="flex gap-2">
+                <div className="">
                   {item?.servings.serving
                     .filter(
                       (serving) =>
                         serving.measurement_description === "g" ||
                         serving.measurement_description === "ml"
                     )
-                    .map((serving) => (
-                      <p key={serving?.serving_id}>
-                        {serving?.serving_description}, {serving?.calories}
-                        cal,
-                      </p>
+                    .map((serving, index) => (
+                      <div
+                        key={serving?.serving_id}
+                        className="flex flex-row justify-start gap-3"
+                      >
+                        <p> {index === 1 && serving?.serving_description}</p>
+                        <p> {index === 1 && `${serving?.calories} cal`}</p>
+                      </div>
                     ))}
                   <p className="font-semibold">{item.brand_name}</p>
                 </div>
               </div>
               <div className="flex justify-between gap-3">
-                <Button onClick={() => handleAddFood(item, "lunch")}>
+                <Button onClick={() => addFood(item, session, "lunch")}>
                   Add Food
                 </Button>
                 <Link

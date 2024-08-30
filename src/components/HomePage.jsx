@@ -25,7 +25,14 @@ export default async function HomePage() {
           <CardDescription>{format(date, "LLL dd, y")}</CardDescription>
         </CardHeader>
         <CardContent className="flex-1 pb-0">
-          <PieChartComponent width={200} height={200} />
+          <PieChartComponent
+            width={200}
+            height={200}
+            totalCalories={2000}
+            carbs={200}
+            protein={150}
+            fats={70}
+          />
         </CardContent>
       </Card>
       <TableDemo />
