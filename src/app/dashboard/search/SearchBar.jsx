@@ -16,6 +16,7 @@ const SearchBar = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showAllResults, setShowAllResults] = useState(false);
+  const [showMoreClicked, setShowMoreClicked] = useState(false);
 
   const session = useSession();
   const { setSelectedFood } = useFood();
@@ -26,6 +27,7 @@ const SearchBar = () => {
     setLoading(true);
     setError(null);
     setShowAllResults(false);
+    setShowMoreClicked(false);
 
     try {
       const response = await fetch(
@@ -47,10 +49,13 @@ const SearchBar = () => {
     }
   };
 
-  const handleShowMore = () => {
+  const handleShowMore = async () => {
     setShowAllResults(true);
+    setShowMoreClicked(true);
   };
-
+  const handleShowLess = async () => {
+    setShowAllResults(false);
+  };
   return (
     <div>
       <form onSubmit={handleSearch} className="m-4">
@@ -66,7 +71,6 @@ const SearchBar = () => {
         </div>
       </form>
       {loading && <p>Loading...</p>}
-
       {error && <p className="text-red-500">{error}</p>}
       <div className="flex flex-col justify-center space-y-2 mt-4 mx-4">
         {result &&
@@ -125,9 +129,20 @@ const SearchBar = () => {
           <Button
             variant="ghost"
             className="hover:text-blue-500"
-            onClick={handleShowMore}
+            onClick={() => handleShowMore()}
           >
-            Show more results ...
+            Show more ...
+          </Button>
+        </div>
+      )}{" "}
+      {showAllResults && showMoreClicked && (
+        <div className="flex justify-center mt-4">
+          <Button
+            variant="ghost"
+            className="hover:text-blue-500"
+            onClick={() => handleShowLess()}
+          >
+            Show less ...
           </Button>
         </div>
       )}
