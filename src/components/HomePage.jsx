@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 import { format } from "date-fns";
 
-export default async function HomePage() {
+export default function HomePage() {
   const [date] = useState(new Date());
 
   return (

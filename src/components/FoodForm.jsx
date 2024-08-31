@@ -19,60 +19,63 @@ import {
 } from "@/components/ui/form";
 import PieChartComponent from "@/components/PieChartComponent";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import SelectMeal from "./SelectMeal";
 
-const FoodDetails = ({ foodData }) => {
-  const [selectedFood] = useState(foodData); // Use the context to access selectedFood
+export default function FoodForm({ foodData }) {
+  const [selectedFood] = useState(foodData);
+  const firstServing = selectedFood?.servings?.serving[0];
+
   const [calculatedValues, setCalculatedValues] = useState({
-    calories: selectedFood.servings.serving[1].calories,
-    protein: selectedFood.servings.serving[1].protein,
-    carbs: selectedFood.servings.serving[1].carbohydrate,
-    fats: selectedFood.servings.serving[1].fat,
+    calories: firstServing.calories,
+    protein: firstServing.protein,
+    carbs: firstServing.carbohydrate,
+    fats: firstServing.fat,
   });
+
+  const [meal, setMeal] = useState("");
+
+  useEffect(() => {
+    const storedMeal = localStorage.getItem("selectedMeal");
+    if (storedMeal) {
+      setMeal(storedMeal);
+    }
+  }, []);
 
   const form = useForm({
     resolver: zodResolver(),
 
     defaultValues: {
-      foodName: "",
-      amount: "",
+      foodName: selectedFood.food_name,
+      amount: Math.round(firstServing.metric_serving_amount),
       servingUnit: "",
-      numberOfServings: "",
-      meal: "",
+      numberOfServings: 1,
+      meal: meal || "",
     },
   });
 
   const calculateMacros = (amount, numberOfServings) => {
-    const metricServing = Math.round(
-      selectedFood.servings.serving[1].metric_serving_amount
+    const metricServing = Math.round(firstServing.metric_serving_amount);
+
+    const initialCalories = firstServing.calories;
+    const initialProtein = firstServing.protein;
+    const initialCarbs = firstServing.carbohydrate;
+    const initialFats = firstServing.fat;
+
+    const calories = Math.round(
+      ((amount * initialCalories) / metricServing) * numberOfServings
     );
 
-    const initialCalories = selectedFood.servings.serving[1].calories;
-    const initialProtein = selectedFood.servings.serving[1].protein;
-    const initialCarbs = selectedFood.servings.serving[1].carbohydrate;
-    const initialFats = selectedFood.servings.serving[1].fat;
+    const protein = Math.round(
+      ((amount * initialProtein) / metricServing) * numberOfServings
+    );
 
-    const calories =
-      ((amount * initialCalories) / metricServing) * numberOfServings;
-
-    const protein =
-      ((amount * initialProtein) / metricServing) * numberOfServings;
-
-    const carbs = parseInt(
+    const carbs = Math.round(
       ((amount * initialCarbs) / metricServing) * numberOfServings
     );
 
-    const fats = ((amount * initialFats) / metricServing) * numberOfServings;
-
-    console.log(
-      "Calories",
-      calories,
-      "Protein",
-      protein,
-      "Carbs",
-      carbs,
-      "Fats",
-      fats
+    const fats = Math.round(
+      ((amount * initialFats) / metricServing) * numberOfServings
     );
 
     setCalculatedValues({
@@ -159,23 +162,7 @@ const FoodDetails = ({ foodData }) => {
             render={({ field }) => (
               <FormItem className="flex items-center justify-between">
                 <FormLabel className="w-1/3">Meal</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Dinner" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="breakfast">Breakfast</SelectItem>
-                    <SelectItem value="lunch">Lunch</SelectItem>
-                    <SelectItem value="dinner">Dinner</SelectItem>
-                    <SelectItem value="snack">Snack</SelectItem>
-                  </SelectContent>
-                </Select>
-
+                <SelectMeal onValueChange={field.onChange} />
                 <FormMessage />
               </FormItem>
             )}
@@ -194,20 +181,18 @@ const FoodDetails = ({ foodData }) => {
           />
         </div>
         <div>
-          <h2>Protein</h2>
+          <h2 className="text-[hsl(var(--chart-1))]">Protein</h2>
           <h3>{calculatedValues.protein}</h3>
         </div>
         <div>
-          <h2>Carbs</h2>
+          <h2 className="text-[hsl(var(--chart-3))]">Carbs</h2>
           <h3>{calculatedValues.carbs}</h3>
         </div>
         <div>
-          <h2>Fats</h2>
+          <h2 className="text-[hsl(var(--chart-2))]">Fats</h2>
           <h3>{calculatedValues.fats}</h3>
         </div>
       </div>
     </div>
   );
-};
-
-export default FoodDetails;
+}

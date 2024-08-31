@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const addFood = async (item, session, mealType) => {
+export const addFood = async (item, session, mealType, name) => {
   const { calories, carbohydrate, protein, fat } = item;
+  console.log("item", item);
 
-  console.log("Food added to meal successfully!", session);
   try {
     await axios.post(`/api/addFood`, {
       method: "POST",
@@ -11,7 +11,7 @@ export const addFood = async (item, session, mealType) => {
         "Content-Type": "application/json",
       },
       body: {
-        name: item.food_name,
+        name: name,
         userId: session?.data?.user?._id,
         calories,
         carbs: carbohydrate,
@@ -20,6 +20,7 @@ export const addFood = async (item, session, mealType) => {
         mealType: mealType,
       },
     });
+    console.log("Food added to meal:", item);
   } catch (error) {
     console.error("Error adding food to meal:", error);
   }

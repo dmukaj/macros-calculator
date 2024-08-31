@@ -2,13 +2,14 @@
 
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { useFood } from "@/context/FoodContext";
 import { Button } from "@/components/ui/button";
 import { addFood } from "@/utils/foodUtils";
 import { useSession } from "next-auth/react";
-
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { useFood } from "@/context/FoodContext";
+import SelectMeal from "@/components/SelectMeal";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
@@ -19,7 +20,7 @@ const SearchBar = () => {
   const [showMoreClicked, setShowMoreClicked] = useState(false);
 
   const session = useSession();
-  const { setSelectedFood } = useFood();
+  const { setSelectedFood } = useFood({});
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query) return;
@@ -40,7 +41,7 @@ const SearchBar = () => {
       const data = await response.json();
 
       const foodItem = data.foods_search.results.food;
-      console.log(foodItem);
+
       setResult(Array.isArray(foodItem) ? foodItem : []);
       setLoading(false);
     } catch (error) {
@@ -56,8 +57,15 @@ const SearchBar = () => {
   const handleShowLess = async () => {
     setShowAllResults(false);
   };
+
   return (
     <div>
+      <div className=" relative flex flex-row text-lg justify-center items-center p-4 font-semibold">
+        <Link href="/dashboard" className="absolute left-3">
+          <ArrowLeft />
+        </Link>
+        <SelectMeal />
+      </div>
       <form onSubmit={handleSearch} className="m-4">
         <div className="relative w-full ">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -101,9 +109,7 @@ const SearchBar = () => {
                 </div>
               </div>
               <div className="flex justify-between gap-3">
-                <Button onClick={() => addFood(item, session, "lunch")}>
-                  Add Food
-                </Button>
+                <Button onClick={() => addFood(item, session)}>Add Food</Button>
                 <Link
                   href={{
                     pathname: "/dashboard/foodDetails",
