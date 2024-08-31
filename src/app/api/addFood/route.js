@@ -5,7 +5,6 @@ export async function POST(request) {
   const data = await request.json();
 
   let { name, userId, calories, carbs, protein, fat, mealType } = data.body;
-
   calories = parseInt(calories);
   carbs = parseInt(carbs);
   protein = parseInt(protein);
