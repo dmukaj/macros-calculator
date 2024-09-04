@@ -11,6 +11,8 @@ import { useState } from "react";
 import { useFood } from "@/context/FoodContext";
 import SelectMeal from "@/components/SelectMeal";
 
+import History from "@/components/History";
+
 const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [result, setResult] = useState([]);
@@ -21,6 +23,7 @@ const SearchBar = () => {
 
   const session = useSession();
   const { setSelectedFood } = useFood({});
+
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query) return;
@@ -80,7 +83,7 @@ const SearchBar = () => {
       </form>
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
-      <div className="flex flex-col justify-center space-y-2 mt-4 mx-4">
+      <div className="flex flex-col justify-center space-y-2 m-4">
         {result &&
           (showAllResults ? result : result.slice(0, 4)).map((item) => (
             <div
@@ -89,7 +92,7 @@ const SearchBar = () => {
             >
               <div>
                 <p className="font-semibold">{item.food_name}</p>
-                <div className="">
+                <div>
                   {item?.servings.serving
                     .filter(
                       (serving) =>
@@ -129,6 +132,7 @@ const SearchBar = () => {
               </div>
             </div>
           ))}
+        {!loading && result.length === 0 && !query && <History />}
       </div>
       {!showAllResults && result.length > 4 && (
         <div className="flex justify-center mt-4">
@@ -152,7 +156,6 @@ const SearchBar = () => {
           </Button>
         </div>
       )}
-      <div className="flex justify-center font-semibold ">History</div>
     </div>
   );
 };

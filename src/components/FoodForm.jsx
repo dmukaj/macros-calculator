@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import SelectMeal from "./SelectMeal";
 
-export default function FoodForm({ foodData }) {
+export default function FoodForm({ foodData, onUpdateFoodData }) {
   const [selectedFood] = useState(foodData);
   const firstServing = selectedFood?.servings?.serving[0];
 
@@ -48,7 +48,7 @@ export default function FoodForm({ foodData }) {
     defaultValues: {
       foodName: selectedFood.food_name,
       amount: Math.round(firstServing.metric_serving_amount),
-      servingUnit: "",
+      servingUnit: firstServing.metric_serving_unit,
       numberOfServings: 1,
       meal: meal || "",
     },
@@ -78,12 +78,15 @@ export default function FoodForm({ foodData }) {
       ((amount * initialFats) / metricServing) * numberOfServings
     );
 
-    setCalculatedValues({
+    const newValues = {
       calories,
       protein,
       carbs,
       fats,
-    });
+    };
+
+    setCalculatedValues(newValues);
+    onUpdateFoodData(newValues);
   };
 
   const onSubmit = (e) => {
