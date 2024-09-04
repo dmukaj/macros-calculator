@@ -2,17 +2,15 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchFoodDetails } from "@/lib/api/fetchFoodDetails";
-import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import FoodForm from "@/components/FoodForm";
-import { addFood } from "@/utils/foodUtils";
-import { ArrowLeft, Plus, Check } from "lucide-react";
+import AddFoodButton from "@/components/AddFoodButton";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-const FoodDetails = () => {
+const FoodDetails = ({ foodData }) => {
   const session = useSession();
-  const [click, setClick] = useState(false);
-  const [selectedFood, setSelectedFood] = useState([]);
+  const [selectedFood, setSelectedFood] = useState({ foodData });
   const [loading, setLoading] = useState(true);
   const [meal, setMeal] = useState("");
 
@@ -36,7 +34,7 @@ const FoodDetails = () => {
     };
 
     loadFoodDetails();
-  }, []);
+  }, [id]);
 
   if (!id) return <p>No food selected.</p>;
 
@@ -46,11 +44,6 @@ const FoodDetails = () => {
 
   const firstServing = selectedFood?.servings?.serving[0];
 
-  const handleAddFood = () => {
-    if (firstServing && session) {
-      addFood(firstServing, session, meal, selectedFood.food_name); // Pass the meal value to addFood
-    }
-  };
   return (
     <div>
       <div className="flex justify-between text-lg items-center bg-gray-50 p-4">
@@ -62,18 +55,22 @@ const FoodDetails = () => {
           {Math.round(firstServing?.metric_serving_amount)}
           {firstServing?.metric_serving_unit}
         </h2>
-        {click && firstServing ? (
-          <Button onClick={handleAddFood}>
-            <Check />
-          </Button>
-        ) : (
-          <Button variant="outline" onClick={() => setClick(true)}>
-            <Plus />
-          </Button>
-        )}
+        <AddFoodButton
+          firstServing={firstServing}
+          selectedFood={selectedFood}
+          session={session}
+          meal={meal}
+          foodName={selectedFood?.food_name}
+        />
       </div>
       <div className="p-4">
-        <FoodForm id={id} foodData={selectedFood} />
+        <FoodForm
+          id={id}
+          foodData={selectedFood}
+          onUpdateFoodData={(newValues) => {
+            setSelectedFood({ ...selectedFood, ...newValues });
+          }}
+        />
       </div>
     </div>
   );

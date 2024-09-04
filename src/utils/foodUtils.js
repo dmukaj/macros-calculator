@@ -2,7 +2,6 @@ import axios from "axios";
 
 export const addFood = async (item, session, mealType, name) => {
   const { calories, carbohydrate, protein, fat } = item;
-  console.log("item", item);
 
   try {
     await axios.post(`/api/addFood`, {
