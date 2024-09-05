@@ -11,7 +11,7 @@ export async function POST(request) {
       orderBy: {
         createdAt: "desc",
       },
-      take: 5,
+      take: 7,
     });
 
     if (foods.length === 0) {

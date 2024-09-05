@@ -22,16 +22,13 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import SelectMeal from "./SelectMeal";
 
-export default function FoodForm({ foodData, onUpdateFoodData }) {
+export default function FoodForm({
+  foodData,
+  calculatedValues,
+  setCalculatedValues,
+}) {
   const [selectedFood] = useState(foodData);
   const firstServing = selectedFood?.servings?.serving[0];
-
-  const [calculatedValues, setCalculatedValues] = useState({
-    calories: firstServing.calories,
-    protein: firstServing.protein,
-    carbs: firstServing.carbohydrate,
-    fats: firstServing.fat,
-  });
 
   const [meal, setMeal] = useState("");
 
@@ -40,6 +37,14 @@ export default function FoodForm({ foodData, onUpdateFoodData }) {
     if (storedMeal) {
       setMeal(storedMeal);
     }
+
+    setCalculatedValues((prevState) => ({
+      ...prevState,
+      calories: Math.round(firstServing.calories),
+      protein: Math.round(firstServing.protein),
+      carbs: Math.round(firstServing.carbohydrate),
+      fats: Math.round(firstServing.fat),
+    }));
   }, []);
 
   const form = useForm({
@@ -47,7 +52,9 @@ export default function FoodForm({ foodData, onUpdateFoodData }) {
 
     defaultValues: {
       foodName: selectedFood.food_name,
-      amount: Math.round(firstServing.metric_serving_amount),
+      amount: firstServing.metric_serving_amount
+        ? Math.round(firstServing.metric_serving_amount)
+        : Math.round(firstServing.number_of_units),
       servingUnit: firstServing.metric_serving_unit,
       numberOfServings: 1,
       meal: meal || "",
@@ -55,7 +62,9 @@ export default function FoodForm({ foodData, onUpdateFoodData }) {
   });
 
   const calculateMacros = (amount, numberOfServings) => {
-    const metricServing = Math.round(firstServing.metric_serving_amount);
+    const metricServing = firstServing.metric_serving_amount
+      ? Math.round(firstServing.metric_serving_amount)
+      : Math.round(firstServing.number_of_units);
 
     const initialCalories = firstServing.calories;
     const initialProtein = firstServing.protein;
@@ -86,7 +95,7 @@ export default function FoodForm({ foodData, onUpdateFoodData }) {
     };
 
     setCalculatedValues(newValues);
-    onUpdateFoodData(newValues);
+    // console.log("newValues", newValues);
   };
 
   const onSubmit = (e) => {
@@ -177,10 +186,10 @@ export default function FoodForm({ foodData, onUpdateFoodData }) {
           <PieChartComponent
             width={120}
             height={120}
-            totalCalories={calculatedValues.calories}
-            protein={calculatedValues.protein}
-            carbs={calculatedValues.carbs}
-            fats={calculatedValues.fats}
+            totalCalories={calculatedValues?.calories}
+            protein={calculatedValues?.protein}
+            carbs={calculatedValues?.carbs}
+            fats={calculatedValues?.fats}
           />
         </div>
         <div>

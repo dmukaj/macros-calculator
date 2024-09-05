@@ -2,9 +2,9 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchFoodDetails } from "@/lib/api/fetchFoodDetails";
+import AddFoodButton from "@/components/AddFoodButton";
 import { useSession } from "next-auth/react";
 import FoodForm from "@/components/FoodForm";
-import AddFoodButton from "@/components/AddFoodButton";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -17,6 +17,11 @@ const FoodDetails = ({ foodData }) => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
+  const firstServing = selectedFood?.servings?.serving[0];
+
+  const [calculatedValues, setCalculatedValues] = useState({});
+
+  console.log("calculatedValues", selectedFood?.servings?.serving[0]);
   useEffect(() => {
     const storedMeal = localStorage.getItem("selectedMeal");
     if (storedMeal) {
@@ -42,7 +47,9 @@ const FoodDetails = ({ foodData }) => {
     return <p>Loading food details...</p>;
   }
 
-  const firstServing = selectedFood?.servings?.serving[0];
+  let servingAmount = firstServing?.metric_serving_amount
+    ? Math.round(firstServing?.metric_serving_amount)
+    : firstServing?.serving_description;
 
   return (
     <div>
@@ -51,14 +58,16 @@ const FoodDetails = ({ foodData }) => {
           <ArrowLeft />
         </Link>
         <h2 className="font-semibold mr-3 ">
-          {selectedFood?.food_name},
-          {Math.round(firstServing?.metric_serving_amount)}
-          {firstServing?.metric_serving_unit}
+          {selectedFood?.food_name} ({servingAmount})
+          {firstServing.metric_serving_unit
+            ? firstServing?.metric_serving_unit
+            : ""}
         </h2>
         <AddFoodButton
           firstServing={firstServing}
           selectedFood={selectedFood}
           session={session}
+          calculatedValues={calculatedValues}
           meal={meal}
           foodName={selectedFood?.food_name}
         />
@@ -67,8 +76,10 @@ const FoodDetails = ({ foodData }) => {
         <FoodForm
           id={id}
           foodData={selectedFood}
+          calculatedValues={calculatedValues}
+          setCalculatedValues={setCalculatedValues}
           onUpdateFoodData={(newValues) => {
-            setSelectedFood({ ...selectedFood, ...newValues });
+            setSelectedFood(newValues);
           }}
         />
       </div>
