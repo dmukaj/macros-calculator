@@ -1,6 +1,6 @@
 "use client";
 
-import { TableDemo } from "@/components/Table";
+import TableDemo from "@/components/TableDemo";
 
 import PieChartComponent from "@/components/PieChartComponent";
 import {
