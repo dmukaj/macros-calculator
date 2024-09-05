@@ -6,7 +6,6 @@ import { useState } from "react";
 const AddFoodButton = ({
   calculatedValues,
   firstServing,
-  selectedFood,
   session,
   meal,
   foodName,
@@ -15,9 +14,6 @@ const AddFoodButton = ({
 
   const handleAddFood = () => {
     setClick(!click);
-    // if (firstServing && session) {
-    //   addFood({ ...firstServing, ...selectedFood }, session, meal, foodName);
-    // }
 
     if (firstServing && session) {
       addFood(

@@ -2,8 +2,7 @@ import db from "@/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const data = await request.json();
-  console.log("data", data);
+  await request.json();
 
   try {
     const foods = await db.meal.findMany({
