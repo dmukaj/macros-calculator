@@ -21,6 +21,8 @@ const SearchBar = () => {
   const [showAllResults, setShowAllResults] = useState(false);
   const [showMoreClicked, setShowMoreClicked] = useState(false);
 
+  const meal = localStorage.getItem("selectedMeal");
+
   const session = useSession();
   const { setSelectedFood } = useFood({});
 
@@ -112,7 +114,18 @@ const SearchBar = () => {
                 </div>
               </div>
               <div className="flex justify-between gap-3">
-                <Button onClick={() => addFood(item, session)}>Add Food</Button>
+                <Button
+                  onClick={() =>
+                    addFood(
+                      item.servings.serving[0],
+                      session,
+                      meal,
+                      item.food_name
+                    )
+                  }
+                >
+                  Add Food
+                </Button>
                 <Link
                   href={{
                     pathname: "/dashboard/foodDetails",
