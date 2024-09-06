@@ -4,11 +4,14 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   const data = await request.json();
 
-  let { name, userId, calories, carbs, protein, fat, mealType } = data.body;
+  let { name, userId, calories, carbs, protein, fat, mealType, date } =
+    data.body;
   calories = parseInt(calories);
   carbs = parseInt(carbs);
   protein = parseInt(protein);
   fat = parseInt(fat);
+
+  console.log("date", date);
 
   try {
     const food = await db.meal.create({
@@ -20,6 +23,7 @@ export async function POST(request) {
         fat,
         userId,
         mealType,
+        createdAt: new Date(date),
       },
     });
 

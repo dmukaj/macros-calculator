@@ -10,12 +10,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import { useState } from "react";
 import { format } from "date-fns";
+import { useEffect } from "react";
 
 export default function HomePage() {
-  const [date] = useState(new Date());
+  const date = new Date();
+
+  useEffect(() => {
+    localStorage.removeItem("selectedDate");
+  }, []);
 
   return (
     <>
@@ -35,7 +38,7 @@ export default function HomePage() {
           />
         </CardContent>
       </Card>
-      <TableDemo />
+      <TableDemo date={date} />
     </>
   );
 }

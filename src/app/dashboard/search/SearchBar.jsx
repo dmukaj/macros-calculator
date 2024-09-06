@@ -22,6 +22,7 @@ const SearchBar = () => {
   const [showMoreClicked, setShowMoreClicked] = useState(false);
 
   const meal = localStorage.getItem("selectedMeal");
+  const date = localStorage.getItem("selectedDate");
 
   const session = useSession();
   const { setSelectedFood } = useFood({});
@@ -120,7 +121,8 @@ const SearchBar = () => {
                       item.servings.serving[0],
                       session,
                       meal,
-                      item.food_name
+                      item.food_name,
+                      date
                     )
                   }
                 >

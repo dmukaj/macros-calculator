@@ -23,6 +23,7 @@ const AddFoodButton = ({
         },
         session,
         meal,
+
         foodName
       );
     }
