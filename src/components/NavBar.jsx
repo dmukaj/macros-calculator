@@ -16,7 +16,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import { logout } from "@/actions/auth";
 
 function NavBar({ session }) {
@@ -66,6 +71,7 @@ function NavBar({ session }) {
             </Link>
           </nav>
         </SheetContent>
+        <SheetDescription />
       </Sheet>
 
       <div className="flex items-center gap-2">
