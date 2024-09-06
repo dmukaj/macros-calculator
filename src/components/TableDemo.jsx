@@ -1,6 +1,6 @@
-import TableComponent from "@/components/Table";
+import FoodTable from "@/components/FoodTable";
 
-export default function TableDemo() {
+export default function TableDemo({ date }) {
   return (
     <main className="flex flex-col items-center">
       <div className="flex flex-col lg:gap-6 gap-14 w-3/4 lg:w-2/3">
@@ -9,22 +9,22 @@ export default function TableDemo() {
             <h1 className="text-lg font-semibold md:text-2xl my-4">
               Breakfast
             </h1>
-            <TableComponent mealType="Breakfast" />
+            <FoodTable mealType="Breakfast" date={date} />
           </div>
           <div className="flex flex-col items-center justify-center p-10  rounded-lg border border-dashed shadow-lg bg-gray-100 hover:bg-gray-50">
             <h1 className="text-lg font-semibold md:text-2xl my-4">Lunch</h1>
 
-            <TableComponent mealType="Lunch" />
+            <FoodTable mealType="Lunch" date={date} />
           </div>
           <div className="flex flex-col items-center justify-center rounded-lg p-10  border border-dashed shadow-lg bg-gray-100 hover:bg-gray-50">
             <h1 className="text-lg font-semibold md:text-2xl my-4">Dinner</h1>
 
-            <TableComponent mealType="Dinner" />
+            <FoodTable mealType="Dinner" date={date} />
           </div>
           <div className="flex flex-col items-center justify-center rounded-lg p-10  border border-dashed shadow-lg bg-gray-100 hover:bg-gray-50">
             <h1 className="text-lg font-semibold md:text-2xl my-4">Snacks</h1>
 
-            <TableComponent mealType="Snack" />
+            <FoodTable mealType="Snack" date={date} />
           </div>
         </div>
       </div>

@@ -13,6 +13,7 @@ const FoodDetails = ({ foodData }) => {
   const [selectedFood, setSelectedFood] = useState({ foodData });
   const [loading, setLoading] = useState(true);
   const [meal, setMeal] = useState("");
+  const [date, setDate] = useState(new Date());
 
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
@@ -21,11 +22,15 @@ const FoodDetails = ({ foodData }) => {
 
   const [calculatedValues, setCalculatedValues] = useState({});
 
-  console.log("calculatedValues", selectedFood?.servings?.serving[0]);
   useEffect(() => {
     const storedMeal = localStorage.getItem("selectedMeal");
+    const storedDate = localStorage.getItem("selectedDate");
+
     if (storedMeal) {
       setMeal(storedMeal);
+    }
+    if (storedDate) {
+      setDate(storedDate);
     }
     const loadFoodDetails = async () => {
       try {
@@ -69,6 +74,7 @@ const FoodDetails = ({ foodData }) => {
           session={session}
           calculatedValues={calculatedValues}
           meal={meal}
+          date={date}
           foodName={selectedFood?.food_name}
         />
       </div>

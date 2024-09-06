@@ -6,7 +6,7 @@ export async function fetchHistory(session) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId: session?.data?.user?._id, // Make sure session contains user ID
+        userId: session?.data?.user?._id,
       }),
     });
 
