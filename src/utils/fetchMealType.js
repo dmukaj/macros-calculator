@@ -20,6 +20,29 @@ export async function fetchMealType(mealType, date) {
     return data;
   } catch (error) {
     console.log("Error fetching meal type", error);
-    return <p>Error fetching meal type</p>;
+  }
+}
+
+export async function fetchMealTypeByDate(date) {
+  try {
+    const response = await fetch(`/api/getMealByDate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        date,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error fetching meal type: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.log("Error fetching meal type", error);
   }
 }

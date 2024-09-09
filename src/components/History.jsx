@@ -12,7 +12,6 @@ const History = () => {
       if (session) {
         const historyData = await fetchHistory(session);
         setHistory(Array.isArray(historyData.foods) ? historyData.foods : []);
-        console.log("history", historyData.foods);
       }
     };
     loadHistory();

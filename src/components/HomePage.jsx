@@ -11,34 +11,46 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { format } from "date-fns";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import calculateMacros from "@/utils/calculateMarcos";
 
 export default function HomePage() {
-  const date = new Date();
+  const [foodData, setFoodData] = useState([]);
+
+  const date = new Date().toISOString();
 
   useEffect(() => {
-    localStorage.removeItem("selectedDate");
+    localStorage.removeItem("selectsedDate");
+    const handleCalculateMacros = async () => {
+      const macros = await calculateMacros(date);
+      if (macros) {
+        setFoodData(macros);
+      }
+    };
+    handleCalculateMacros();
   }, []);
 
   return (
-    <>
-      <Card className="flex flex-col m-10">
+    <div className="m-10 space-y-16">
+      <Card className="flex flex-col">
         <CardHeader className="items-center pb-0">
           <CardTitle>Today&apos;s Date</CardTitle>
           <CardDescription>{format(date, "LLL dd, y")}</CardDescription>
         </CardHeader>
         <CardContent className="flex-1 pb-0">
-          <PieChartComponent
-            width={200}
-            height={200}
-            totalCalories={2000}
-            carbs={200}
-            protein={150}
-            fats={70}
-          />
+          {foodData && (
+            <PieChartComponent
+              width={200}
+              height={200}
+              totalCalories={foodData.totalCalories}
+              carbs={foodData.totalCarbs}
+              protein={foodData.totalProtein}
+              fats={foodData.totalFats}
+            />
+          )}
         </CardContent>
       </Card>
       <TableDemo date={date} />
-    </>
+    </div>
   );
 }

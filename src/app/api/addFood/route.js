@@ -10,9 +10,6 @@ export async function POST(request) {
   carbs = parseInt(carbs);
   protein = parseInt(protein);
   fat = parseInt(fat);
-
-  console.log("date", date);
-
   try {
     const food = await db.meal.create({
       data: {
@@ -23,7 +20,7 @@ export async function POST(request) {
         fat,
         userId,
         mealType,
-        createdAt: new Date(date),
+        createdAt: date,
       },
     });
 
