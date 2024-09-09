@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const addFood = async (item, session, mealType, name, date) => {
-  console.log("date", date);
-  const { calories, carbohydrate, protein, fat } = item;
+export const addFood = async (item, session, mealType, name) => {
+  const { calories, carbohydrate, protein, fat, createdAt } = item;
+  console.log("item", item);
   try {
     await axios.post(`/api/addFood`, {
       method: "POST",
@@ -17,7 +17,7 @@ export const addFood = async (item, session, mealType, name, date) => {
         protein,
         fat,
         mealType: mealType,
-        date,
+        date: createdAt,
       },
     });
   } catch (error) {
