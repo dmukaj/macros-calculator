@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
-import calculateMacros from "@/utils/calculateMarcos";
+import { calculateTotalMacros } from "@/utils/calculateMacros";
 
 export default function HomePage() {
   const [foodData, setFoodData] = useState([]);
@@ -21,13 +21,13 @@ export default function HomePage() {
 
   useEffect(() => {
     localStorage.removeItem("selectsedDate");
-    const handleCalculateMacros = async () => {
-      const macros = await calculateMacros(date);
+    const handleCalculateTotalMacros = async () => {
+      const macros = await calculateTotalMacros(date);
       if (macros) {
         setFoodData(macros);
       }
     };
-    handleCalculateMacros();
+    handleCalculateTotalMacros();
   }, []);
 
   return (

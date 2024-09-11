@@ -30,6 +30,7 @@ model User {
   sessions      Session[]
   role          UserRole?       @default(ADMIN)
   meals         Meal[]
+  calculator    Calculator[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  
@@ -120,4 +121,22 @@ model ApiToken {
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Calculator {
+  userId      String   @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  age         Int
+  height      Int
+  weight      Int
+  activity    String
+  goal        String
+  gender      String?
+  bmr         Int
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId])
 }

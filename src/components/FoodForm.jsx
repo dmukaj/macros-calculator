@@ -61,7 +61,7 @@ export default function FoodForm({
     },
   });
 
-  const calculateMacros = (amount, numberOfServings) => {
+  const calculateTotalMacros = (amount, numberOfServings) => {
     const metricServing = firstServing.metric_serving_amount
       ? Math.round(firstServing.metric_serving_amount)
       : Math.round(firstServing.number_of_units);
@@ -102,7 +102,7 @@ export default function FoodForm({
     const { name } = e.target;
     const { amount, numberOfServings } = form.getValues();
     if (name === "numberOfServings" || name === "amount")
-      calculateMacros(amount, numberOfServings);
+      calculateTotalMacros(amount, numberOfServings);
   };
 
   return (

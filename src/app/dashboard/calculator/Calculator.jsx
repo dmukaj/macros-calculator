@@ -2,13 +2,13 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { number, z } from "zod";
+import { z } from "zod";
+import { postUsersData, getUsersData } from "@/utils/usersData";
 
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,38 +22,88 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useToast } from "@/components/hooks/use-toast";
+import { calculateBMR } from "@/utils/calculateMacros";
+import { useEffect, useState } from "react";
 
 const formSchema = z.object({
-  age: z.number({
-    required_error: "Age is required",
-    invalid_type_error: "Age must be a number",
-  }),
-  height: z.number({
-    required_error: "Height is required",
+  age: z.coerce
+    .number({
+      invalid_type_error: "Age must be a number",
+    })
+    .min(1, { message: "Age must be greater than 0" }),
+  height: z.coerce.number({
     invalid_type_error: "Height must be a number",
   }),
-  weight: z.number({
+  weight: z.coerce.number({
     required_error: "Weight is required",
     invalid_type_error: "Weight must be a number",
   }),
   activity: z.string().min(1, { message: "Please select your goal" }),
   goal: z.string().min(1, { message: "Please select your goal" }),
+  gender: z.string().min(1, { message: "Please select your gender" }),
 });
 
 export default function Calculator() {
+  const [userData, setUserData] = useState({});
+  const { toast } = useToast();
+
   const form = useForm({
     resolver: zodResolver(formSchema),
+    mode: "onChange",
     defaultValues: {
-      age: "",
-      height: "",
       activity: "",
-      weight: "",
+      age: 25,
+      gender: "",
       goal: "",
+      height: 123,
+      weight: 150,
     },
   });
-  const onSubmit = (data) => console.log(data);
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      const data = await getUsersData();
+      if (data.user) {
+        let { age, height, weight, gender, activity, goal } = data.user;
+        goal = goal.toString();
+        gender = gender.toString();
+        activity = activity.toString();
+        setUserData({ age, height, weight, gender, activity, goal });
+
+        form.reset({
+          activity: activity,
+          age: age,
+          gender: gender,
+          goal: goal,
+          height: height,
+          weight: weight,
+        });
+      }
+    };
+    loadUserData();
+  }, [form.reset]);
+
+  const onSubmit = async (values) => {
+    const macros = await calculateBMR(values);
+
+    const response = await postUsersData({ ...values, bmr: macros });
+
+    if (response === 201) {
+      toast({
+        title: "Success!",
+        description: "You can view your results in the dashboard",
+        variant: "success",
+      });
+    }
+    if (response === 500) {
+      toast({
+        title: "Uh oh!",
+        description: "Something went wrong",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <>
@@ -65,35 +115,61 @@ export default function Calculator() {
           <FormField
             control={form.control}
             name="age"
-            render={() => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>Age</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" type="number" />
+                  <Input placeholder="age" type="number" {...field} />
                 </FormControl>
 
                 <FormMessage />
               </FormItem>
             )}
           />
-          <RadioGroup defaultValue="gender">
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="male" id="r2" />
-              <Label htmlFor="r2">Male</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="female" id="r3" />
-              <Label htmlFor="r3">Female</Label>
-            </div>
-          </RadioGroup>
+          <FormField
+            control={form.control}
+            name="gender"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Gender</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={userData?.gender}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          placeholder={
+                            userData?.gender || "Select your gender?"
+                          }
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="male">Male</SelectItem>
+                      <SelectItem value="female">Female</SelectItem>
+                      <SelectItem value="unknown">Prefer not to say</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="height"
-            render={() => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>Height</FormLabel>
                 <FormControl>
-                  <Input placeholder="your height in inches" type="number" />
+                  <Input
+                    placeholder="your height in inches"
+                    type="number"
+                    {...field}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -103,11 +179,15 @@ export default function Calculator() {
           <FormField
             control={form.control}
             name="weight"
-            render={() => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>Weight</FormLabel>
                 <FormControl>
-                  <Input placeholder="your weight in pounds" type="number" />
+                  <Input
+                    placeholder="your weight in pounds"
+                    type="number"
+                    {...field}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -121,24 +201,25 @@ export default function Calculator() {
               <FormItem>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  defaultValue={userData?.activity || field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select your activity level?" />
+                      <SelectValue
+                        placeholder={
+                          userData?.activity || "Select your activity level"
+                        }
+                      />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Sedetary">
-                      Sedetary:Little or no exercise
+                    <SelectItem value="Sedentary">
+                      Sedentary:Little or no exercise
                     </SelectItem>
                     <SelectItem value="Light">
                       Light: Exercise 1-3 times a week
                     </SelectItem>
                     <SelectItem value="Moderate">
-                      Moderate: Exercise 3-4 times a week
-                    </SelectItem>
-                    <SelectItem value="Active">
                       Moderate: Exercise 3-4 times a week
                     </SelectItem>
                     <SelectItem value="Very Active">
@@ -161,7 +242,9 @@ export default function Calculator() {
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select your goal?" />
+                      <SelectValue
+                        placeholder={userData?.goal || "Select goal"}
+                      />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>

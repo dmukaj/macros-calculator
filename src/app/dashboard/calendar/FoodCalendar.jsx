@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/popover";
 import TableDemo from "@/components/TableDemo";
 import PieChartComponent from "@/components/PieChartComponent";
-import calculateMacros from "@/utils/calculateMarcos";
+import { calculateTotalMacros } from "@/utils/calculateMarcos";
 
 export default function FoodCalendar() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -21,13 +21,13 @@ export default function FoodCalendar() {
   localStorage.setItem("selectedDate", selectedDate);
 
   useEffect(() => {
-    const handleCalculateMacros = async () => {
-      const macros = await calculateMacros(selectedDate);
+    const handleCalculateTotalMacros = async () => {
+      const macros = await calculateTotalMacros(selectedDate);
       if (macros) {
         setFoodData(macros);
       }
     };
-    handleCalculateMacros();
+    handleCalculateTotalMacros();
   }, [selectedDate]);
   return (
     <div className="flex flex-col items-center justify-center mt-10 space-y-10">
