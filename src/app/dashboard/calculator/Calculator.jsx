@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/hooks/use-toast";
+import Result from "./Result";
 import { calculateBMR } from "@/utils/calculateMacros";
 import { useEffect, useState } from "react";
 
@@ -45,7 +46,8 @@ const formSchema = z.object({
 });
 
 export default function Calculator() {
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(null);
+  const [bmr, setBmr] = useState(null);
   const { toast } = useToast();
 
   const form = useForm({
@@ -56,36 +58,15 @@ export default function Calculator() {
       age: 25,
       gender: "",
       goal: "",
-      height: 123,
+      height: 66,
       weight: 150,
     },
   });
 
-  useEffect(() => {
-    const loadUserData = async () => {
-      const data = await getUsersData();
-      if (data.user) {
-        let { age, height, weight, gender, activity, goal } = data.user;
-        goal = goal.toString();
-        gender = gender.toString();
-        activity = activity.toString();
-        setUserData({ age, height, weight, gender, activity, goal });
-
-        form.reset({
-          activity: activity,
-          age: age,
-          gender: gender,
-          goal: goal,
-          height: height,
-          weight: weight,
-        });
-      }
-    };
-    loadUserData();
-  }, [form.reset]);
-
-  const onSubmit = async (values) => {
+  const onSubmit = async (values, event) => {
+    event.preventDefault();
     const macros = await calculateBMR(values);
+    setBmr(macros);
 
     const response = await postUsersData({ ...values, bmr: macros });
 
@@ -104,6 +85,32 @@ export default function Calculator() {
       });
     }
   };
+
+  const loadUserData = async () => {
+    const { user } = await getUsersData();
+
+    if (user) {
+      let { age, height, weight, gender, activity, goal, bmr } = user;
+      goal = goal.toString();
+      gender = gender.toString();
+      activity = activity.toString();
+      setUserData({ age, height, weight, gender, activity, goal });
+      setBmr(bmr);
+
+      form.reset({
+        activity: activity,
+        age: age,
+        gender: gender,
+        goal: goal,
+        height: height,
+        weight: weight,
+      });
+    }
+  };
+
+  useEffect(() => {
+    loadUserData();
+  }, [form.reset, bmr]);
 
   return (
     <>
@@ -265,6 +272,7 @@ export default function Calculator() {
           </Button>
         </form>
       </Form>
+      {bmr && <Result bmr={bmr} />}
     </>
   );
 }

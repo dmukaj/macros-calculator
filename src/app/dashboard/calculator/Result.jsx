@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -7,20 +8,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Link from "next/link";
 import { calculateMacros } from "@/utils/calculateMacros";
 import { useEffect, useState } from "react";
 
-const Result = () => {
-  const [userData, setUserData] = useState({});
+const Result = ({ bmr }) => {
+  const [calculatedValues, setCalculatedValues] = useState();
+
   useEffect(() => {
-    const handleData = async () => {
-      const data = await calculateMacros();
-      console.log("data", data);
-      setUserData(data);
-    };
-    handleData();
-  }, []);
-  console.log("userData", userData);
+    const data = calculateMacros(bmr);
+    setCalculatedValues(data);
+  }, [bmr]);
+
   return (
     <div className="p-20">
       <Table>
@@ -31,27 +30,40 @@ const Result = () => {
             <TableHead className="text-right">Amount </TableHead>
           </TableRow>
         </TableHeader>
-        {userData && (
+        {calculatedValues && (
           <TableBody>
             <TableRow>
               <TableCell className="font-medium">Total calories</TableCell>
-              <TableCell className="text-right">{userData.bmr}</TableCell>
+              <TableCell className="text-right">
+                {calculatedValues.calories} cal
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Protein</TableCell>
-              <TableCell className="text-right">150 gram</TableCell>
+              <TableCell className="text-right">
+                {calculatedValues.protein} g
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Carbs</TableCell>
-              <TableCell className="text-right">300 gram</TableCell>
+              <TableCell className="text-right">
+                {calculatedValues.carbs} g
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Fats</TableCell>
-              <TableCell className="text-right">80 gram</TableCell>
+              <TableCell className="text-right">
+                {calculatedValues.fats} g
+              </TableCell>
             </TableRow>
           </TableBody>
         )}
       </Table>
+      <Button variant="outline">
+        <Link asChild href="/dashboard/info">
+          Read more about Macros
+        </Link>
+      </Button>
     </div>
   );
 };

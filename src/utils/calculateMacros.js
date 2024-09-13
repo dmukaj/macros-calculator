@@ -1,5 +1,4 @@
 import { fetchMealTypeByDate } from "./fetchMealType";
-import { getUsersData } from "./usersData";
 
 export async function calculateTotalMacros(date) {
   const foodData = await fetchMealTypeByDate(date);
@@ -87,11 +86,16 @@ export const calculateBMR = async (data) => {
     default:
       return (BMR *= 1);
   }
-  console.log("BMR", BMR);
+
   return Math.round(BMR);
 };
 
-export const calculateMacros = async () => {
-  const data = await getUsersData();
-  return data;
+export const calculateMacros = (bmr) => {
+  const calories = parseInt(bmr);
+
+  const protein = Math.round((bmr * 0.4) / 4);
+  const carbs = Math.round((bmr * 0.3) / 4);
+  const fats = Math.round((bmr * 0.3) / 9);
+
+  return { calories, protein, carbs, fats };
 };
