@@ -7,13 +7,14 @@ import { useSession } from "next-auth/react";
 import FoodForm from "@/components/FoodForm";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { format } from "date-fns";
 
 const FoodDetails = ({ foodData }) => {
   const session = useSession();
   const [selectedFood, setSelectedFood] = useState({ foodData });
   const [loading, setLoading] = useState(true);
   const [meal, setMeal] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState();
 
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
@@ -62,12 +63,18 @@ const FoodDetails = ({ foodData }) => {
         <Link href="/dashboard/search" className="mr-3">
           <ArrowLeft />
         </Link>
-        <h2 className="font-semibold mr-3 ">
-          {selectedFood?.food_name} ({servingAmount})
-          {firstServing.metric_serving_unit
-            ? firstServing?.metric_serving_unit
-            : ""}
-        </h2>
+        <div className="flex flex-row items-center gap-2 justify-center font-semibold">
+          <p className="text-red-500 dark:text-green-500 ">
+            {" "}
+            {format(date, "LLL dd, y")}
+          </p>
+          <h2 className=" mr-3 ">
+            {selectedFood?.food_name} ({servingAmount})
+            {firstServing.metric_serving_unit
+              ? firstServing?.metric_serving_unit
+              : ""}
+          </h2>
+        </div>
         <AddFoodButton
           firstServing={firstServing}
           selectedFood={selectedFood}

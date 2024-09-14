@@ -6,6 +6,7 @@ import AddFoodButton from "./AddFoodButton";
 const History = () => {
   const session = useSession();
   const [history, setHistory] = useState([]);
+  const [selectedDate, setSelectedDate] = useState();
 
   useEffect(() => {
     const loadHistory = async () => {
@@ -14,8 +15,11 @@ const History = () => {
         setHistory(Array.isArray(historyData.foods) ? historyData.foods : []);
       }
     };
+    const storedDate = localStorage.getItem("selectedDate");
+    setSelectedDate(storedDate);
     loadHistory();
   }, [session]);
+  // console.log("selectedDate", selectedDate);
   return (
     <div className="flex flex-col justify-center items-center font-semibold ">
       <h1>History</h1>
@@ -35,6 +39,7 @@ const History = () => {
                   firstServing={item}
                   selectedFood={item}
                   session={session}
+                  date={selectedDate}
                   meal={item.mealType}
                   foodName={item.name}
                 />

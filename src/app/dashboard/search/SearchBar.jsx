@@ -7,6 +7,7 @@ import { addFood } from "@/utils/foodUtils";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { format } from "date-fns";
 import { useState } from "react";
 import { useFood } from "@/context/FoodContext";
 import SelectMeal from "@/components/SelectMeal";
@@ -70,6 +71,9 @@ const SearchBar = () => {
         <Link href="/dashboard" className="absolute left-3">
           <ArrowLeft />
         </Link>
+        <p className="text-sm text-red-500 dark:text-green-500 mr-2">
+          {format(date, "LLL dd, y")}
+        </p>
         <SelectMeal />
       </div>
       <form onSubmit={handleSearch} className="m-4">

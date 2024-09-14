@@ -9,6 +9,7 @@ const AddFoodButton = ({
   session,
   meal,
   foodName,
+  date,
 }) => {
   const [click, setClick] = useState(false);
 
@@ -23,8 +24,8 @@ const AddFoodButton = ({
         },
         session,
         meal,
-
-        foodName
+        foodName,
+        date
       );
     }
   };

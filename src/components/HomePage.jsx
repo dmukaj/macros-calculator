@@ -20,7 +20,7 @@ export default function HomePage() {
   const date = new Date().toISOString();
 
   useEffect(() => {
-    localStorage.removeItem("selectsedDate");
+    localStorage.removeItem("selectedDate");
     const handleCalculateTotalMacros = async () => {
       const macros = await calculateTotalMacros(date);
       if (macros) {
