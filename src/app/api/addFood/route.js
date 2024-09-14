@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   const data = await request.json();
 
-  let { name, userId, calories, carbs, protein, fat, mealType, date } =
+  let { name, userId, calories, carbohydrate, protein, fat, mealType, date } =
     data.body;
   calories = parseInt(calories);
-  carbs = parseInt(carbs);
+  carbohydrate = parseInt(carbohydrate);
   protein = parseInt(protein);
   fat = parseInt(fat);
   try {
@@ -15,7 +15,7 @@ export async function POST(request) {
       data: {
         name,
         calories,
-        carbs,
+        carbohydrate,
         protein,
         fat,
         userId,

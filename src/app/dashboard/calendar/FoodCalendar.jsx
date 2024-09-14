@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/popover";
 import TableDemo from "@/components/TableDemo";
 import PieChartComponent from "@/components/PieChartComponent";
-import { calculateTotalMacros } from "@/utils/calculateMarcos";
+import { calculateTotalMacros } from "@/utils/calculateMacros";
 
 export default function FoodCalendar() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -63,7 +63,7 @@ export default function FoodCalendar() {
           width={200}
           height={200}
           totalCalories={foodData.totalCalories}
-          carbs={foodData.totalCarbs}
+          carbohydrate={foodData.totalCarbs}
           protein={foodData.totalProtein}
           fats={foodData.totalFats}
         />

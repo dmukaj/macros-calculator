@@ -32,7 +32,7 @@ export default function HomePage() {
 
   return (
     <div className="m-10 space-y-16">
-      <Card className="flex flex-col">
+      <Card className="flex flex-col p-6">
         <CardHeader className="items-center pb-0">
           <CardTitle>Today&apos;s Date</CardTitle>
           <CardDescription>{format(date, "LLL dd, y")}</CardDescription>
@@ -43,7 +43,7 @@ export default function HomePage() {
               width={200}
               height={200}
               totalCalories={foodData.totalCalories}
-              carbs={foodData.totalCarbs}
+              carbohydrate={foodData.totalCarbs}
               protein={foodData.totalProtein}
               fats={foodData.totalFats}
             />

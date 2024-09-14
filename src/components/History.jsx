@@ -16,18 +16,17 @@ const History = () => {
     };
     loadHistory();
   }, [session]);
-
   return (
     <div className="flex flex-col justify-center items-center font-semibold ">
       <h1>History</h1>
-      <div className="flex flex-col justify-center space-y-2 w-full p-4">
+      <div className="flex flex-col justify-center space-y-2 w-full p-4 ">
         {history &&
           history.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col justify-center space-y-2"
+              className="flex flex-col justify-center space-y-2 "
             >
-              <div className="bg-gray-100 rounded-lg p-4 text-xs flex justify-between items-center">
+              <div className="bg-gray-100 rounded-lg p-4 text-xs flex justify-between items-center dark:bg-[#323232] ">
                 <div>
                   <p className="font-semibold">{item.name}</p>
                   <p>{item.calories} cal</p>

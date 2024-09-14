@@ -91,7 +91,7 @@ const SearchBar = () => {
           (showAllResults ? result : result.slice(0, 4)).map((item) => (
             <div
               key={item?.food_id}
-              className="bg-gray-100 rounded-lg p-4 text-xs flex justify-between items-center"
+              className="bg-gray-100 dark:bg-[#323232] rounded-lg p-4 text-xs flex justify-between items-center"
             >
               <div>
                 <p className="font-semibold">{item.food_name}</p>

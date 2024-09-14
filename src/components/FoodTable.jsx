@@ -31,19 +31,19 @@ export default function FoodTable({ mealType, date }) {
   };
 
   return (
-    <div className=" flex flex-col w-auto lg:w-2/3">
+    <div className=" flex flex-col w-auto ">
       <div
         onClick={handleLocalStorage}
-        className=" flex items-center justify-center text-lg bg-white py-2 px-4 rounded-lg hover:text-blue-700"
+        className=" flex items-center justify-center text-lg bg-white py-2 px-4 rounded-lg hover:text-blue-700 dark:bg-[#323232] dark:hover:text-[#2d6347]"
       >
         <Link href="/dashboard/search">Add Food</Link>
       </div>
 
-      <div className="relative shadow-md sm:rounded-lg w-full mt-4 bg-gray-200 ">
+      <div className="relative shadow-md sm:rounded-lg w-full mt-4 bg-gray-200 dark:bg-[#323232] dark:hover:bg-[#3f3f3f">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Food</TableHead>
+              <TableHead className="w-[200px]">Food</TableHead>
               <TableHead className="text-right">Calories</TableHead>
               <TableHead className="text-right">Protein</TableHead>
               <TableHead className="text-right">Carbs</TableHead>
@@ -61,7 +61,7 @@ export default function FoodTable({ mealType, date }) {
                     {item.protein || 0}
                   </TableCell>
                   <TableCell className="font-medium">
-                    {item.carbs || 0}
+                    {item.carbohydrate || 0}
                   </TableCell>
                   <TableCell className="font-medium">{item.fat || 0}</TableCell>
                 </TableRow>

@@ -42,7 +42,7 @@ export default function FoodForm({
       ...prevState,
       calories: Math.round(firstServing.calories),
       protein: Math.round(firstServing.protein),
-      carbs: Math.round(firstServing.carbohydrate),
+      carbohydrate: Math.round(firstServing.carbohydrate),
       fats: Math.round(firstServing.fat),
     }));
   }, []);
@@ -79,7 +79,7 @@ export default function FoodForm({
       ((amount * initialProtein) / metricServing) * numberOfServings
     );
 
-    const carbs = Math.round(
+    const carbohydrate = Math.round(
       ((amount * initialCarbs) / metricServing) * numberOfServings
     );
 
@@ -90,7 +90,7 @@ export default function FoodForm({
     const newValues = {
       calories,
       protein,
-      carbs,
+      carbohydrate,
       fats,
     };
 
@@ -188,7 +188,7 @@ export default function FoodForm({
             height={120}
             totalCalories={calculatedValues?.calories}
             protein={calculatedValues?.protein}
-            carbs={calculatedValues?.carbs}
+            carbohydrate={calculatedValues?.carbohydrate}
             fats={calculatedValues?.fats}
           />
         </div>
@@ -198,7 +198,7 @@ export default function FoodForm({
         </div>
         <div>
           <h2 className="text-[hsl(var(--chart-3))]">Carbs</h2>
-          <h3>{calculatedValues.carbs}</h3>
+          <h3>{calculatedValues.carbohydrate}</h3>
         </div>
         <div>
           <h2 className="text-[hsl(var(--chart-2))]">Fats</h2>

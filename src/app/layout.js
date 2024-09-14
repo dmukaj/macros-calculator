@@ -6,6 +6,7 @@ import { FoodProvider } from "@/context/FoodContext";
 const inter = Inter({ subsets: ["latin"] });
 
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata = {
   title: "My Daily Macros",
@@ -20,8 +21,15 @@ export default async function RootLayout({ children }) {
       <FoodProvider>
         <html lang="en">
           <body className={inter.className}>
-            {children}
-            <Toaster />
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+              <Toaster />
+            </ThemeProvider>
           </body>
         </html>
       </FoodProvider>

@@ -14,8 +14,8 @@ export const chartConfig = {
     label: "Fats",
     color: "hsl(var(--chart-2))",
   },
-  carbs: {
-    label: "Carbs",
+  carbohydrate: {
+    label: "carbohydrate",
     color: "hsl(var(--chart-3))",
   },
 };
@@ -25,16 +25,20 @@ export default function PieChartComponent({
   height = 180,
   totalCalories,
   protein,
-  carbs,
+  carbohydrate,
   fats,
 }) {
   const chartData = useMemo(
     () => [
       { browser: "protein", calories: protein, fill: "var(--color-protein)" },
       { browser: "fats", calories: fats, fill: "var(--color-fats)" },
-      { browser: "carbs", calories: carbs, fill: "var(--color-carbs)" },
+      {
+        browser: "carbohydrate",
+        calories: carbohydrate,
+        fill: "var(--color-carbohydrate)",
+      },
     ],
-    [protein, fats, carbs]
+    [protein, fats, carbohydrate]
   );
   return (
     <ChartContainer

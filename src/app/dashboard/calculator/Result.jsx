@@ -47,7 +47,7 @@ const Result = ({ bmr }) => {
             <TableRow>
               <TableCell className="font-medium">Carbs</TableCell>
               <TableCell className="text-right">
-                {calculatedValues.carbs} g
+                {calculatedValues.carbohydrate} g
               </TableCell>
             </TableRow>
             <TableRow>

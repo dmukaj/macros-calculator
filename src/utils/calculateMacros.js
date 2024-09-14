@@ -30,7 +30,7 @@ function getProteinPerDay(foodData) {
 }
 
 function getCarbsPerDay(foodData) {
-  const carbsPerDay = foodData.response.map((item) => item.carbs || 0);
+  const carbsPerDay = foodData.response.map((item) => item.carbohydrate || 0);
   return carbsPerDay.reduce((acc, item) => acc + item, 0);
 }
 
@@ -93,9 +93,9 @@ export const calculateBMR = async (data) => {
 export const calculateMacros = (bmr) => {
   const calories = parseInt(bmr);
 
-  const protein = Math.round((bmr * 0.4) / 4);
-  const carbs = Math.round((bmr * 0.3) / 4);
+  const protein = Math.round((bmr * 0.3) / 4);
+  const carbohydrate = Math.round((bmr * 0.3) / 4);
   const fats = Math.round((bmr * 0.3) / 9);
 
-  return { calories, protein, carbs, fats };
+  return { calories, protein, carbohydrate, fats };
 };

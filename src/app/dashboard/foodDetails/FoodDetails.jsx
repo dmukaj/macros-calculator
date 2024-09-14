@@ -58,7 +58,7 @@ const FoodDetails = ({ foodData }) => {
 
   return (
     <div>
-      <div className="flex justify-between text-lg items-center bg-gray-50 p-4">
+      <div className="flex justify-between text-lg items-center bg-gray-50 dark:bg-[#323232] p-4">
         <Link href="/dashboard/search" className="mr-3">
           <ArrowLeft />
         </Link>

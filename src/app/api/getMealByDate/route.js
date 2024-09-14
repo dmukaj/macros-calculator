@@ -8,10 +8,6 @@ export async function POST(request) {
   const startOfDay = new Date(targetDate.setHours(0, 0, 0, 0));
   const endOfDay = new Date(targetDate.setHours(23, 59, 59, 999));
 
-  console.log("startOfDay", startOfDay);
-  console.log("endOfDay", endOfDay);
-  console.log("targetDate", targetDate);
-
   try {
     const response = await db.meal.findMany({
       where: {

@@ -2,7 +2,8 @@ import axios from "axios";
 
 export const addFood = async (item, session, mealType, name) => {
   const { calories, carbohydrate, protein, fat, createdAt } = item;
-  console.log("item", item);
+  console.log("carbos", carbohydrate);
+
   try {
     await axios.post(`/api/addFood`, {
       method: "POST",
@@ -13,7 +14,7 @@ export const addFood = async (item, session, mealType, name) => {
         name: name,
         userId: session?.data?.user?._id,
         calories,
-        carbs: carbohydrate,
+        carbohydrate,
         protein,
         fat,
         mealType: mealType,

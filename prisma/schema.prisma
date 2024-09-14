@@ -100,7 +100,7 @@ model Meal {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   calories    Int?
-  carbs       Int?
+  carbohydrate      Int?
   protein     Int?
   fat         Int?
   mealType    String?

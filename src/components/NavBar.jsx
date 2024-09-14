@@ -23,6 +23,7 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { logout } from "@/actions/auth";
+import { ModeToggle } from "./ThemeToggle";
 
 function NavBar({ session }) {
   const handleSignOut = async () => {
@@ -75,6 +76,7 @@ function NavBar({ session }) {
       </Sheet>
 
       <div className="flex items-center gap-2">
+        <ModeToggle />
         <p>Hello {session?.user.name}</p>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

@@ -15,7 +15,6 @@ export async function fetchHistory(session) {
     }
 
     const data = await response.json();
-
     const uniqueFoods = [];
     const foodNames = new Set();
     for (const food of data.foods) {
