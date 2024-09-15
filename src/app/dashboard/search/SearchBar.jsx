@@ -73,7 +73,7 @@ const SearchBar = () => {
         <Link href="/dashboard" className="absolute left-3">
           <ArrowLeft />
         </Link>
-        <p className="text-sm text-red-500 dark:text-green-500 mr-2">
+        <p className="text-sm text-red-500 dark:text-green-600 mr-2">
           {format(date, "LLL dd, y")}
         </p>
         <SelectMeal />

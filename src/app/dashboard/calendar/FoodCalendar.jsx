@@ -68,6 +68,12 @@ export default function FoodCalendar() {
       </Popover>
       <div className="flex flex-col items-center justify-center mt-10 space-y-10">
         <h1 className="text-2xl font-semibold">Total Macros</h1>
+
+        <ProgressDemo
+          label="Calories"
+          value={parseInt(foodData.totalCalories)}
+          max={calories}
+        />
         <ProgressDemo
           label="Protein"
           value={parseInt(foodData.totalProtein)}

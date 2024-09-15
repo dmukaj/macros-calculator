@@ -58,13 +58,13 @@ const FoodDetails = ({ foodData }) => {
     : firstServing?.serving_description;
 
   return (
-    <div>
+    <div className="">
       <div className="flex justify-between text-lg items-center bg-gray-50 dark:bg-[#323232] p-4">
         <Link href="/dashboard/search" className="mr-3">
           <ArrowLeft />
         </Link>
         <div className="flex flex-row items-center gap-2 justify-center font-semibold">
-          <p className="text-red-500 dark:text-green-500 ">
+          <p className="text-red-500 dark:text-green-600 ">
             {" "}
             {format(date, "LLL dd, y")}
           </p>

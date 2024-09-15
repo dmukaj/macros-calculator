@@ -11,7 +11,7 @@ export default async function RootLayout({ children }) {
   }
 
   return (
-    <div className="grid  w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+    <div className="grid w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] h-screen">
       <SideBar />
       <div className="flex h-full max-h-screen flex-col">
         <NavBar session={session} />

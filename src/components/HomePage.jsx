@@ -56,6 +56,9 @@ export default function HomePage() {
               height={200}
               totalCalories={foodData.totalCalories}
               remainingCalories={remainingCalories}
+              // protein={0}
+              // carbohydrate={0}
+              // fats={0}
             />
           )}
 

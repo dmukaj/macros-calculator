@@ -6,18 +6,18 @@ import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { ChartContainer } from "@/components/ui/chart";
 
 export const chartConfig = {
-  // protein: {
-  //   label: "Protein",
-  //   color: "hsl(var(--chart-1))",
-  // },
-  // fats: {
-  //   label: "Fats",
-  //   color: "hsl(var(--chart-2))",
-  // },
-  // carbohydrate: {
-  //   label: "carbohydrate",
-  //   color: "hsl(var(--chart-3))",
-  // },
+  protein: {
+    label: "Protein",
+    color: "hsl(var(--chart-1))",
+  },
+  fats: {
+    label: "Fats",
+    color: "hsl(var(--chart-2))",
+  },
+  carbohydrate: {
+    label: "carbohydrate",
+    color: "hsl(var(--chart-3))",
+  },
   totalCalories: {
     label: "totalCalories",
     color: "hsl(var(--chart-4))",
@@ -35,13 +35,13 @@ export default function PieChartComponent({
   totalCalories,
   remainingCalories,
 
-  // protein,
-  // carbohydrate,
-  // fats,
+  protein,
+  carbohydrate,
+  fats,
 }) {
   const chartData = useMemo(
     () => [
-      // { browser: "protein", calories: protein, fill: "var(--color-protein)" },
+      { browser: "protein", calories: protein, fill: "var(--color-protein)" },
       {
         browser: "totalCalories",
         calories: totalCalories,
@@ -52,14 +52,14 @@ export default function PieChartComponent({
         calories: remainingCalories,
         fill: "var(--color-remainingCalories)",
       },
-      // { browser: "fats", calories: fats, fill: "var(--color-fats)" },
-      // {
-      //   browser: "carbohydrate",
-      //   calories: carbohydrate,
-      //   fill: "var(--color-carbohydrate)",
-      // },
+      { browser: "fats", calories: fats, fill: "var(--color-fats)" },
+      {
+        browser: "carbohydrate",
+        calories: carbohydrate,
+        fill: "var(--color-carbohydrate)",
+      },
     ],
-    [totalCalories, remainingCalories]
+    [(totalCalories, remainingCalories, carbohydrate, fats, protein)]
   );
   return (
     <ChartContainer
@@ -77,7 +77,7 @@ export default function PieChartComponent({
           dataKey="calories"
           nameKey="browser"
           innerRadius={width * 0.3}
-          outerRadius={width * 0.5} // Adjust outer radius based on size
+          outerRadius={width * 0.5}
           strokeWidth={5}
         >
           <Label
@@ -95,14 +95,16 @@ export default function PieChartComponent({
                       y={(viewBox.cy || 0) - 5}
                       className="fill-foreground text-xl font-bold"
                     >
-                      {remainingCalories?.toLocaleString()}
+                      {remainingCalories
+                        ? remainingCalories?.toLocaleString()
+                        : totalCalories?.toLocaleString()}
                     </tspan>
                     <tspan
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) + 15}
                       className="items-center fill-muted-foreground"
                     >
-                      remaining calories
+                      calories
                     </tspan>
                   </text>
                 );

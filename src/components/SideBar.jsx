@@ -3,14 +3,14 @@ import { Calculator, CalendarCheck, Home } from "lucide-react";
 
 const SideBar = () => {
   return (
-    <div className="hidden h-full max-h-screen  border-r bg-muted/40 md:block">
-      <div className="flex flex-col gap-2">
-        <div className="flex h-14 items-center border-b px-4 py-6 lg:h-[77px] lg:px-6">
+    <div className="hidden border-r bg-muted/40 md:block">
+      <div className="flex h-full max-h-full flex-col gap-2">
+        <div className="flex h-14 items-center border-b px-4 py-10 lg:px-6">
           <Link
             href="/dashboard"
             className="flex items-center gap-2 font-semibold"
           >
-            <img src="/images/logo.png" className="w-20 h-20" />
+            <img src="/images/logo.png" className="w-16 h-16" />
             <span className="">My Daily Macros</span>
           </Link>
         </div>
