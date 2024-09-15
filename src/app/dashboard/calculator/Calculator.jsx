@@ -114,7 +114,7 @@ export default function Calculator() {
 
   return (
     <>
-      <div className="flex flex-col items-center text-lg lg:text-2xl font-bold text-gray-800">
+      <div className="flex flex-col items-center text-xl lg:text-3xl font-semibold text-gray-800 dark:text-white mt-10">
         <h1> Macros Calculator</h1>
       </div>
       <Form {...form} className="w-[70vw]">

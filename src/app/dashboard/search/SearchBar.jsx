@@ -9,6 +9,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { format } from "date-fns";
 import { useState } from "react";
+import { useToast } from "@/components/hooks/use-toast";
 import { useFood } from "@/context/FoodContext";
 import SelectMeal from "@/components/SelectMeal";
 
@@ -21,6 +22,7 @@ const SearchBar = () => {
   const [error, setError] = useState(null);
   const [showAllResults, setShowAllResults] = useState(false);
   const [showMoreClicked, setShowMoreClicked] = useState(false);
+  const { toast } = useToast();
 
   const meal = localStorage.getItem("selectedMeal");
   const date = localStorage.getItem("selectedDate");
@@ -120,15 +122,20 @@ const SearchBar = () => {
               </div>
               <div className="flex justify-between gap-3">
                 <Button
-                  onClick={() =>
+                  onClick={() => {
                     addFood(
                       item.servings.serving[0],
                       session,
                       meal,
                       item.food_name,
                       date
-                    )
-                  }
+                    );
+                    toast({
+                      title: "Success!",
+                      description: "Food added to your meal.",
+                      variant: "success",
+                    });
+                  }}
                 >
                   Add Food
                 </Button>

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Plus, Check } from "lucide-react";
 import { addFood } from "@/utils/foodUtils";
+import { useToast } from "@/components/hooks/use-toast";
 import { useState } from "react";
 
 const AddFoodButton = ({
@@ -11,6 +12,7 @@ const AddFoodButton = ({
   foodName,
   date,
 }) => {
+  const { toast } = useToast();
   const [click, setClick] = useState(false);
 
   const handleAddFood = () => {
@@ -28,6 +30,11 @@ const AddFoodButton = ({
         date
       );
     }
+    toast({
+      title: "Success!",
+      description: "Food added successfully",
+      variant: "success",
+    });
   };
 
   return (

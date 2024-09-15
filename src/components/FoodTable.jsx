@@ -12,6 +12,7 @@ import { fetchMealType } from "@/utils/fetchMealType";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import DeleteFoodBtn from "./DeleteFoodBtn";
 
 export default function FoodTable({ mealType, date }) {
   const [mealTypeData, setMealTypeData] = useState({});
@@ -64,6 +65,10 @@ export default function FoodTable({ mealType, date }) {
                     {item.carbohydrate || 0}
                   </TableCell>
                   <TableCell className="font-medium">{item.fat || 0}</TableCell>
+                  <TableCell className="font-medium">
+                    {" "}
+                    <DeleteFoodBtn foodId={item.id} />
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>
