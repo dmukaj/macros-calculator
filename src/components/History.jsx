@@ -25,8 +25,8 @@ const History = () => {
 
   return (
     <div className="flex flex-col justify-center items-center font-semibold ">
-      <h1>History</h1>
-      <div className="flex flex-col justify-center space-y-2 w-full p-4 ">
+      <h1 className="text-lg font-semibold lg:text-xl">History</h1>
+      <div className="flex flex-col justify-center space-y-2 w-full mt-4 ">
         {history &&
           history.map((item) => (
             <div

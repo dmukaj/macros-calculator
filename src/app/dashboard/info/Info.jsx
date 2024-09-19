@@ -1,6 +1,6 @@
 const Info = () => {
   return (
-    <div className="flex flex-col text-base lg:text-lg space-y-8 m-10 p-10 bg-secondary/80 h-screen rounded-lg border-card-foreground text-muted-foreground">
+    <div className="flex flex-col text-base lg:text-lg space-y-8 m-10 p-10 bg-secondary/20 h-screen rounded-lg border-card-foreground text-muted-foreground">
       <div className="flex items-center justify-center">
         <h2 className="lg:text-4xl text-2xl font-semiboldb text-primary ">
           What are Macronutrients (Macros)?
