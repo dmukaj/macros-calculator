@@ -12,11 +12,11 @@ import { useState } from "react";
 import { useToast } from "@/components/hooks/use-toast";
 import { useFood } from "@/context/FoodContext";
 import SelectMeal from "@/components/SelectMeal";
-
 import History from "@/components/History";
+import _ from "lodash";
 
 const SearchBar = () => {
-  const [query, setQuery] = useState("");
+  const [query] = useState("");
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -31,9 +31,9 @@ const SearchBar = () => {
   const { setSelectedFood } = useFood({});
 
   const handleSearch = async (e) => {
-    e.preventDefault();
-    if (!query) return;
+    let query = e.target.value;
 
+    if (query.length < 2) return;
     setLoading(true);
     setError(null);
     setShowAllResults(false);
@@ -69,7 +69,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col space-y-6 mx-6">
       <div className=" relative flex flex-row text-lg justify-center items-center p-4 font-semibold">
         <Link href="/dashboard" className="absolute left-3">
           <ArrowLeft />
@@ -77,21 +77,18 @@ const SearchBar = () => {
         <p className="text-sm  mr-2">{format(date, "LLL dd, y")}</p>
         <SelectMeal />
       </div>
-      <form onSubmit={handleSearch} className="m-4">
-        <div className="relative w-full ">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search food..."
-            className=" appearance-none bg-background pl-8 w-full"
-          />
-        </div>
-      </form>
+      <div className="relative w-full ">
+        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+        <Input
+          type="search"
+          onChange={_.debounce(handleSearch, 700)}
+          placeholder="Search food..."
+          className=" appearance-none bg-background pl-8 w-full"
+        />
+      </div>
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
-      <div className="flex flex-col justify-center space-y-2 m-4">
+      <div className="flex flex-col justify-center space-y-2">
         {result &&
           (showAllResults ? result : result.slice(0, 4)).map((item) => (
             <div
@@ -161,7 +158,7 @@ const SearchBar = () => {
         {!loading && result.length === 0 && !query && <History />}
       </div>
       {!showAllResults && result.length > 4 && (
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-4 ">
           <Button variant="ghost" onClick={() => handleShowMore()}>
             Show more ...
           </Button>
