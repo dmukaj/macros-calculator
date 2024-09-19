@@ -1,7 +1,6 @@
 import { Trash2Icon } from "lucide-react";
 import { deleteFood } from "@/utils/foodUtils";
 import { useToast } from "@/components/hooks/use-toast";
-import { useEffect, useState } from "react";
 
 export default function DeleteFoodBtn({ foodId, setFilteredMealData }) {
   const { toast } = useToast();
