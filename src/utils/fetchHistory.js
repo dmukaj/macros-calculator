@@ -1,13 +1,10 @@
-export async function fetchHistory(session) {
+export async function fetchHistory() {
   try {
     const response = await fetch(`/api/getFood`, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        userId: session?.data?.user?._id,
-      }),
     });
 
     if (!response.ok) {

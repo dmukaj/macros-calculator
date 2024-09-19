@@ -6,6 +6,7 @@ const nextConfig = {
   experimental: {
     urlImports: ["https://api.nal.usda.gov"],
   },
+  output: "standalone",
 };
 
 export default nextConfig;

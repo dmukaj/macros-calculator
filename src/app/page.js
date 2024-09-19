@@ -1,9 +1,9 @@
-import { TableDemo } from "@/components/Table";
+import Welcome from "@/app/welcome/Welcome";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center">
-      <TableDemo />
+    <main>
+      <Welcome />
     </main>
   );
 }

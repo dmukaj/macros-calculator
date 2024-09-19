@@ -1,12 +1,6 @@
 "use client";
 import Link from "next/link";
-import {
-  Calculator,
-  CalendarCheck,
-  CircleUser,
-  Home,
-  Menu,
-} from "lucide-react";
+import { Calculator, UserIcon, Home, Menu, Book } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -31,7 +25,7 @@ function NavBar({ session }) {
   };
 
   return (
-    <header className="flex h-14 justify-between items-center border-b bg-muted/40 px-4 lg:px-6  py-10 ">
+    <header className="flex h-14 justify-between items-center border-b bg-secondary/20 px-4 lg:px-6  py-10 text-lg">
       <div className="flex  gap-2">
         <Sheet>
           <SheetTrigger asChild>
@@ -40,7 +34,7 @@ function NavBar({ session }) {
               size="icon"
               className="shrink-0 md:hidden"
             >
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5 " />
               <span className="sr-only">Toggle navigation menu</span>
             </Button>
           </SheetTrigger>
@@ -55,25 +49,25 @@ function NavBar({ session }) {
               </Link>
               <Link
                 href="/dashboard"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-gray-100"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 transition-all text-muted-foreground  hover:text-primary hover:bg-secondary/70"
               >
                 <Home className="h-4 w-4" />
                 Dashboard
               </Link>
 
               <Link
-                href="/dashboard/calendar"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-gray-100"
-              >
-                <CalendarCheck className="h-4 w-4" />
-                Calendar
-              </Link>
-              <Link
                 href="/dashboard/calculator"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-gray-100"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-secondary/70"
               >
                 <Calculator className="h-4 w-4" />
                 Calculate Macros
+              </Link>
+              <Link
+                href="/dashboard/info"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-secondary/70"
+              >
+                <Book className="h-4 w-4" />
+                Read about Macros
               </Link>
             </nav>
           </SheetContent>
@@ -86,8 +80,8 @@ function NavBar({ session }) {
         <p>Hello {session?.user.name}</p>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="secondary" size="icon" className="rounded-full">
-              <CircleUser className="h-5 w-5" />
+            <Button variant="outline" size="icon" className="rounded-full">
+              <UserIcon className="h-5 w-5 " />
               <span className="sr-only">Toggle user menu</span>
             </Button>
           </DropdownMenuTrigger>

@@ -26,6 +26,7 @@ import { useToast } from "@/components/hooks/use-toast";
 import Result from "./Result";
 import { calculateBMR } from "@/utils/calculateMacros";
 import { useEffect, useState } from "react";
+import { LoaderCircle } from "lucide-react";
 
 const formSchema = z.object({
   age: z.coerce
@@ -48,6 +49,7 @@ const formSchema = z.object({
 export default function Calculator() {
   const [userData, setUserData] = useState(null);
   const [bmr, setBmr] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   const form = useForm({
@@ -110,11 +112,21 @@ export default function Calculator() {
 
   useEffect(() => {
     loadUserData();
+    setLoading(false);
   }, [form.reset, bmr]);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col h-screen items-center justify-center space-y-16 m-10 text-xl lg:text-2xl ">
+        <h1>Loading your data...</h1>
+        <LoaderCircle className="h-20 w-20 lg:h-36 lg:w-36 animate-spin text-white" />
+      </div>
+    );
+  }
 
   return (
     <>
-      <div className="flex flex-col items-center text-xl lg:text-3xl font-semibold text-gray-800 dark:text-white mt-10">
+      <div className="flex flex-col items-center text-xl lg:text-3xl font-semibold text-mute-foreground mt-10">
         <h1> Macros Calculator</h1>
       </div>
       <Form {...form} className="w-[70vw]">
@@ -206,6 +218,7 @@ export default function Calculator() {
             name="activity"
             render={({ field }) => (
               <FormItem>
+                <FormLabel>Activity Level</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={userData?.activity || field.value}
@@ -243,6 +256,7 @@ export default function Calculator() {
             name="goal"
             render={({ field }) => (
               <FormItem>
+                <FormLabel>Goal</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}

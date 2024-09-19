@@ -13,19 +13,23 @@ import {
 } from "@/components/ui/popover";
 import TableDemo from "@/components/TableDemo";
 import { ProgressDemo } from "@/components/ProgressDemo";
-import { calculateTotalMacros } from "@/utils/calculateMacros";
+import { calculateTotalMacros, calculateMacros } from "@/utils/calculateMacros";
 import { getUsersData } from "@/utils/usersData";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function FoodCalendar() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [foodData, setFoodData] = useState({});
-  const [calories, setCalories] = useState(null);
+  const [macros, setMacros] = useState({});
+  const [loading, setLoading] = useState(true);
   localStorage.setItem("selectedDate", selectedDate);
 
   const handleBMR = async () => {
     const data = await getUsersData();
-    setCalories(data.user.bmr);
+    const macros = calculateMacros(data.user.bmr);
+    setMacros(macros);
   };
+
   useEffect(() => {
     const handleCalculateTotalMacros = async () => {
       const macros = await calculateTotalMacros(selectedDate);
@@ -36,8 +40,21 @@ export default function FoodCalendar() {
 
     handleCalculateTotalMacros();
     handleBMR();
+    setLoading(false);
   }, [selectedDate]);
 
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center space-y-16 m-10">
+        <Skeleton className="h-[528px] w-[614px] rounded-xl " />
+        <div className="space-y-10">
+          <Skeleton className="h-[393.5px] w-[614px] rounded-xl" />{" "}
+          <Skeleton className="h-[393.5px] w-[614px] rounded-xl" />{" "}
+          <Skeleton className="h-[393.5px] w-[614px] rounded-xl" />
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col items-center justify-center mt-10 space-y-10">
       <Popover>
@@ -67,27 +84,25 @@ export default function FoodCalendar() {
         </PopoverContent>
       </Popover>
       <div className="flex flex-col items-center justify-center mt-10 space-y-10">
-        <h1 className="text-2xl font-semibold">Total Macros</h1>
-
         <ProgressDemo
           label="Calories"
-          value={parseInt(foodData.totalCalories)}
-          max={calories}
+          value={foodData?.totalCalories || 0}
+          max={macros?.calories || 0}
         />
         <ProgressDemo
           label="Protein"
-          value={parseInt(foodData.totalProtein)}
-          max={parseInt((calories * 0.35) / 4)}
+          value={foodData?.totalProtein || 0}
+          max={macros?.protein || 0}
         />
         <ProgressDemo
           label="Carbs"
-          value={parseInt(foodData.totalCarbs)}
-          max={parseInt((calories * 0.3) / 4)}
+          value={foodData?.totalCarbs || 0}
+          max={macros?.carbohydrate || 0}
         />
         <ProgressDemo
           label="Fats"
-          value={parseInt(foodData.totalFats)}
-          max={parseInt((calories * 0.3) / 9)}
+          value={foodData?.totalFats || 0}
+          max={macros?.fats || 0}
         />
       </div>
       <TableDemo date={selectedDate} />

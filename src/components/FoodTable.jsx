@@ -8,23 +8,27 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchMealType } from "@/utils/fetchMealType";
-
+import { fetchMealTypeByDate } from "@/utils/fetchMealType";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import DeleteFoodBtn from "./DeleteFoodBtn";
 
 export default function FoodTable({ mealType, date }) {
-  const [mealTypeData, setMealTypeData] = useState({});
+  // const [mealTypeData, setMealTypeData] = useState({});
+  const [filteredMealData, setFilteredMealData] = useState([]);
 
   useEffect(() => {
     const handleGetmeal = async () => {
-      const data = await fetchMealType(mealType, date);
-      setMealTypeData(data);
+      const data = await fetchMealTypeByDate(date);
+      const filteredData = data.response.filter(
+        (item) => item.mealType === mealType
+      );
+
+      setFilteredMealData(filteredData);
     };
 
     handleGetmeal();
-  }, [date]);
+  }, [date, mealType]);
 
   const handleLocalStorage = () => {
     localStorage.setItem("selectedMeal", mealType);
@@ -35,12 +39,12 @@ export default function FoodTable({ mealType, date }) {
     <div className=" flex flex-col w-auto ">
       <div
         onClick={handleLocalStorage}
-        className=" flex items-center justify-center text-lg bg-white py-2 px-4 rounded-lg hover:text-blue-700 dark:bg-[#323232] dark:hover:text-[#2d6347]"
+        className=" flex items-center justify-center text-lg  py-2 px-4 rounded-lg bg-secondary/50 hover:bg-primary/60"
       >
         <Link href="/dashboard/search">Add Food</Link>
       </div>
 
-      <div className="relative shadow-md sm:rounded-lg w-full mt-4 bg-gray-200 dark:bg-[#323232] dark:hover:bg-[#3f3f3f">
+      <div className="relative shadow-md sm:rounded-lg w-full mt-4 bg-secondary/50">
         <Table>
           <TableHeader>
             <TableRow>
@@ -52,9 +56,8 @@ export default function FoodTable({ mealType, date }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {mealTypeData &&
-              Array.isArray(mealTypeData.mealTypes) &&
-              mealTypeData.mealTypes.map((item) => (
+            {filteredMealData &&
+              filteredMealData.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell className="font-medium">{item.name}</TableCell>
                   <TableCell className="font-medium">{item.calories}</TableCell>
@@ -66,8 +69,10 @@ export default function FoodTable({ mealType, date }) {
                   </TableCell>
                   <TableCell className="font-medium">{item.fat || 0}</TableCell>
                   <TableCell className="font-medium">
-                    {" "}
-                    <DeleteFoodBtn foodId={item.id} />
+                    <DeleteFoodBtn
+                      foodId={item.id}
+                      setFilteredMealData={setFilteredMealData}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

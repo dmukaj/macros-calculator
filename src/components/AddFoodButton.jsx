@@ -35,19 +35,21 @@ const AddFoodButton = ({
       description: "Food added successfully",
       variant: "success",
     });
+
+    setTimeout(() => {
+      setClick(false);
+    }, 3000);
   };
 
   return (
     <>
-      {click ? (
-        <Button>
-          <Check />
-        </Button>
-      ) : (
-        <Button variant="outline" onClick={handleAddFood}>
-          <Plus />
-        </Button>
-      )}
+      <Button
+        variant={click ? "default" : "outline"}
+        onClick={handleAddFood}
+        disabled={click}
+      >
+        {click ? <Check /> : <Plus />}
+      </Button>
     </>
   );
 };
