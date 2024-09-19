@@ -6,11 +6,13 @@ import { Button } from "@/components/ui/button";
 import { addFood } from "@/utils/foodUtils";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
+import { ArrowLeft } from "lucide-react";
+import { format } from "date-fns";
+import { useEffect, useState } from "react";
 import { useToast } from "@/components/hooks/use-toast";
 import { useFood } from "@/context/FoodContext";
+import SelectMeal from "@/app/dashboard/search/SelectMeal";
 import History from "@/components/History";
-import { SearchFood } from "@/utils/SearchFood";
 import _ from "lodash";
 
 const SearchBar = () => {
@@ -18,12 +20,23 @@ const SearchBar = () => {
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [meal, setMeal] = useState("");
+  const [date, setDate] = useState(new Date());
   const [showAllResults, setShowAllResults] = useState(false);
   const [showMoreClicked, setShowMoreClicked] = useState(false);
   const { toast } = useToast();
 
-  const meal = localStorage.getItem("selectedMeal");
-  const date = localStorage.getItem("selectedDate");
+  const getLocalStorage = () => {
+    const selectedMeal = localStorage?.getItem("selectedMeal");
+    const selectedDate = localStorage?.getItem("selectedDate");
+    return { selectedMeal, selectedDate };
+  };
+
+  useEffect(() => {
+    const { selectedMeal, selectedDate } = getLocalStorage();
+    setMeal(selectedMeal);
+    setDate(selectedDate);
+  }, [getLocalStorage]);
 
   const session = useSession();
   const { setSelectedFood } = useFood({});
@@ -35,9 +48,27 @@ const SearchBar = () => {
     setLoading(true);
     setError(null);
     setShowAllResults(false);
+    setShowMoreClicked(false);
 
-    const searchResults = await SearchFood(query);
-    setResult(searchResults);
+    try {
+      const response = await fetch(
+        `/api/food?query=${encodeURIComponent(query)}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json();
+      const foodItem = data.foods_search.results.food;
+
+      const searchResults = Array.isArray(foodItem) ? foodItem : [];
+      setResult(searchResults);
+
+      setLoading(false);
+    } catch (error) {
+      setError("Error fetching data :(", error);
+      setLoading(false);
+    }
   };
 
   const handleShowMore = async () => {
@@ -48,8 +79,17 @@ const SearchBar = () => {
     setShowAllResults(false);
   };
 
+  console.log(date);
+
   return (
-    <div className="flex flex-col space-y-6">
+    <div className="flex flex-col space-y-6 mx-6">
+      <div className=" relative flex flex-row text-lg justify-center items-center p-4 font-semibold">
+        <Link href="/dashboard" className="absolute left-3">
+          <ArrowLeft />
+        </Link>
+        <p className="text-sm  mr-2">{format(date, "LLL dd, y")}</p>
+        <SelectMeal mealType={meal} setMeal={setMeal} />
+      </div>
       <div className="relative w-full ">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
@@ -128,7 +168,9 @@ const SearchBar = () => {
               </div>
             </div>
           ))}
-        {!loading && result.length === 0 && !query && <History />}
+        {!loading && result.length === 0 && !query && (
+          <History mealType={meal} setMeal={setMeal} date={date} />
+        )}
       </div>
       {!showAllResults && result.length > 4 && (
         <div className="flex justify-center mt-4 ">

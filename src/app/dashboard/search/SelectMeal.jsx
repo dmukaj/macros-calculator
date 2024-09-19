@@ -7,31 +7,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState, useEffect } from "react";
 
-const SelectMeal = () => {
-  const [meal, setMeal] = useState("");
-
-  useEffect(() => {
-    const storedMeal = localStorage.getItem("selectedMeal");
-    if (storedMeal) {
-      setMeal(storedMeal);
-    }
-  }, []);
-
+const SelectMeal = ({ mealType, setMeal }) => {
   const handleMealChange = (value) => {
     setMeal(value);
-    localStorage.setItem("selectedMeal", value); // Store the selected meal in localStorage
+    localStorage.setItem("selectedMeal", value);
   };
+
   return (
     <Select
       onValueChange={(value) => {
         handleMealChange(value);
       }}
-      defaultValue={meal}
+      defaultValue={mealType}
     >
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder={meal || "Select Meal"} />
+        <SelectValue placeholder={mealType || "Select Meal"} />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="Breakfast">Breakfast</SelectItem>

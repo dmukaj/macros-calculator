@@ -20,7 +20,7 @@ import {
 import PieChartComponent from "@/components/PieChartComponent";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
-import SelectMeal from "./SelectMeal";
+import SelectMeal from "../app/dashboard/search/SelectMeal";
 
 export default function FoodForm({
   foodData,
