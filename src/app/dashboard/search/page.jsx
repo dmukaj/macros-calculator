@@ -1,7 +1,13 @@
-import SearchBar from "./SearchBar";
+import SearchBar from "./Search";
+import SearchNav from "./SearchNav";
 
 const page = () => {
-  return <SearchBar />;
+  return (
+    <div className="m-6 space-y-6">
+      <SearchNav />
+      <SearchBar />
+    </div>
+  );
 };
 
 export default page;

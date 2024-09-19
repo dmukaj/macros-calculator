@@ -6,13 +6,11 @@ import { Button } from "@/components/ui/button";
 import { addFood } from "@/utils/foodUtils";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { format } from "date-fns";
 import { useState } from "react";
 import { useToast } from "@/components/hooks/use-toast";
 import { useFood } from "@/context/FoodContext";
-import SelectMeal from "@/components/SelectMeal";
 import History from "@/components/History";
+import { SearchFood } from "@/utils/SearchFood";
 import _ from "lodash";
 
 const SearchBar = () => {
@@ -37,27 +35,9 @@ const SearchBar = () => {
     setLoading(true);
     setError(null);
     setShowAllResults(false);
-    setShowMoreClicked(false);
 
-    try {
-      const response = await fetch(
-        `/api/food?query=${encodeURIComponent(query)}`
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      const data = await response.json();
-      const foodItem = data.foods_search.results.food;
-
-      const searchResults = Array.isArray(foodItem) ? foodItem : [];
-      setResult(searchResults);
-
-      setLoading(false);
-    } catch (error) {
-      setError("Error fetching data :(", error);
-      setLoading(false);
-    }
+    const searchResults = await SearchFood(query);
+    setResult(searchResults);
   };
 
   const handleShowMore = async () => {
@@ -69,14 +49,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-6 mx-6">
-      <div className=" relative flex flex-row text-lg justify-center items-center p-4 font-semibold">
-        <Link href="/dashboard" className="absolute left-3">
-          <ArrowLeft />
-        </Link>
-        <p className="text-sm  mr-2">{format(date, "LLL dd, y")}</p>
-        <SelectMeal />
-      </div>
+    <div className="flex flex-col space-y-6">
       <div className="relative w-full ">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input

@@ -40,16 +40,14 @@ export default function HomePage() {
 
   const handleCalculateTotalMacros = async () => {
     setLoading(true);
-    try {
-      const macros = await calculateTotalMacros(selectedDate);
-      if (macros) {
-        setFoodData(macros);
-      } else {
-        setFoodData(null);
-      }
-    } catch (error) {
+
+    const macros = await calculateTotalMacros(selectedDate);
+    if (macros) {
+      setFoodData(macros);
+    } else {
       setFoodData(null);
     }
+
     setLoading(false);
   };
 
