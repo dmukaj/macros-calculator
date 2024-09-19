@@ -19,7 +19,7 @@ export default async function RootLayout({ children }) {
   return (
     <SessionProvider session={session}>
       <FoodProvider>
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
           <body className={inter.className}>
             <ThemeProvider
               attribute="class"

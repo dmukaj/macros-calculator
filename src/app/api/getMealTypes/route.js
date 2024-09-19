@@ -11,6 +11,7 @@ export async function POST(request) {
   try {
     const mealTypes = await db.meal.findMany({
       where: {
+        userId: data.userId,
         mealType: data.mealType,
         createdAt: {
           gte: startOfDay,

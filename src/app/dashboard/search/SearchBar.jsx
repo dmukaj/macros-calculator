@@ -48,10 +48,11 @@ const SearchBar = () => {
         throw new Error("Failed to fetch data");
       }
       const data = await response.json();
-
       const foodItem = data.foods_search.results.food;
 
-      setResult(Array.isArray(foodItem) ? foodItem : []);
+      const searchResults = Array.isArray(foodItem) ? foodItem : [];
+      setResult(searchResults);
+
       setLoading(false);
     } catch (error) {
       setError("Error fetching data :(", error);
@@ -73,9 +74,7 @@ const SearchBar = () => {
         <Link href="/dashboard" className="absolute left-3">
           <ArrowLeft />
         </Link>
-        <p className="text-sm text-red-500 dark:text-green-600 mr-2">
-          {format(date, "LLL dd, y")}
-        </p>
+        <p className="text-sm  mr-2">{format(date, "LLL dd, y")}</p>
         <SelectMeal />
       </div>
       <form onSubmit={handleSearch} className="m-4">
@@ -97,10 +96,11 @@ const SearchBar = () => {
           (showAllResults ? result : result.slice(0, 4)).map((item) => (
             <div
               key={item?.food_id}
-              className="bg-gray-100 dark:bg-[#323232] rounded-lg p-4 text-xs flex justify-between items-center"
+              className="bg-secondary rounded-lg p-4 text-xs flex justify-between items-center"
             >
               <div>
                 <p className="font-semibold">{item.food_name}</p>
+                <p>{item.servings.serving.calories}</p>
                 <div>
                   {item?.servings.serving
                     .filter(
@@ -162,22 +162,14 @@ const SearchBar = () => {
       </div>
       {!showAllResults && result.length > 4 && (
         <div className="flex justify-center mt-4">
-          <Button
-            variant="ghost"
-            className="hover:text-blue-500"
-            onClick={() => handleShowMore()}
-          >
+          <Button variant="ghost" onClick={() => handleShowMore()}>
             Show more ...
           </Button>
         </div>
       )}{" "}
       {showAllResults && showMoreClicked && (
         <div className="flex justify-center mt-4">
-          <Button
-            variant="ghost"
-            className="hover:text-blue-500"
-            onClick={() => handleShowLess()}
-          >
+          <Button variant="ghost" onClick={() => handleShowLess()}>
             Show less ...
           </Button>
         </div>

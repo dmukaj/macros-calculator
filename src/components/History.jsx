@@ -7,6 +7,7 @@ const History = () => {
   const session = useSession();
   const [history, setHistory] = useState([]);
   const [selectedDate, setSelectedDate] = useState();
+  const [selectedMealType, setSelectedMealType] = useState();
 
   useEffect(() => {
     const loadHistory = async () => {
@@ -15,11 +16,13 @@ const History = () => {
         setHistory(Array.isArray(historyData.foods) ? historyData.foods : []);
       }
     };
+    const storedMealType = localStorage.getItem("selectedMeal");
     const storedDate = localStorage.getItem("selectedDate");
+    setSelectedMealType(storedMealType);
     setSelectedDate(storedDate);
     loadHistory();
   }, [session]);
-  // console.log("selectedDate", selectedDate);
+
   return (
     <div className="flex flex-col justify-center items-center font-semibold ">
       <h1>History</h1>
@@ -30,7 +33,7 @@ const History = () => {
               key={item.id}
               className="flex flex-col justify-center space-y-2 "
             >
-              <div className="bg-gray-100 rounded-lg p-4 text-xs flex justify-between items-center dark:bg-[#323232] ">
+              <div className="bg-secondary rounded-lg p-4 text-xs flex justify-between items-center  ">
                 <div>
                   <p className="font-semibold">{item.name}</p>
                   <p>{item.calories} cal</p>
@@ -40,7 +43,7 @@ const History = () => {
                   selectedFood={item}
                   session={session}
                   date={selectedDate}
-                  meal={item.mealType}
+                  meal={selectedMealType}
                   foodName={item.name}
                 />
               </div>

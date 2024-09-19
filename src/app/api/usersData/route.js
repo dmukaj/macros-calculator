@@ -10,8 +10,6 @@ export const POST = auth(async function POST(request) {
       const { age, height, weight, gender, activity, goal, bmr } = data.body;
       const user = await getUserById(request.auth.user._id);
 
-      console.log("data", request.auth.user._id);
-
       if (!user) {
         const response = await db.calculator.create({
           data: {
@@ -55,6 +53,7 @@ export const GET = auth(async function GET(request) {
   if (request.auth) {
     try {
       const user = await getUserById(request.auth.user._id);
+
       return NextResponse.json({ user }, { status: 200 });
     } catch (error) {
       console.log("error", error);
