@@ -1,10 +1,6 @@
 import "./envConfig";
 import { PrismaClient } from "@prisma/client";
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('Invalid/Missing environment variable: "DATABASE_URL"');
-}
-
 const prismaClientSingleton = () => {
   return new PrismaClient({
     datasources: {
