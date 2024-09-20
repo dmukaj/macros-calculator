@@ -1,4 +1,5 @@
 import NextAuth from "next-auth";
+import "./envConfig";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import db from "./db";
 import Credentials from "next-auth/providers/credentials";
@@ -34,7 +35,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             throw new Error("Invalid username or password.");
           }
         }
-    
+
         if (user) return user;
         return null;
       },
