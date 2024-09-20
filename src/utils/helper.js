@@ -7,7 +7,5 @@ export function saltAndHashPassword(password) {
 }
 
 export const verifyPassword = (password, hash) => {
-  // console.log("password", password);
-  // console.log("hash", hash);
   return bcrypt.compareSync(password, hash);
 };

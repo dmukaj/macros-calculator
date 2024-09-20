@@ -12,7 +12,7 @@ export async function searchFood() {
         "Access-Control-Allow-Headers": "Content-Type",
       },
     });
-    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.log("Oiiii error!!!", error);
   }

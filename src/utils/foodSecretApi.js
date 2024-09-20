@@ -66,7 +66,6 @@ export const getTokenExpiry = async () => {
   });
 
   if (tokenExpiry.expires < Date.now()) {
-    console.log("true");
     return getNewToken();
   }
   return tokenExpiry.token;

@@ -79,8 +79,6 @@ const SearchBar = () => {
     setShowAllResults(false);
   };
 
-  console.log(date);
-
   return (
     <div className="flex flex-col space-y-6 mx-6">
       <div className=" relative flex flex-row text-lg justify-center items-center p-4 font-semibold">

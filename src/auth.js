@@ -34,7 +34,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             throw new Error("Invalid username or password.");
           }
         }
-        // console.log("user", user);
+    
         if (user) return user;
         return null;
       },

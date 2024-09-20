@@ -24,8 +24,7 @@ export async function POST(request) {
       },
     });
 
-    console.log("Food added to meal:", food);
-
+  
     return NextResponse.json({ message: "Food added successfully!" });
   } catch (error) {
     console.error("Error adding food to meal:", error);
