@@ -26,11 +26,11 @@ export default function FoodForm({
   foodData,
   calculatedValues,
   setCalculatedValues,
+  meal,
+  setMeal,
 }) {
   const [selectedFood] = useState(foodData);
   const firstServing = selectedFood?.servings?.serving[0];
-
-  const [meal, setMeal] = useState("");
 
   useEffect(() => {
     const storedMeal = localStorage.getItem("selectedMeal");
@@ -174,7 +174,11 @@ export default function FoodForm({
             render={({ field }) => (
               <FormItem className="flex items-center justify-between">
                 <FormLabel className="w-1/3">Meal</FormLabel>
-                <SelectMeal onValueChange={field.onChange} />
+                <SelectMeal
+                  onValueChange={field.onChange}
+                  mealType={meal}
+                  setMeal={setMeal}
+                />
                 <FormMessage />
               </FormItem>
             )}

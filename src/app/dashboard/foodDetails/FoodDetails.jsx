@@ -57,6 +57,7 @@ const FoodDetails = ({ foodData }) => {
     ? Math.round(firstServing?.metric_serving_amount)
     : firstServing?.serving_description;
 
+  console.log("add food", meal);
   return (
     <div className="">
       <div className="flex justify-between text-lg items-center p-4">
@@ -88,6 +89,8 @@ const FoodDetails = ({ foodData }) => {
           foodData={selectedFood}
           calculatedValues={calculatedValues}
           setCalculatedValues={setCalculatedValues}
+          meal={meal}
+          setMeal={setMeal}
           onUpdateFoodData={(newValues) => {
             setSelectedFood(newValues);
           }}

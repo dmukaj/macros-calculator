@@ -59,11 +59,9 @@ const Result = ({ bmr }) => {
           </TableBody>
         )}
       </Table>
-      <Button variant="outline">
-        <Link asChild href="/dashboard/info">
-          Read more about Macros
-        </Link>
-      </Button>
+      <Link href="/dashboard/info">
+        <Button variant="outline">Read more about Macros</Button>
+      </Link>
     </div>
   );
 };

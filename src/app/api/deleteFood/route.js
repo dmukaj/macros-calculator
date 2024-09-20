@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   const data = await request.json();
   const { foodId } = data.body;
-  console.log("foodId", foodId);
+
 
   try {
     const deletedFood = await db.meal.delete({
