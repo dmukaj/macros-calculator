@@ -6,6 +6,7 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
+ENV DATABASE_URL=${DATABASE_URL}
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
@@ -26,6 +27,7 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV DATABASE_URL=${DATABASE_URL}
 
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
