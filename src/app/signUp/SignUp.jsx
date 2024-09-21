@@ -55,18 +55,18 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-20  h-screen">
-      <div className=" border-2 shadow-lg p-20 rounded-lg">
+    <div className="flex flex-col items-center justify-center p-8 h-[800px]">
+      <div className="">
         <div>
           <Lottie options={defaultOptions} height={300} width={300} />
         </div>
-        <div className="flex flex-col items-center text-xl font-semibold">
+        <div className="flex flex-col items-center text-xl lg:text-2xl text-black font-semibold">
           <h1>Create new Account</h1>
         </div>
-        <Form {...form} className="w-[70vw]">
+        <Form {...form} className="w-[70vw] ">
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="p-10 space-y-8"
+            className="p-2 space-y-8 text-black"
           >
             <FormField
               control={form.control}
