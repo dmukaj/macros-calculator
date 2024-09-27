@@ -2,11 +2,7 @@
 import Calculator from "./Calculator";
 
 const page = () => {
-  return (
-    <>
-      <Calculator />
-    </>
-  );
+  return <Calculator />;
 };
 
 export default page;

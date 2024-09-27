@@ -3,7 +3,7 @@ import FoodTable from "@/components/FoodTable";
 export default function TableDemo({ date }) {
   return (
     <main className="flex flex-col items-center ">
-      <div className="flex flex-col lg:gap-6 gap-14 w-full">
+      <div className="flex flex-col lg:gap-6 gap-14 w-full xs:w-[100px]">
         <div className=" flex flex-col w-full md:space-y-0 md:gap-8 space-y-8 xl:grid xl:grid-cols-2 items-center justify-center">
           <div className="flex flex-col items-center justify-center p-10 rounded-lg shadow-lg bg-card/50">
             <h1 className="text-lg font-semibold md:text-2xl my-4">

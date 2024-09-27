@@ -81,8 +81,8 @@ const SearchBar = () => {
 
   return (
     <div className="flex flex-col space-y-6 mx-6">
-      <div className=" relative flex flex-row text-lg justify-center items-center p-4 font-semibold">
-        <Link href="/dashboard" className="absolute left-3">
+      <div className=" relative flex flex-row text-lg md:justify-center items-center p-4 font-semibold">
+        <Link href="/dashboard" className="md:absolute md:left-0 mr-6">
           <ArrowLeft />
         </Link>
         <p className="text-sm  mr-2">{format(date, "LLL dd, y")}</p>

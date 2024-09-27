@@ -4,7 +4,6 @@ import SearchBar from "./Search";
 const page = () => {
   return (
     <div className="m-6 space-y-6">
-      {/* <SearchNav /> */}
       <SearchBar />
     </div>
   );

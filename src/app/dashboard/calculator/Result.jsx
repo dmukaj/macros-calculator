@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -8,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Link from "next/link";
 import { calculateMacros } from "@/utils/calculateMacros";
 import { useEffect, useState } from "react";
 
@@ -59,9 +57,6 @@ const Result = ({ bmr }) => {
           </TableBody>
         )}
       </Table>
-      <Link href="/dashboard/info">
-        <Button variant="outline">Read more about Macros</Button>
-      </Link>
     </div>
   );
 };

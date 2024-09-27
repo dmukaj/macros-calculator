@@ -133,7 +133,11 @@ export default function SignUp() {
               )}
             />
 
-            <Button type="submit" variant="outline">
+            <Button
+              type="submit"
+              variant="outline"
+              className="text-black dark:text-white"
+            >
               Sign Up
             </Button>
           </form>

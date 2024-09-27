@@ -38,11 +38,11 @@ const Welcome = () => {
                 <img className="h-16 sm:h-20" src="/images/logo.png" />
               </span>
 
-              <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
+              <h1 className="mt-2 text-2xl font-bold text-primary/80 sm:text-3xl md:text-4xl">
                 Welcome to My Daily Macros
               </h1>
 
-              <p className="mt-4 leading-relaxed text-gray-500">
+              <p className="mt-4 leading-relaxed text-primary/60">
                 My Daily Macros is a platform that helps you track your daily
                 macros. It provides a simple and user-friendly interface to help
                 you monitor your macronutrient intake and make informed food

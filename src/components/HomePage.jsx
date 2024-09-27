@@ -71,8 +71,8 @@ export default function HomePage() {
   }
 
   return (
-    <div className="m-10 space-y-16 ">
-      <Card className="flex flex-col p-6 bg-card/90 ">
+    <div className="space-y-16 m-10">
+      <Card className="flex flex-col p-6 bg-card/90 w-auto">
         <CardHeader className="items-center pb-0 mb-4">
           <Popover>
             <PopoverTrigger asChild>
