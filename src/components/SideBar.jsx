@@ -3,8 +3,8 @@ import { Calculator, Home, Book } from "lucide-react";
 
 const SideBar = () => {
   return (
-    <div className="hidden border-r bg-secondary/20 md:block">
-      <div className="flex h-full max-h-full flex-col gap-2">
+    <aside className="hidden md:block">
+      <div className="sidebar fixed top-0 bottom-0 border-r lg:left-0 w-[220px] lg:w-[280px] overflow-y-auto text-center no-scrollbar shrink-0 transition-all duration-200 ease-in-out bg-secondary/20 ">
         <div className="flex h-14 items-center border-b px-4 py-10 lg:px-6">
           <Link
             href="/dashboard"
@@ -14,7 +14,7 @@ const SideBar = () => {
             <span className="">My Daily Macros</span>
           </Link>
         </div>
-        <div className="flex-1 text-muted-foreground">
+        <div className="text-muted-foreground">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
             <Link
               href="/dashboard"
@@ -40,7 +40,7 @@ const SideBar = () => {
           </nav>
         </div>
       </div>
-    </div>
+    </aside>
   );
 };
 
