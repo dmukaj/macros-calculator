@@ -8,7 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io/${{ github.repository_owner }}
   IMAGE_NAME: macros-calculator
-  GITOPS_REPO: eldoradocodes/kubernetes/
+  GITOPS_REPO: eldoradocodes/kubernetes
   GITOPS_PATH: websites/macros-calculator/overlays
 
 jobs:
