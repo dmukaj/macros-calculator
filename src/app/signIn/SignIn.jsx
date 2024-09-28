@@ -44,18 +44,16 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-8 h-[800px]">
+    <div className="flex flex-col items-center justify-center p-8 h-[800px] text-foreground ">
       <div className="">
         <div>
           <Lottie options={defaultOptions} height={300} width={300} />
         </div>
-        <div className="flex flex-col items-center text-xl text-black lg:text-2xl font-semibold">
-          <h1>Sign In</h1>
-        </div>
+
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="p-2 w-full space-y-8 text-black"
+            className="p-2 w-full space-y-8"
           >
             <FormField
               control={form.control}
@@ -92,11 +90,7 @@ export default function SignIn() {
 
             {error && <p className="text-red-500 text-sm">{error}</p>}
 
-            <Button
-              type="submit"
-              variant="outline"
-              className="text-black dark:text-white"
-            >
+            <Button type="submit" variant="outline">
               Sign In
             </Button>
           </form>

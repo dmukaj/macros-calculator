@@ -80,7 +80,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-6 mx-6">
+    <div className="flex flex-col space-y-6 mx-6 h-screen">
       <div className=" relative flex flex-row text-lg md:justify-center items-center p-4 font-semibold">
         <Link href="/dashboard" className="md:absolute md:left-0 mr-6">
           <ArrowLeft />

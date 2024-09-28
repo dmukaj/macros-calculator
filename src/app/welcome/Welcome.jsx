@@ -34,34 +34,34 @@ const Welcome = () => {
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
           <div className="max-w-xl lg:max-w-3xl flex flex-col items-center justify-center">
             <div className="relative -mt-16 block lg:hidden">
-              <span className="inline-flex size-16 items-center justify-center rounded-full bg-white text-blue-600 sm:size-20">
+              <span className="inline-flex size-16 items-center justify-center rounded-full bg-white sm:size-20">
                 <img className="h-16 sm:h-20" src="/images/logo.png" />
               </span>
 
-              <h1 className="mt-2 text-2xl font-bold text-primary/80 sm:text-3xl md:text-4xl">
+              <h1 className="mt-2 text-2xl font-bold text-foreground/80 sm:text-3xl md:text-4xl">
                 Welcome to My Daily Macros
               </h1>
 
-              <p className="mt-4 leading-relaxed text-primary/60">
+              <p className="mt-4 leading-relaxed text-foreground/60">
                 My Daily Macros is a platform that helps you track your daily
                 macros. It provides a simple and user-friendly interface to help
                 you monitor your macronutrient intake and make informed food
                 choices.
               </p>
             </div>
-            <div className="flex items-center justify-center w-auto bg-white mt-20">
+            <div className="flex items-center justify-center w-auto mt-20">
               <Tabs defaultValue="sign-in" className="w-auto">
-                <TabsList className="grid w-full grid-cols-2 bg-gray-200">
+                <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="sign-in">Sign In</TabsTrigger>
                   <TabsTrigger value="sign-up">Sign Up</TabsTrigger>
                 </TabsList>
                 <TabsContent value="sign-in">
-                  <Card className="bg-white">
+                  <Card className="bg-secondary/60">
                     <SignIn />
                   </Card>
                 </TabsContent>
                 <TabsContent value="sign-up">
-                  <Card className="bg-white">
+                  <Card className="bg-secondary/60">
                     <SignUp />
                   </Card>
                 </TabsContent>

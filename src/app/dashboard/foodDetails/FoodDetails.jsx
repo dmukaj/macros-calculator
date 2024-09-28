@@ -59,7 +59,7 @@ const FoodDetails = ({ foodData }) => {
 
   console.log("add food", meal);
   return (
-    <div className="">
+    <div className="h-screen">
       <div className="flex justify-between text-lg items-center p-4">
         <Link href="/dashboard/search" className="mr-3">
           <ArrowLeft />

@@ -10,7 +10,7 @@ export const GET = auth(async function GET(request) {
           userId: request.auth.user._id,
         },
         orderBy: {
-          createdAt: "desc",
+          updatedAt: "desc",
         },
         take: 10,
       });
