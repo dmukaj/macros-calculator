@@ -11,7 +11,7 @@ export async function POST(request) {
   protein = parseInt(protein);
   fat = parseInt(fat);
   try {
-    const food = await db.meal.create({
+    await db.meal.create({
       data: {
         name,
         calories,
@@ -24,7 +24,6 @@ export async function POST(request) {
       },
     });
 
-  
     return NextResponse.json({ message: "Food added successfully!" });
   } catch (error) {
     console.error("Error adding food to meal:", error);
