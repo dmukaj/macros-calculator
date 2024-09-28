@@ -50,7 +50,7 @@ const FoodDetails = ({ foodData }) => {
   if (!id) return <p>No food selected.</p>;
 
   if (loading) {
-    return <p>Loading food details...</p>;
+    return <p className="h-screen">Loading food details...</p>;
   }
 
   let servingAmount = firstServing?.metric_serving_amount
