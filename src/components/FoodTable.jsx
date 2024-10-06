@@ -17,6 +17,7 @@ export default function FoodTable({ mealType, date }) {
   // const [mealTypeData, setMealTypeData] = useState({});
   const [filteredMealData, setFilteredMealData] = useState([]);
 
+  console.log("CURRENT DATE: ", date);
   useEffect(() => {
     const handleGetmeal = async () => {
       const data = await fetchMealTypeByDate(date);
