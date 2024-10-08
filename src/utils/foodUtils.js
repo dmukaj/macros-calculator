@@ -1,8 +1,10 @@
 import axios from "axios";
+import { formatISO } from "date-fns";
 
 export const addFood = async (item, session, mealType, name, date) => {
   const { calories, carbohydrate, protein, fat, createdAt } = item;
-  const newDate = new Date(date);
+  const newDate = formatISO(new Date(date));
+
   try {
     await axios.post(`/api/addFood`, {
       method: "POST",

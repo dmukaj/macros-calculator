@@ -1,14 +1,26 @@
 import db from "@/db";
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
+import { formatISO } from "date-fns";
 
 export const POST = auth(async function POST(request) {
   if (request.auth) {
     const data = await request.json();
 
     const targetDate = new Date(data.date);
-    const startOfDay = new Date(targetDate.setHours(0, 0, 0, 0));
-    const endOfDay = new Date(targetDate.setHours(23, 59, 59, 999));
+    const utcDate = new Date(
+      Date.UTC(
+        targetDate.getFullYear(),
+        targetDate.getMonth(),
+        targetDate.getDate(),
+        targetDate.getHours(),
+        targetDate.getMinutes(),
+        targetDate.getSeconds(),
+        targetDate.getMilliseconds()
+      )
+    );
+    const startOfDay = formatISO(new Date(utcDate.setHours(0, 0, 0)));
+    const endOfDay = formatISO(new Date(utcDate.setHours(23, 59, 59)));
 
     try {
       const response = await db.meal.findMany({
@@ -20,7 +32,7 @@ export const POST = auth(async function POST(request) {
           },
         },
         orderBy: {
-          createdAt: "desc",
+          updatedAt: "desc",
         },
       });
 

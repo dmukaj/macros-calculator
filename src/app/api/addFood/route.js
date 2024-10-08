@@ -12,6 +12,7 @@ export const POST = auth(async function POST(request) {
     carbohydrate = parseInt(carbohydrate);
     protein = parseInt(protein);
     fat = parseInt(fat);
+
     try {
       await db.meal.create({
         data: {

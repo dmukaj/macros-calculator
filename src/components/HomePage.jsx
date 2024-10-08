@@ -5,7 +5,7 @@ import PieChartComponent from "@/components/PieChartComponent";
 import { ProgressDemo } from "@/components/ProgressDemo";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { format } from "date-fns";
+import { format, formatISO } from "date-fns";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -52,6 +52,7 @@ export default function HomePage() {
   };
 
   const remainingCalories = macros?.calories - (foodData?.totalCalories || 0);
+
   useEffect(() => {
     const fetchData = async () => {
       localStorage.setItem("selectedDate", selectedDate);
@@ -70,6 +71,9 @@ export default function HomePage() {
     );
   }
 
+  const handleDateSelect = (date) => {
+    setSelectedDate(formatISO(date));
+  };
   return (
     <div className="space-y-16 m-10">
       <Card className="flex flex-col p-6 bg-card/90 w-auto">
@@ -95,7 +99,7 @@ export default function HomePage() {
               <Calendar
                 mode="single"
                 selected={selectedDate}
-                onSelect={setSelectedDate}
+                onSelect={handleDateSelect}
                 initialFocus
               />
             </PopoverContent>

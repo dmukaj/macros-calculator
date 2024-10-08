@@ -1,8 +1,10 @@
 import { fetchMealTypeByDate } from "./fetchMealType";
 
 export async function calculateTotalMacros(date) {
+  console.log(date);
   const foodData = await fetchMealTypeByDate(date);
-  if (!foodData || !Array.isArray(foodData.response)) {
+
+  if (!foodData || !Array.isArray(foodData)) {
     return null;
   }
 
@@ -20,22 +22,22 @@ export async function calculateTotalMacros(date) {
 }
 
 function getCaloriesPerDay(foodData) {
-  const caloriesPerDay = foodData.response.map((item) => item.calories || 0);
+  const caloriesPerDay = foodData.map((item) => item.calories || 0);
   return caloriesPerDay.reduce((acc, item) => acc + item, 0);
 }
 
 function getProteinPerDay(foodData) {
-  const proteinPerDay = foodData.response.map((item) => item.protein || 0);
+  const proteinPerDay = foodData.map((item) => item.protein || 0);
   return proteinPerDay.reduce((acc, item) => acc + item, 0);
 }
 
 function getCarbsPerDay(foodData) {
-  const carbsPerDay = foodData.response.map((item) => item.carbohydrate || 0);
+  const carbsPerDay = foodData.map((item) => item.carbohydrate || 0);
   return carbsPerDay.reduce((acc, item) => acc + item, 0);
 }
 
 function getFatsPerDay(foodData) {
-  const fatsPerDay = foodData.response.map((item) => item.fat || 0);
+  const fatsPerDay = foodData.map((item) => item.fat || 0);
   return fatsPerDay.reduce((acc, item) => acc + item, 0);
 }
 

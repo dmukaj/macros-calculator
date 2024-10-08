@@ -40,8 +40,15 @@ export async function fetchMealTypeByDate(date) {
     }
 
     const data = await response.json();
+    const convertedData = data.response.map((item) => ({
+      ...item,
+      updatedAt: new Date(item.updatedAt),
+    }));
 
-    return data;
+    console.log(data);
+    console.log(convertedData);
+
+    return convertedData;
   } catch (error) {
     console.log("Error fetching meal type", error);
   }
