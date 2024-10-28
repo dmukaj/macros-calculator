@@ -5,7 +5,7 @@ import PieChartComponent from "@/components/PieChartComponent";
 import { ProgressDemo } from "@/components/ProgressDemo";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { format } from "date-fns";
+import { format, formatISO } from "date-fns";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,7 @@ export default function HomePage() {
   const [foodData, setFoodData] = useState(null);
   const [macros, setMacros] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(formatISO(new Date()));
 
   const handleBMR = async () => {
     const data = await getUsersData();
@@ -72,7 +72,7 @@ export default function HomePage() {
   }
 
   const handleDateSelect = (date) => {
-    setSelectedDate(format(date, "PPP"));
+    setSelectedDate(formatISO(date));
   };
   return (
     <div className="space-y-16 m-10">
