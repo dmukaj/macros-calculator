@@ -5,7 +5,7 @@ import PieChartComponent from "@/components/PieChartComponent";
 import { ProgressDemo } from "@/components/ProgressDemo";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { format, formatISO } from "date-fns";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -72,7 +72,7 @@ export default function HomePage() {
   }
 
   const handleDateSelect = (date) => {
-    setSelectedDate(formatISO(date));
+    setSelectedDate(format(date, "PPP"));
   };
   return (
     <div className="space-y-16 m-10">
