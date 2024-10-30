@@ -1,7 +1,6 @@
 import { fetchMealTypeByDate } from "./fetchMealType";
 
 export async function calculateTotalMacros(date) {
-  console.log(date);
   const foodData = await fetchMealTypeByDate(date);
 
   if (!foodData || !Array.isArray(foodData)) {

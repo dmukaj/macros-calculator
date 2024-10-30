@@ -40,13 +40,14 @@ export async function fetchMealTypeByDate(date) {
     }
 
     const data = await response.json();
+
     const convertedData = data.response.map((item) => ({
       ...item,
       updatedAt: new Date(item.updatedAt),
     }));
 
-    console.log(data);
-    console.log(convertedData);
+    // console.log("data", data);
+    // console.log("converted", convertedData);
 
     return convertedData;
   } catch (error) {

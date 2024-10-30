@@ -19,7 +19,7 @@ export const POST = auth(async function POST(request) {
         targetDate.getMilliseconds()
       )
     );
-    const startOfDay = formatISO(new Date(utcDate.setHours(0, 0, 0)));
+    const startOfDay = formatISO(new Date(utcDate.setHours(0, 0, 59)));
     const endOfDay = formatISO(new Date(utcDate.setHours(23, 59, 59)));
 
     try {

@@ -41,7 +41,10 @@ export default function HomePage() {
   const handleCalculateTotalMacros = async () => {
     setLoading(true);
 
-    const macros = await calculateTotalMacros(selectedDate);
+    const macros = await calculateTotalMacros(
+      formatISO(new Date(selectedDate))
+    );
+    console.log("dateeeee", selectedDate);
     if (macros) {
       setFoodData(macros);
     } else {
@@ -71,8 +74,17 @@ export default function HomePage() {
     );
   }
 
-  const handleDateSelect = (date) => {
-    setSelectedDate(formatISO(date));
+  const handleDateSelect = (selectedDate) => {
+    const dateWithCurrentTime = new Date(selectedDate);
+    const now = new Date();
+    dateWithCurrentTime.setHours(
+      now.getHours(),
+      now.getMinutes(),
+      now.getSeconds()
+    );
+
+    setSelectedDate(formatISO(dateWithCurrentTime));
+    console.log("handledate", formatISO(dateWithCurrentTime));
   };
   return (
     <div className="space-y-16 m-10">

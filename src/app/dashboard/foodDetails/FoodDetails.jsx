@@ -57,7 +57,6 @@ const FoodDetails = ({ foodData }) => {
     ? Math.round(firstServing?.metric_serving_amount)
     : firstServing?.serving_description;
 
-  console.log("add food", meal);
   return (
     <div className="h-screen">
       <div className="flex justify-between text-lg items-center p-4">
