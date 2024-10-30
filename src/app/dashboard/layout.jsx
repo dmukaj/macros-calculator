@@ -24,7 +24,7 @@ export default async function RootLayout({ children }) {
         <div className="flex flex-col">
           <NavBar session={session} />
           {children}
-          <div className="relative -bottom-20">
+          <div className="relative -bottom-32">
             <Footer />
           </div>
         </div>
