@@ -84,7 +84,6 @@ export default function HomePage() {
     );
 
     setSelectedDate(formatISO(dateWithCurrentTime));
-    console.log("handledate", formatISO(dateWithCurrentTime));
   };
   return (
     <div className="space-y-16 m-10">

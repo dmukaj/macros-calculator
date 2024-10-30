@@ -19,12 +19,14 @@ export default async function RootLayout({ children }) {
 
   return (
     <>
-      <div className="grid w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] ">
+      <div className="absolute grid w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] ">
         <SideBar />
-        <div className="flex h-full max-h-screen flex-col">
+        <div className="flex flex-col">
           <NavBar session={session} />
           {children}
-          <Footer />
+          <div className="relative -bottom-20">
+            <Footer />
+          </div>
         </div>
       </div>
     </>
