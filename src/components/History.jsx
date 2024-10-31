@@ -19,9 +19,9 @@ const History = ({ mealType, setMeal, date }) => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center font-semibold h-screen">
+    <div className="flex flex-col justify-center items-center font-semibold container h-screen space-y-2 ">
       <h1 className="text-lg font-semibold">History</h1>
-      <div className="flex flex-col justify-center space-y-2 w-full mt-4 ">
+      <div className="flex flex-col justify-center space-y-2 w-full overflow-y-auto">
         {history &&
           history.map((item) => (
             <div

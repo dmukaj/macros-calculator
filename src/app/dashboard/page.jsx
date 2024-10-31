@@ -9,9 +9,5 @@ export default async function page() {
   if (!session?.user) {
     redirect("/welcome");
   }
-  return (
-    <>
-      <HomePage />
-    </>
-  );
+  return <HomePage />;
 }
