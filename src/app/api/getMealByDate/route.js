@@ -1,7 +1,6 @@
 import db from "@/db";
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
-import { formatISO } from "date-fns";
 
 export const POST = auth(async function POST(request) {
   if (request.auth) {
@@ -36,7 +35,7 @@ export const POST = auth(async function POST(request) {
       const response = await db.meal.findMany({
         where: {
           userId: request.auth.user._id,
-          updatedAt: {
+          createdAt: {
             gte: startOfDay,
             lte: endOfDay,
           },
