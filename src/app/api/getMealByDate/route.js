@@ -8,25 +8,34 @@ export const POST = auth(async function POST(request) {
     const data = await request.json();
 
     const targetDate = new Date(data.date);
-    const utcDate = new Date(
+
+    const startOfDay = new Date(
       Date.UTC(
-        targetDate.getFullYear(),
-        targetDate.getMonth(),
-        targetDate.getDate(),
-        targetDate.getHours(),
-        targetDate.getMinutes(),
-        targetDate.getSeconds(),
-        targetDate.getMilliseconds()
+        targetDate.getUTCFullYear(),
+        targetDate.getUTCMonth(),
+        targetDate.getUTCDate(),
+        0,
+        0,
+        0
       )
-    );
-    const startOfDay = formatISO(new Date(utcDate.setHours(0, 0, 59)));
-    const endOfDay = formatISO(new Date(utcDate.setHours(23, 59, 59)));
+    ).toISOString();
+
+    const endOfDay = new Date(
+      Date.UTC(
+        targetDate.getUTCFullYear(),
+        targetDate.getUTCMonth(),
+        targetDate.getUTCDate(),
+        23,
+        59,
+        59
+      )
+    ).toISOString();
 
     try {
       const response = await db.meal.findMany({
         where: {
           userId: request.auth.user._id,
-          createdAt: {
+          updatedAt: {
             gte: startOfDay,
             lte: endOfDay,
           },
