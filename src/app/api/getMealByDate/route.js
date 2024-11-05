@@ -31,6 +31,7 @@ export const POST = auth(async function POST(request) {
       )
     ).toISOString();
 
+    console.log("START: ", startOfDay, "END: ", endOfDay);
     try {
       const response = await db.meal.findMany({
         where: {
