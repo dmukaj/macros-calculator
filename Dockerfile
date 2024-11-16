@@ -3,9 +3,7 @@ FROM node:20-alpine AS base
 # Install dependencies only when needed
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat tzdata
-ENV TZ=America/New_York
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apk add --no-cache libc6-compat 
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
@@ -40,6 +38,9 @@ RUN \
 
 # Production image, copy all the files and run next
 FROM base AS runner
+RUN apk add --no-cache tzdata
+ENV TZ=America/New_York
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR /app
 
 ENV NODE_ENV=production
