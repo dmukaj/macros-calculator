@@ -8,29 +8,9 @@ export const POST = auth(async function POST(request) {
 
     const targetDate = new Date(data.date);
 
-    const startOfDay = new Date(
-      Date.UTC(
-        targetDate.getUTCFullYear(),
-        targetDate.getUTCMonth(),
-        targetDate.getUTCDate(),
-        0,
-        0,
-        0
-      )
-    ).toISOString();
+    const startOfDay = new Date(targetDate.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(targetDate.setHours(23, 59, 59, 999));
 
-    const endOfDay = new Date(
-      Date.UTC(
-        targetDate.getUTCFullYear(),
-        targetDate.getUTCMonth(),
-        targetDate.getUTCDate(),
-        23,
-        59,
-        59
-      )
-    ).toISOString();
-
-    console.log("START: ", startOfDay, "END: ", endOfDay);
     try {
       const response = await db.meal.findMany({
         where: {
