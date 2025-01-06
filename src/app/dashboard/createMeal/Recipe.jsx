@@ -85,12 +85,12 @@ const Recipe = () => {
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="grid grid-cols-5 items-center gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-between gap-6 w-full">
         {ingredients &&
           ingredients.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col gap-2 justify-center border-2 p-2 rounded-r-xl rounded-bl-xl w-[10dvw] h-[20dvh]"
+              className="flex flex-col gap-2 justify-center border-2 p-2 rounded-lg w-full h-auto text-sm md:text-base"
             >
               <div className="flex items-center justify-between">
                 <span className="font-bold overflow-hidden text-ellipsis whitespace-nowrap">
@@ -102,10 +102,10 @@ const Recipe = () => {
                   onClick={() => handleDeleteIngredient(item, setIngredients)}
                 />
               </div>
-              <span>calories: {item.calories}</span>
-              <span>carbs: {item.carbohydrate}</span>
-              <span>protein: {item.protein}</span>
-              <span>fat: {item.fats}</span>
+              <span>Calories: {item.calories}</span>
+              <span>Carbs: {item.carbohydrate}</span>
+              <span>Protein: {item.protein}</span>
+              <span>Fat: {item.fats}</span>
             </div>
           ))}
       </div>
@@ -121,16 +121,16 @@ const Recipe = () => {
         <p>Total Fat: {totalFats}</p>
       </div>
       <div>
-        <h2 className="text-2xl font-semibold flex justify-center">
+        <h2 className="text-2xl font-semibold flex justify-center mb-10">
           My Recipes
         </h2>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 items-center">
           {recipe &&
             recipe.map((item) => (
               <div
                 key={item.id}
-                className="flex flex-col border-2 p-4 rounded-lg w-[30dvw] h-auto bg-secondary/10"
+                className="flex flex-col border-2 p-4 rounded-lg w-full sm:w-[80dvw] h-auto bg-secondary/10"
               >
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
@@ -138,7 +138,9 @@ const Recipe = () => {
                       variant="destructive"
                       className="cursor-pointer text-white mb-6"
                     >
-                      <span className="text-lg">Delete Recipe</span>
+                      <span className="md:text-xl text-base">
+                        Delete Recipe
+                      </span>
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
@@ -163,17 +165,20 @@ const Recipe = () => {
                   </AlertDialogContent>
                 </AlertDialog>
 
-                <div className="flex flex-row items-center justify-between ">
-                  <div className="flex flex-col gap-2 w-[60dvw]">
-                    <span className="font-semibold text-xl text-[hsl(var(--chart-4))]">
+                <div className="flex md:flex-row items-center md:justify-between flex-col justify-start">
+                  <div className="flex flex-col gap-2 w-full">
+                    <span className="font-semibold md:text-xl text-base text-[hsl(var(--chart-4))]">
                       {item.name}
                     </span>
                     <ol>
-                      <li className="text-lg font-semibold text-[hsl(var(--chart-2))]">
+                      <li className="md:text-lg text-base font-semibold text-[hsl(var(--chart-2))]">
                         Ingredients 🍽️
                       </li>
                       {item.ingredients.map((ingredient) => (
-                        <li key={ingredient}> - {ingredient}</li>
+                        <li key={ingredient} className="md:text-base text-sm">
+                          {" "}
+                          - {ingredient}
+                        </li>
                       ))}
                     </ol>
                   </div>

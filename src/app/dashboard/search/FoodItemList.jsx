@@ -17,7 +17,7 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
   const { setSelectedFood } = useFood({});
 
   return (
-    <div className="py-4 px-8">
+    <div className="py-4 md:px-8">
       <div className="flex flex-col justify-center space-y-2">
         {result &&
           (showAllResults ? result : result.slice(0, 6)).map((item) => {
@@ -28,7 +28,7 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
             return (
               <div
                 key={item?.food_id || item?.id}
-                className="bg-secondary rounded-lg p-4 text-xs flex justify-between items-center"
+                className="bg-secondary rounded-lg p-4 md:text-base text-xs flex justify-between items-center"
               >
                 <div>
                   <p className="font-semibold">{item.food_name || item.name}</p>
@@ -36,7 +36,7 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
                     {firstServing ? (
                       <div
                         key={firstServing?.serving_id}
-                        className="flex flex-row justify-start gap-3"
+                        className="flex md:flex-row flex-col justify-start gap-1"
                       >
                         <span>{firstServing?.serving_description}</span>
                         <span>{`${firstServing?.calories} cal`}</span>
@@ -56,7 +56,7 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
                   </div>
                 </div>
 
-                <div className="flex justify-between gap-3">
+                <div className="flex md:flex-row md:justify-between gap-3 flex-col items-center">
                   {pathname === "/dashboard/search" && (
                     <Button
                       onClick={() => {
@@ -73,6 +73,7 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
                           variant: "success",
                         });
                       }}
+                      className="p-1 text-xs md:text-base md:px-3 md:py-2"
                     >
                       Add Food
                     </Button>
@@ -91,8 +92,9 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
                         };
                         handleAddIngredient(tranformedItem);
                       }}
+                      className="p-1 text-xs md:text-base md:px-3 md:py-2"
                     >
-                      Add to meal
+                      Add to Meal
                     </Button>
                   )}
                   {firstServing ? (
@@ -108,6 +110,7 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
                       <Button
                         variant="outline"
                         onClick={() => setSelectedFood(item)}
+                        className="py-1 px-3 text-xs md:text-base md:px-3 md:py-2"
                       >
                         Edit Food
                       </Button>
@@ -125,6 +128,7 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
                       <Button
                         variant="outline"
                         onClick={() => setSelectedFood(item)}
+                        className="p-1 text-xs md:text-base md:px-3 md:py-2"
                       >
                         Edit Food
                       </Button>
