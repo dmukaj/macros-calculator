@@ -1,6 +1,13 @@
 "use client";
 import Link from "next/link";
-import { Calculator, UserIcon, Home, Menu, Book } from "lucide-react";
+import {
+  Calculator,
+  UserIcon,
+  Home,
+  Menu,
+  Book,
+  CookingPot,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -68,6 +75,13 @@ function NavBar({ session }) {
               >
                 <Book className="h-4 w-4" />
                 Read about Macros
+              </Link>
+              <Link
+                className="flex items-center gap-2 text-sm ml-2"
+                href="/dashboard/createMeal"
+              >
+                <span>Create Meal</span>
+                <CookingPot />
               </Link>
             </nav>
           </SheetContent>

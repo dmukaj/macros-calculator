@@ -19,18 +19,23 @@ import {
 } from "@/components/ui/form";
 import PieChartComponent from "@/components/PieChartComponent";
 import { Input } from "@/components/ui/input";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useFood } from "@/context/FoodContext";
 import SelectMeal from "../app/dashboard/search/SelectMeal";
 
 export default function FoodForm({
-  foodData,
   calculatedValues,
   setCalculatedValues,
   meal,
   setMeal,
 }) {
-  const [selectedFood] = useState(foodData);
-  const firstServing = selectedFood?.servings?.serving[0];
+  const { selectedFood } = useFood();
+  const selectedRecipe = selectedFood?.servings?.serving;
+
+  let firstServing;
+  if (selectedFood?.servings?.serving.length > 0) {
+    firstServing = selectedFood?.servings?.serving[0];
+  }
 
   useEffect(() => {
     const storedMeal = localStorage.getItem("selectedMeal");
@@ -40,36 +45,39 @@ export default function FoodForm({
 
     setCalculatedValues((prevState) => ({
       ...prevState,
-      calories: Math.round(firstServing.calories),
-      protein: Math.round(firstServing.protein),
-      carbohydrate: Math.round(firstServing.carbohydrate),
-      fats: Math.round(firstServing.fat),
+      id: selectedFood?.food_id,
+      foodName: selectedFood?.food_name,
+      calories: Math.round(firstServing?.calories || selectedRecipe?.calories),
+      protein: Math.round(firstServing?.protein || selectedRecipe?.protein),
+      carbohydrate: Math.round(
+        firstServing?.carbohydrate || selectedRecipe?.carbohydrate
+      ),
+      fats: Math.round(firstServing?.fat || selectedRecipe?.fat),
     }));
   }, []);
 
+  const metricServingAmount =
+    Math.round(firstServing?.metric_serving_amount) ||
+    selectedRecipe?.metric_serving_amount;
+
   const form = useForm({
     resolver: zodResolver(),
-
     defaultValues: {
       foodName: selectedFood.food_name,
-      amount: firstServing.metric_serving_amount
-        ? Math.round(firstServing.metric_serving_amount)
-        : Math.round(firstServing.number_of_units),
-      servingUnit: firstServing.metric_serving_unit,
+      amount: metricServingAmount,
+      servingUnit: firstServing?.metric_serving_unit || "",
       numberOfServings: 1,
       meal: meal || "",
     },
   });
 
   const calculateTotalMacros = (amount, numberOfServings) => {
-    const metricServing = firstServing.metric_serving_amount
-      ? Math.round(firstServing.metric_serving_amount)
-      : Math.round(firstServing.number_of_units);
-
-    const initialCalories = firstServing.calories;
-    const initialProtein = firstServing.protein;
-    const initialCarbs = firstServing.carbohydrate;
-    const initialFats = firstServing.fat;
+    const metricServing = metricServingAmount;
+    const initialCalories = firstServing?.calories || selectedRecipe?.calories;
+    const initialProtein = firstServing?.protein || selectedRecipe?.protein;
+    const initialCarbs =
+      firstServing?.carbohydrate || selectedRecipe?.carbohydrate;
+    const initialFats = firstServing?.fat || selectedRecipe?.fat;
 
     const calories = Math.round(
       ((amount * initialCalories) / metricServing) * numberOfServings
@@ -88,6 +96,8 @@ export default function FoodForm({
     );
 
     const newValues = {
+      id: selectedFood?.food_id || selectedRecipe?.id,
+      foodName: selectedFood?.food_name || selectedRecipe?.name,
       calories,
       protein,
       carbohydrate,
@@ -95,7 +105,6 @@ export default function FoodForm({
     };
 
     setCalculatedValues(newValues);
-    // console.log("newValues", newValues);
   };
 
   const onSubmit = (e) => {
@@ -139,14 +148,16 @@ export default function FoodForm({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {selectedFood?.servings?.serving.map((serving) => (
-                      <SelectItem
-                        key={serving.serving_id}
-                        value={serving.measurement_description}
-                      >
-                        {serving.measurement_description}
-                      </SelectItem>
-                    ))}
+                    {selectedFood?.servings?.serving.length > 1
+                      ? selectedFood?.servings?.serving.map((serving) => (
+                          <SelectItem
+                            key={serving.serving_id}
+                            value={serving.measurement_description}
+                          >
+                            {serving.measurement_description}
+                          </SelectItem>
+                        ))
+                      : null}
                   </SelectContent>
                 </Select>
                 <FormMessage />
