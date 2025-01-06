@@ -3,6 +3,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { FoodProvider } from "@/context/FoodContext";
+import { IngredientsProvider } from "@/context/IngredientsContext";
 const inter = Inter({ subsets: ["latin"] });
 
 import { Toaster } from "@/components/ui/toaster";
@@ -25,19 +26,21 @@ export default async function RootLayout({ children }) {
   return (
     <SessionProvider session={session}>
       <FoodProvider>
-        <html lang="en" suppressHydrationWarning>
-          <body className={inter.className}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-              <Toaster />
-            </ThemeProvider>
-          </body>
-        </html>
+        <IngredientsProvider>
+          <html lang="en" suppressHydrationWarning>
+            <body className={inter.className}>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {children}
+                <Toaster />
+              </ThemeProvider>
+            </body>
+          </html>
+        </IngredientsProvider>
       </FoodProvider>
     </SessionProvider>
   );

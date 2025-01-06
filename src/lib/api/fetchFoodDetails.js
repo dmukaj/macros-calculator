@@ -9,6 +9,7 @@ export const fetchFoodDetails = async (id) => {
       throw new Error("Failed to fetch food details");
     }
     const data = await response.json();
+
     return data;
   } catch (error) {
     console.log("Error fetching food details", error);

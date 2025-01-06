@@ -18,15 +18,18 @@ export default async function RootLayout({ children }) {
   }
 
   return (
-    <div className=" absolute grid w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] sm:flex-col">
-      <SideBar />
-      <div className="flex flex-col ">
-        <NavBar session={session} />
-        {children}
-        <div className="relative -bottom-28 ">
-          <Footer />
+    <div className="flex flex-col min-h-screen">
+      {/* Main layout content */}
+      <div className="grid flex-grow w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] sm:flex-col">
+        <SideBar />
+        <div className="flex flex-col">
+          <NavBar session={session} />
+          <div className="flex-grow">{children}</div>
         </div>
       </div>
+
+      {/* Footer at the bottom */}
+      <Footer />
     </div>
   );
 }

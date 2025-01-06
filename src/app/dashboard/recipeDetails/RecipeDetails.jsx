@@ -1,28 +1,25 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { fetchFoodDetails } from "@/lib/api/fetchFoodDetails";
 import AddFoodButton from "@/components/AddFoodButton";
-import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
+import { useFood } from "@/context/FoodContext";
 import FoodForm from "@/components/FoodForm";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
-import { CookingPot } from "lucide-react";
-import { useIngredients } from "@/context/IngredientsContext";
+import { fetchRecipeDetails } from "@/lib/api/fetchRecipeDetails";
 
-const FoodDetails = () => {
+const RecipeDetails = () => {
   const session = useSession();
-  const [selectedFood, setSelectedFood] = useState({});
+  const { selectedFood, setSelectedFood } = useFood();
+
   const [loading, setLoading] = useState(true);
   const [meal, setMeal] = useState("");
   const [date, setDate] = useState();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  const firstServing = selectedFood?.servings?.serving[0];
   const [calculatedValues, setCalculatedValues] = useState({});
-  const { handleAddIngredient } = useIngredients();
 
   useEffect(() => {
     const storedMeal = localStorage.getItem("selectedMeal");
@@ -36,9 +33,28 @@ const FoodDetails = () => {
     }
     const loadFoodDetails = async () => {
       try {
-        const data = await fetchFoodDetails(id);
-
-        setSelectedFood(data);
+        const rawData = await fetchRecipeDetails(id);
+        // Reformat the data to match the required format
+        const formattedData = {
+          food_id: rawData.id || "",
+          food_name: rawData.name || "",
+          ingredients: rawData.ingredients,
+          servings: {
+            serving: {
+              calories: rawData.calories,
+              carbohydrate: rawData.carbohydrate,
+              fat: rawData.fat,
+              protein: rawData.protein,
+              measurement_description: "",
+              metric_serving_amount: 1,
+              metric_serving_unit: "g",
+              serving_description: "",
+              number_of_units: 1,
+              serving_id: "",
+            },
+          },
+        };
+        setSelectedFood(formattedData);
       } catch (error) {
         console.log("Error fetching food details", error);
       } finally {
@@ -55,26 +71,19 @@ const FoodDetails = () => {
     return <p className="h-screen">Loading food details...</p>;
   }
 
-  let servingAmount = firstServing?.metric_serving_amount
-    ? Math.round(firstServing?.metric_serving_amount)
-    : firstServing?.serving_description;
-
   return (
     <div className="h-screen">
       <div className="flex justify-between text-lg items-center p-4">
-        <Link href="/dashboard/search" className="mr-3">
+        <Link href="/dashboard/myRecipes" className="mr-3">
           <ArrowLeft />
         </Link>
         <div className="flex flex-row items-center gap-2 justify-center font-semibold">
           <p className="text-blue-500  "> {format(date, "LLL dd, y")}</p>
-          <h2 className=" mr-3 ">
-            {selectedFood?.food_name} ({servingAmount || ""})
-            {firstServing?.metric_serving_unit || ""}
-          </h2>
+          <h2 className=" mr-3 ">{selectedFood.food_name}</h2>
         </div>
         <div className="flex gap-3">
           <AddFoodButton
-            firstServing={firstServing}
+            firstServing={selectedFood}
             selectedFood={selectedFood}
             session={session}
             calculatedValues={calculatedValues}
@@ -82,12 +91,6 @@ const FoodDetails = () => {
             date={date}
             foodName={selectedFood?.food_name}
           />
-
-          {selectedFood?.servings?.serving && (
-            <Button onClick={() => handleAddIngredient(calculatedValues)}>
-              <CookingPot />
-            </Button>
-          )}
         </div>
       </div>
       <div className="p-4">
@@ -102,9 +105,19 @@ const FoodDetails = () => {
             setSelectedFood(newValues);
           }}
         />
+        <div className="flex flex-col gap-4 items-start justify-center mt-10">
+          <h2 className="text-2xl font-semibold flex justify-center ">
+            Ingredients in this recipe
+          </h2>
+          <h3>
+            {selectedFood?.ingredients.map((item) => (
+              <p key={item.id}> - {item}</p>
+            ))}
+          </h3>
+        </div>
       </div>
     </div>
   );
 };
 
-export default FoodDetails;
+export default RecipeDetails;

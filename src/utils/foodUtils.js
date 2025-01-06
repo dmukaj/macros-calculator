@@ -12,7 +12,7 @@ export const addFood = async (item, session, mealType, name, date) => {
         "Content-Type": "application/json",
       },
       body: {
-        name: name,
+        name,
         userId: session?.data?.user?._id,
         calories,
         carbohydrate,

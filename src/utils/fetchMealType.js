@@ -46,9 +46,6 @@ export async function fetchMealTypeByDate(date) {
       updatedAt: new Date(item.updatedAt),
     }));
 
-    // console.log("data", data);
-    // console.log("converted", convertedData);
-
     return convertedData;
   } catch (error) {
     console.log("Error fetching meal type", error);

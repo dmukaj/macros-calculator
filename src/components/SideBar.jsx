@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Calculator, Home, Book } from "lucide-react";
+import { Calculator, Home, Book, CookingPot } from "lucide-react";
 
 const SideBar = () => {
   return (
@@ -36,6 +36,13 @@ const SideBar = () => {
             >
               <Book className="h-4 w-4" />
               Read about Macros
+            </Link>
+            <Link
+              href="/dashboard/createMeal"
+              className="flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-primary hover:bg-secondary/70"
+            >
+              <CookingPot className="h-4 w-4" />
+              Create Meal
             </Link>
           </nav>
         </div>

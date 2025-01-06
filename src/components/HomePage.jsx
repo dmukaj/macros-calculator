@@ -44,7 +44,7 @@ export default function HomePage() {
     const macros = await calculateTotalMacros(
       formatISO(new Date(selectedDate))
     );
-    console.log("dateeeee", selectedDate);
+
     if (macros) {
       setFoodData(macros);
     } else {

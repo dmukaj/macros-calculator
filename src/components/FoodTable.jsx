@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import DeleteFoodBtn from "./DeleteFoodBtn";
 
 export default function FoodTable({ mealType, date }) {
-  // const [mealTypeData, setMealTypeData] = useState({});
   const [filteredMealData, setFilteredMealData] = useState([]);
 
   useEffect(() => {

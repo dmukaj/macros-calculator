@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   const data = await request.json();
-  const { foodId } = data.body;
 
+  const { foodId } = data.body;
 
   try {
     const deletedFood = await db.meal.delete({
