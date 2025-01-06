@@ -77,11 +77,11 @@ function NavBar({ session }) {
                 Read about Macros
               </Link>
               <Link
-                className="flex items-center gap-2 text-sm ml-2"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-secondary/70"
                 href="/dashboard/createMeal"
               >
+                <CookingPot className="h-4 w-4" />
                 <span>Create Meal</span>
-                <CookingPot />
               </Link>
             </nav>
           </SheetContent>
