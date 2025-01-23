@@ -8,7 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import { format } from "date-fns";
 import SelectMeal from "@/app/dashboard/search/SelectMeal";
 
-const Recipe = ({ showAllResults }) => {
+const Recipe = () => {
   const [recipe, setRecipe] = useState([]);
   const [meal, setMeal] = useState("");
   const [date, setDate] = useState(new Date());
@@ -34,7 +34,7 @@ const Recipe = ({ showAllResults }) => {
   }, []);
 
   return (
-    <div className=" flex flex-col flex-grow m-6 space-y-6">
+    <div className=" flex flex-col m-6 space-y-6">
       <div className="relative flex flex-row text-lg justify-center items-center p-4 font-semibold ">
         <div className="flex flex-col sm:flex-row items-center justify-center absolute sm:right-26 xs:right-0 gap-1 ">
           <p className="text-sm">{format(date, "LLL dd, y")}</p>
@@ -47,12 +47,14 @@ const Recipe = ({ showAllResults }) => {
           text={"Go to Dashboard"}
         />
       </div>
-      <FoodItemList
-        meal={meal}
-        date={date}
-        result={recipe}
-        showAllResults={showAllResults}
-      />
+      <div className="container  w-full  h-[70dvh] overflow-y-auto">
+        <FoodItemList
+          meal={meal}
+          date={date}
+          result={recipe}
+          showAllResults={true}
+        />
+      </div>
     </div>
   );
 };

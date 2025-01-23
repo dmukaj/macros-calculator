@@ -50,7 +50,6 @@ export default async function getNewToken() {
       });
     }
 
-    // console.log("tokenExpiry", result);
     return token;
   } catch (error) {
     console.log("Failed to get new token", error);

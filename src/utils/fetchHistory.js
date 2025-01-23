@@ -1,6 +1,6 @@
 export async function fetchHistory() {
   try {
-    const response = await fetch(`/api/getFood`, {
+    const response = await fetch(`/api/getHistory`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -20,7 +20,7 @@ import { fetchRecipes } from "@/utils/fetchRecipes";
 import PieChartComponent from "@/components/PieChartComponent";
 import { deleteRecipe } from "@/utils/fetchRecipes";
 
-const Recipe = () => {
+const CreateRecipe = () => {
   const {
     ingredients,
     setIngredients,
@@ -34,7 +34,6 @@ const Recipe = () => {
     setTotalFats,
     handleDeleteIngredient,
   } = useIngredients();
-
   const [recipe, setRecipe] = useState([]);
   const session = useSession();
   const userId = session?.data?.user?._id;
@@ -84,7 +83,7 @@ const Recipe = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 ">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-between gap-6 w-full">
         {ingredients &&
           ingredients.map((item) => (
@@ -125,78 +124,80 @@ const Recipe = () => {
           My Recipes
         </h2>
 
-        <div className="flex flex-col gap-4 items-center">
-          {recipe &&
-            recipe.map((item) => (
-              <div
-                key={item.id}
-                className="flex flex-col border-2 p-4 rounded-lg w-full sm:w-[80dvw] h-auto bg-secondary/10"
-              >
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      variant="destructive"
-                      className="cursor-pointer text-white mb-6"
-                    >
-                      <span className="md:text-xl text-base">
-                        Delete Recipe
-                      </span>
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Are you absolutely sure?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete this recipe and remove your data from our
-                        servers.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={() => handleDeleteRecipe(item.id)}
+        <div className="flex flex-col justify-center items-center font-semibold container h-screen space-y-2">
+          <div className="flex flex-col gap-4 items-center overflow-y-auto">
+            {recipe &&
+              recipe.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex flex-col border-2 p-4 rounded-lg w-full sm:w-[80dvw] h-auto bg-secondary/10"
+                >
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="destructive"
+                        className="cursor-pointer text-white mb-6"
                       >
-                        Continue
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                        <span className="md:text-xl text-base">
+                          Delete Recipe
+                        </span>
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete this recipe and remove your data from our
+                          servers.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDeleteRecipe(item.id)}
+                        >
+                          Continue
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
 
-                <div className="flex md:flex-row items-center md:justify-between flex-col justify-start">
-                  <div className="flex flex-col gap-2 w-full">
-                    <span className="font-semibold md:text-xl text-base text-[hsl(var(--chart-4))]">
-                      {item.name}
-                    </span>
-                    <ol>
-                      <li className="md:text-lg text-base font-semibold text-[hsl(var(--chart-2))]">
-                        Ingredients 🍽️
-                      </li>
-                      {item.ingredients.map((ingredient) => (
-                        <li key={ingredient} className="md:text-base text-sm">
-                          {" "}
-                          - {ingredient}
+                  <div className="flex md:flex-row items-center md:justify-between flex-col justify-start">
+                    <div className="flex flex-col gap-2 w-full">
+                      <span className="font-semibold md:text-xl text-base text-[hsl(var(--chart-4))]">
+                        {item.name}
+                      </span>
+                      <ol>
+                        <li className="md:text-lg text-base font-semibold text-[hsl(var(--chart-2))]">
+                          Ingredients 🍽️
                         </li>
-                      ))}
-                    </ol>
+                        {item.ingredients.map((ingredient) => (
+                          <li key={ingredient} className="md:text-base text-sm">
+                            {" "}
+                            - {ingredient}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                    <PieChartComponent
+                      width={120}
+                      height={120}
+                      totalCalories={item.calories}
+                      protein={item.protein}
+                      carbohydrate={item.carbohydrate}
+                      fats={item.fat}
+                    />
                   </div>
-                  <PieChartComponent
-                    width={120}
-                    height={120}
-                    totalCalories={item.calories}
-                    protein={item.protein}
-                    carbohydrate={item.carbohydrate}
-                    fats={item.fat}
-                  />
                 </div>
-              </div>
-            ))}
+              ))}
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Recipe;
+export default CreateRecipe;

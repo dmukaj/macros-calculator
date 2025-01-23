@@ -12,7 +12,7 @@ export const GET = auth(async function GET(request) {
         orderBy: {
           updatedAt: "desc",
         },
-        take: 25,
+        take: 40,
       });
 
       if (foods.length === 0) {

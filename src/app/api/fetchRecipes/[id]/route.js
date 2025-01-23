@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export const GET = auth(async function GET(request, response) {
   const recipeId = response.params.id;
-  console.log("recipeId", response);
+
   if (request.auth) {
     try {
       const recipeResponse = await db.recipe.findUnique({

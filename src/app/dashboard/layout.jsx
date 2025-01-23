@@ -18,8 +18,7 @@ export default async function RootLayout({ children }) {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Main layout content */}
+    <div className="flex flex-col min-h-screen min-w-full max-w-full ">
       <div className="grid flex-grow w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] sm:flex-col">
         <SideBar />
         <div className="flex flex-col">
@@ -27,9 +26,9 @@ export default async function RootLayout({ children }) {
           <div className="flex-grow">{children}</div>
         </div>
       </div>
-
-      {/* Footer at the bottom */}
-      <Footer />
+      <div className="flex flex-col min-w-full w-full">
+        <Footer />
+      </div>
     </div>
   );
 }

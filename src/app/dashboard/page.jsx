@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-
 import HomePage from "@/components/HomePage";
 import { redirect } from "next/navigation";
 

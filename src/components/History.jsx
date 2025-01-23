@@ -19,31 +19,33 @@ const History = ({ mealType, setMeal, date }) => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center font-semibold container h-screen space-y-2 ">
+    <div className="flex flex-col justify-center items-center font-semibold space-y-2">
       <h1 className="text-lg font-semibold">History</h1>
-      <div className="flex flex-col justify-center space-y-2 w-full overflow-y-auto">
-        {history &&
-          history.map((item) => (
-            <div
-              key={item.id}
-              className="flex flex-col justify-center space-y-2 "
-            >
-              <div className="bg-secondary rounded-lg p-4 text-xs flex justify-between items-center  ">
-                <div>
-                  <p className="font-semibold">{item.name}</p>
-                  <p>{item.calories} cal</p>
+      <div className="container h-[60dvh] overflow-y-auto">
+        <div className="flex flex-col justify-center space-y-2 w-full ">
+          {history &&
+            history.map((item) => (
+              <div
+                key={item.id}
+                className="flex flex-col justify-center space-y-2 "
+              >
+                <div className="bg-secondary rounded-lg p-4 text-xs flex justify-between items-center  ">
+                  <div>
+                    <p className="font-semibold">{item.name}</p>
+                    <p>{item.calories} cal</p>
+                  </div>
+                  <AddFoodButton
+                    firstServing={item}
+                    selectedFood={item}
+                    session={session}
+                    date={date}
+                    meal={mealType}
+                    foodName={item.name}
+                  />
                 </div>
-                <AddFoodButton
-                  firstServing={item}
-                  selectedFood={item}
-                  session={session}
-                  date={date}
-                  meal={mealType}
-                  foodName={item.name}
-                />
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     </div>
   );

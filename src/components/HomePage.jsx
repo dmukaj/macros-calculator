@@ -86,7 +86,7 @@ export default function HomePage() {
     setSelectedDate(formatISO(dateWithCurrentTime));
   };
   return (
-    <div className="space-y-16 m-10">
+    <div className="space-y-16 m-10 ">
       <Card className="flex flex-col p-6 bg-card/90 w-auto">
         <CardHeader className="items-center pb-0 mb-4">
           <Popover>
