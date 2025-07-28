@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SignIn from "../signIn/SignIn";
 import SignUp from "../signUp/SignUp";
@@ -49,23 +49,44 @@ const Welcome = () => {
                 choices.
               </p>
             </div>
-            <div className="flex items-center justify-center w-auto mt-20">
-              <Tabs defaultValue="sign-in" className="w-auto">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="sign-in">Sign In</TabsTrigger>
-                  <TabsTrigger value="sign-up">Sign Up</TabsTrigger>
-                </TabsList>
-                <TabsContent value="sign-in">
-                  <Card className="bg-secondary/60">
-                    <SignIn />
-                  </Card>
-                </TabsContent>
-                <TabsContent value="sign-up">
-                  <Card className="bg-secondary/60">
-                    <SignUp />
-                  </Card>
-                </TabsContent>
-              </Tabs>
+            <div className="flex flex-col items-center justify-center w-auto mt-20 max-w-md">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                  Hi There!
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Sign in to your account or create a new one
+                </p>
+              </div>
+
+              <Card className="shadow-xl border-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <Tabs defaultValue="sign-in" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2 mb-6 bg-gray-100 dark:bg-slate-700">
+                      <TabsTrigger
+                        value="sign-in"
+                        className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-600"
+                      >
+                        Sign In
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="sign-up"
+                        className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-600"
+                      >
+                        Sign Up
+                      </TabsTrigger>
+                    </TabsList>
+
+                    <TabsContent value="sign-in" className="mt-0">
+                      <SignIn />
+                    </TabsContent>
+
+                    <TabsContent value="sign-up" className="mt-0">
+                      <SignUp />
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </main>

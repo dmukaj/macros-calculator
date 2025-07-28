@@ -14,7 +14,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
       authorize: async (credentials) => {
         if (!credentials || !credentials.email || !credentials.password) {
-          throw new Error("Missing credentials.");
+          throw new Error("Missing username or password.");
         }
 
         let user = await db.user.findUnique({
@@ -24,7 +24,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         });
 
         if (!user) {
-          throw new Error("User not found.");
+          throw new Error("Invalid username or password.");
         } else {
           const passMatch = verifyPassword(
             credentials.password,
@@ -40,6 +40,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  // eslint-disable-next-line no-undef
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
