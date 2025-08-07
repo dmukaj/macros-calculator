@@ -61,7 +61,7 @@ export default function ForgotPassword() {
               setError("");
               setSuccess("");
               form.reset();
-              router.push("/welcome");
+              router.push("/");
             }}
             variant="outline"
             className="w-full"
@@ -116,7 +116,7 @@ export default function ForgotPassword() {
 
           <Button
             variant="ghost"
-            onClick={() => router.push("/welcome")}
+            onClick={() => router.push("/")}
             className="w-full"
           >
             Back to Sign In

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Info = () => {
   return (
-    <div className="flex flex-col text-base lg:text-lg space-y-8 xl:p-40 p-10 bg-secondary/20 text-muted-foreground">
+    <div className="flex flex-col text-base lg:text-lg space-y-8 xl:p-40 p-10 text-muted-foreground">
       <div className="flex flex-col items-center justify-center gap-4">
         <h1 className="lg:text-4xl text-2xl font-semiboldb text-primary ">
           What are{" "}

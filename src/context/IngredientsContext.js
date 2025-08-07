@@ -12,7 +12,6 @@ export const IngredientsProvider = ({ children }) => {
   const [totalCarbs, setTotalCarbs] = useState(0);
   const [totalProtein, setTotalProtein] = useState(0);
   const [totalFats, setTotalFats] = useState(0);
-  // const [macros, setMacros] = useState([]);
 
   const handleAddIngredient = (ingredient) => {
     setIngredients((prevState) => [...prevState, ingredient]);
@@ -37,8 +36,6 @@ export const IngredientsProvider = ({ children }) => {
         setTotalProtein,
         totalFats,
         setTotalFats,
-        // macros,
-        // setMacros,
         handleAddIngredient,
         handleDeleteIngredient,
       }}

@@ -19,7 +19,7 @@ export default async function middleware(request) {
   );
 
   if (!session && isProtected) {
-    const absoluteURL = new URL("/welcome", request.nextUrl);
+    const absoluteURL = new URL("/", request.nextUrl);
     return NextResponse.redirect(absoluteURL.toString());
   }
 

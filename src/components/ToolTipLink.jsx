@@ -11,9 +11,7 @@ const ToolTipLink = ({ href, text, icon, className }) => {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild className={className}>
-          <Link href={href} className="mr-2 md:absolute md:right-0">
-            {icon}
-          </Link>
+          <Link href={href}>{icon}</Link>
         </TooltipTrigger>
         <TooltipContent>
           <p>{text}</p>

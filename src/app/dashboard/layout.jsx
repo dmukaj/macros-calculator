@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
 import NavBar from "@/components/NavBar";
-import SideBar from "@/components/SideBar";
 import Footer from "@/components/Footer";
 import { redirect } from "next/navigation";
 
@@ -14,21 +13,22 @@ export default async function RootLayout({ children }) {
   const session = await auth();
 
   if (!session?.user) {
-    redirect("/welcome");
+    redirect("/");
   }
 
   return (
-    <div className="flex flex-col min-h-screen min-w-full max-w-full ">
-      <div className="grid flex-grow w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] sm:flex-col">
-        <SideBar />
-        <div className="flex flex-col">
-          <NavBar session={session} />
-          <div className="flex-grow">{children}</div>
-        </div>
-      </div>
-      <div className="flex flex-col min-w-full w-full">
+    <div className="flex flex-col min-h-screen">
+      <header className="top-0 left-0 right-0 z-50  bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+        <NavBar session={session} />
+      </header>
+
+      <main className=" overflow-y-auto">
+        <div>{children}</div>
+      </main>
+
+      <footer className="bottom-0 right-0 w-full bg-white dark:bg-gray-900  border-gray-200 dark:border-gray-700">
         <Footer />
-      </div>
+      </footer>
     </div>
   );
 }

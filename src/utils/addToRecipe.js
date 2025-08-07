@@ -11,21 +11,19 @@ export const addToRecipe = async (
 ) => {
   try {
     await axios.post(`/api/createRecipe`, {
-      method: "POST",
+      userId: session?.data?.user?._id,
+      recipeName,
+      ingredients,
+      calories,
+      carbohydrate,
+      protein,
+      fat,
       headers: {
         "Content-Type": "application/json",
-      },
-      body: {
-        userId: session?.data?.user?._id,
-        recipeName,
-        ingredients,
-        calories,
-        carbohydrate,
-        protein,
-        fat,
       },
     });
   } catch (error) {
     console.error("Error adding food to recipe:", error);
+    throw error;
   }
 };

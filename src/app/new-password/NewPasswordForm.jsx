@@ -43,7 +43,7 @@ function NewPasswordForm() {
       newPassword(values, token).then((data) => {
         if (data.success) {
           setSuccess(data?.success);
-          router.push("/welcome");
+          router.push("/");
         }
         setError(data?.error);
       });

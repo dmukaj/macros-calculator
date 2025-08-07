@@ -6,7 +6,7 @@ export default async function page() {
   const session = await auth();
 
   if (!session?.user) {
-    redirect("/welcome");
+    redirect("/");
   }
   return <HomePage />;
 }

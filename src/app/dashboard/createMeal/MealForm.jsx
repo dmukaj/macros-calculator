@@ -30,7 +30,6 @@ const MealForm = () => {
     totalFats,
     handleAddIngredient,
   } = useIngredients();
-
   const { toast } = useToast();
   const session = useSession();
 
@@ -38,7 +37,13 @@ const MealForm = () => {
     recipeName: z.string().min(1, { message: "Recipe name is required" }),
     ingredients: z.array(
       z.object({
-        food_name: z.string(),
+        calories: z.coerce.number(),
+        carbohydrate: z.coerce.number(),
+        protein: z.coerce.number(),
+        fats: z.coerce.number(),
+        serving_amount: z.coerce.number(),
+        metric_serving_unit: z.string().optional(),
+        serving_description: z.string().optional(),
       })
     ),
   });
@@ -51,7 +56,8 @@ const MealForm = () => {
     },
   });
   const recipeName = form.getValues("recipeName");
-  const foodNames = ingredients.map((ingredient) => ingredient.foodName);
+  const firstFood = ingredients.map((ingredient) => ingredient);
+
   const handleAddToRecipe = async () => {
     try {
       if (ingredients.length === 0) {
@@ -66,13 +72,12 @@ const MealForm = () => {
       await addToRecipe(
         session.data.user._id,
         recipeName,
-        foodNames,
+        firstFood,
         totalCalories,
         totalCarbs,
         totalProtein,
         totalFats
       );
-
       toast({
         title: "Success!",
         description: "Recipe added successfully",
@@ -91,7 +96,7 @@ const MealForm = () => {
     handleAddIngredient(ingredients);
   };
   return (
-    <div>
+    <div className="w-full lg:w-[60dvw] mx-auto ">
       <div className="flex justify-end ">
         <Button onClick={handleAddToRecipe}>
           <CookingPot className="mr-3" />
@@ -121,6 +126,7 @@ const MealForm = () => {
                 <FormLabel> Add Ingredients</FormLabel>
 
                 <SearchPage
+                  query={query}
                   setQuery={setQuery}
                   setResult={setResult}
                   result={result}

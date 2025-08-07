@@ -53,6 +53,14 @@ export default function FoodForm({
         firstServing?.carbohydrate || selectedRecipe?.carbohydrate
       ),
       fats: Math.round(firstServing?.fat || selectedRecipe?.fat),
+      serving_amount: Math.round(
+        firstServing?.metric_serving_amount ||
+          selectedRecipe.metric_serving_amount
+      ),
+      metric_serving_unit:
+        firstServing?.metric_serving_unit || selectedRecipe.metric_serving_unit,
+      serving_description:
+        firstServing?.serving_description || selectedRecipe.serving_description,
     }));
   }, []);
 
@@ -102,6 +110,14 @@ export default function FoodForm({
       protein,
       carbohydrate,
       fats,
+      serving_amount:
+        selectedFood?.serving_amount || selectedRecipe?.serving_amount,
+      metric_serving_unit:
+        selectedFood?.metric_serving_unit ||
+        selectedRecipe?.metric_serving_unit,
+      serving_description:
+        selectedFood?.serving_description ||
+        selectedRecipe?.serving_description,
     };
 
     setCalculatedValues(newValues);
@@ -207,16 +223,16 @@ export default function FoodForm({
             fats={calculatedValues?.fats}
           />
         </div>
-        <div>
-          <h2 className="text-[hsl(var(--chart-1))]">Protein</h2>
+        <div className="flex gap-2 py-2 px-4 bg-secondary/20 rounded-lg text-[hsl(var(--chart-1))]">
+          <h2>Protein</h2>
           <h3>{calculatedValues.protein}</h3>
         </div>
-        <div>
-          <h2 className="text-[hsl(var(--chart-3))]">Carbs</h2>
+        <div className="flex gap-2 py-2 px-4 bg-secondary/20 rounded-lg text-[hsl(var(--chart-3))]">
+          <h2>Carbs</h2>
           <h3>{calculatedValues.carbohydrate}</h3>
         </div>
-        <div>
-          <h2 className="text-[hsl(var(--chart-2))]">Fats</h2>
+        <div className="flex gap-2 py-2 px-4 bg-secondary/20 rounded-lg text-[hsl(var(--chart-2))]">
+          <h2>Fats</h2>
           <h3>{calculatedValues.fats}</h3>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { Calculator, Home, Book, CookingPot } from "lucide-react";
 const SideBar = () => {
   return (
     <aside className="hidden md:block">
-      <div className="sidebar fixed top-0 bottom-0 border-r lg:left-0 w-[220px] lg:w-[280px] overflow-y-auto text-center no-scrollbar shrink-0 transition-all duration-200 ease-in-out bg-secondary/20 ">
+      <div className="sidebar fixed top-0 bottom-0 lg:left-0 w-[220px] lg:w-[280px] overflow-y-auto text-center no-scrollbar shrink-0 transition-all duration-200 ease-in-out bg-secondary/20 ">
         <div className="flex h-14 items-center border-b px-4 py-10 lg:px-6">
           <Link
             href="/dashboard"
