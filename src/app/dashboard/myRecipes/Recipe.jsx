@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { fetchRecipes } from "@/utils/fetchRecipes";
+import { fetchRecipes } from "@/utils/handleRecipes";
 import FoodItemList from "../search/FoodItemList";
 import ToolTipLink from "@/components/ToolTipLink";
 import { ArrowLeft } from "lucide-react";

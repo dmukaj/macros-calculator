@@ -1,113 +1,149 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Calculator,
-  UserIcon,
+  Settings,
   Home,
   Menu,
   Book,
   CookingPot,
+  BookOpenText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
   SheetDescription,
 } from "@/components/ui/sheet";
-import { logout } from "@/actions/auth";
 import { ModeToggle } from "./ThemeToggle";
 
-function NavBar({ session }) {
-  const handleSignOut = async () => {
-    await logout();
+function NavBar() {
+  const pathname = usePathname();
+
+  const navigationItems = [
+    {
+      href: "/dashboard",
+      label: "Dashboard",
+      icon: Home,
+    },
+    {
+      href: "/dashboard/calculator",
+      label: "Calculate Macros",
+      icon: Calculator,
+    },
+    {
+      href: "/dashboard/createMeal",
+      label: "Create Meal",
+      icon: CookingPot,
+    },
+    {
+      href: "/dashboard/myRecipes",
+      label: "My Recipes",
+      icon: BookOpenText,
+    },
+    {
+      href: "/dashboard/info",
+      label: "Read about Macros",
+      icon: Book,
+    },
+    {
+      href: "/dashboard/settings",
+      label: "Settings",
+      icon: Settings,
+    },
+  ];
+
+  const isActive = (href) => {
+    if (href === "/dashboard") {
+      return pathname === "/dashboard";
+    }
+    return pathname.startsWith(href);
   };
 
   return (
-    <header className="flex h-14 justify-between items-center border-b bg-secondary/20 px-4 lg:px-6  py-10 text-lg">
-      <div className="flex  gap-2">
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="shrink-0 md:hidden"
-            >
-              <Menu className="h-5 w-5 " />
-              <span className="sr-only">Toggle navigation menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="flex flex-col">
-            <nav className="grid gap-2 text-lg font-medium">
-              <Link
-                href="/dashboard"
-                className="flex items-center gap-2 font-semibold"
+    <header className="w-full h-24 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-4 lg:px-6">
+      <div className="flex items-center justify-between h-full max-w-full">
+        <div className="flex items-center gap-3">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="shrink-0 md:hidden"
               >
-                <img src="/images/logo.png" className="w-20 h-20" />
-                <span className="">My Daily Macros</span>
-              </Link>
-              <Link
-                href="/dashboard"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 transition-all text-muted-foreground  hover:text-primary hover:bg-secondary/70"
-              >
-                <Home className="h-4 w-4" />
-                Dashboard
-              </Link>
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle navigation menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="flex flex-col">
+              <nav className="grid gap-2 text-lg font-medium">
+                <Link
+                  href="/dashboard"
+                  className="flex items-center gap-2 font-semibold mb-4"
+                >
+                  <img src="/images/logo.png" className="w-16 h-16" />
+                  <span>My Daily Macros</span>
+                </Link>
 
-              <Link
-                href="/dashboard/calculator"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-secondary/70"
-              >
-                <Calculator className="h-4 w-4" />
-                Calculate Macros
-              </Link>
-              <Link
-                href="/dashboard/info"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-secondary/70"
-              >
-                <Book className="h-4 w-4" />
-                Read about Macros
-              </Link>
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-secondary/70"
-                href="/dashboard/createMeal"
-              >
-                <CookingPot className="h-4 w-4" />
-                <span>Create Meal</span>
-              </Link>
-            </nav>
-          </SheetContent>
-          <SheetDescription />
-        </Sheet>
-        <ModeToggle />
-      </div>
+                {navigationItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
+                        isActive(item.href)
+                          ? "text-primary bg-secondary/20"
+                          : "text-muted-foreground hover:text-primary hover:bg-secondary/20"
+                      }`}
+                    >
+                      <Icon className="h-4 w-4" />
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </SheetContent>
+            <SheetDescription />
+          </Sheet>
 
-      <div className="flex items-center gap-2">
-        <p>Hello {session?.user.name}</p>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="rounded-full">
-              <UserIcon className="h-5 w-5 " />
-              <span className="sr-only">Toggle user menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+          <Link
+            href="/dashboard"
+            className="flex items-center gap-2 font-semibold "
+          >
+            <img src="/images/logo.png" className="w-16 h-16 hidden sm:block" />
+            <span className="text-lg font-bold text-gray-900 dark:text-white hidden sm:block">
+              My Daily Macros
+            </span>
+          </Link>
+        </div>
 
-            <Button variant="ghost" onClick={handleSignOut}>
-              Sign Out
-            </Button>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <nav className="hidden md:flex items-center space-x-1">
+          {navigationItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                  isActive(item.href)
+                    ? "text-primary bg-secondary/20"
+                    : "text-muted-foreground hover:text-primary hover:bg-secondary/20"
+                }`}
+              >
+                <Icon className="h-4 w-4" />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <ModeToggle />
+        </div>
       </div>
     </header>
   );

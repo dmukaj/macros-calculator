@@ -33,20 +33,20 @@ export default function FoodTable({ mealType, date }) {
   };
 
   return (
-    <div className=" flex flex-col w-auto ">
+    <div className="flex flex-col w-auto ">
       <Link
         href="/dashboard/search"
         onClick={handleLocalStorage}
-        className=" flex items-center justify-center text-lg  py-2 px-4 rounded-lg bg-secondary/50 hover:bg-primary/60"
+        className=" flex items-center justify-center text-lg py-2 px-4 rounded-lg bg-secondary/50 hover:bg-primary/60"
       >
         Add Food
       </Link>
 
-      <div className="relative shadow-md sm:rounded-lg w-full mt-4 bg-secondary/50 h-[25dvh] overflow-y-auto">
-        <Table>
+      <div className="relative shadow-md sm:rounded-lg w-[90dvw] mt-4 bg-secondary/50 h-[25dvh] overflow-y-auto">
+        <Table className="w-full">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[200px]">Food</TableHead>
+              <TableHead>Food</TableHead>
               <TableHead className="text-right">Calories</TableHead>
               <TableHead className="text-right">Protein</TableHead>
               <TableHead className="text-right">Carbs</TableHead>

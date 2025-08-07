@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import AddFoodButton from "./AddFoodButton";
 
-const History = ({ mealType, setMeal, date }) => {
+const History = ({ mealType, date }) => {
   const session = useSession();
   const [history, setHistory] = useState([]);
 
@@ -41,6 +41,7 @@ const History = ({ mealType, setMeal, date }) => {
                     date={date}
                     meal={mealType}
                     foodName={item.name}
+                    size="sm"
                   />
                 </div>
               </div>

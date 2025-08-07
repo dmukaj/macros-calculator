@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { AuthError } from "next-auth";
 
 export async function logout() {
-  await signOut({ redirectTo: "/welcome" });
+  await signOut({ redirectTo: "/" });
   revalidatePath("/");
 }
 
