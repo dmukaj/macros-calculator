@@ -40,8 +40,6 @@ export default function SignIn() {
       const result = await loginWithCreds(data);
       if (result) {
         setError(result);
-      } else {
-        console.log("Login successful!");
       }
     } catch (err) {
       console.error("Error signing in user", err);

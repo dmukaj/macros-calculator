@@ -30,7 +30,8 @@ export default function FoodForm({
   setMeal,
 }) {
   const { selectedFood } = useFood();
-  const selectedRecipe = selectedFood?.servings?.serving;
+  const selectedRecipe = selectedFood;
+  console.log("recipe hereeeeeeee", selectedRecipe);
 
   let firstServing;
   if (selectedFood?.servings?.serving.length > 0) {
@@ -53,20 +54,14 @@ export default function FoodForm({
         firstServing?.carbohydrate || selectedRecipe?.carbohydrate
       ),
       fats: Math.round(firstServing?.fat || selectedRecipe?.fat),
-      serving_amount: Math.round(
-        firstServing?.metric_serving_amount ||
-          selectedRecipe.metric_serving_amount
-      ),
-      metric_serving_unit:
-        firstServing?.metric_serving_unit || selectedRecipe.metric_serving_unit,
-      serving_description:
-        firstServing?.serving_description || selectedRecipe.serving_description,
+      serving_amount: Math.round(firstServing?.metric_serving_amount || 1),
+      metric_serving_unit: firstServing?.metric_serving_unit || "g",
+      serving_description: firstServing?.serving_description || "",
     }));
   }, []);
 
   const metricServingAmount =
-    Math.round(firstServing?.metric_serving_amount) ||
-    selectedRecipe?.metric_serving_amount;
+    Math.round(firstServing?.metric_serving_amount) || 1;
 
   const form = useForm({
     resolver: zodResolver(),
@@ -225,15 +220,17 @@ export default function FoodForm({
         </div>
         <div className="flex gap-2 py-2 px-4 bg-secondary/20 rounded-lg text-[hsl(var(--chart-1))]">
           <h2>Protein</h2>
-          <h3>{calculatedValues.protein}</h3>
+          <h3>{calculatedValues.protein || selectedRecipe.protein}</h3>
         </div>
         <div className="flex gap-2 py-2 px-4 bg-secondary/20 rounded-lg text-[hsl(var(--chart-3))]">
           <h2>Carbs</h2>
-          <h3>{calculatedValues.carbohydrate}</h3>
+          <h3>
+            {calculatedValues.carbohydrate || selectedRecipe.carbohydrate}
+          </h3>
         </div>
         <div className="flex gap-2 py-2 px-4 bg-secondary/20 rounded-lg text-[hsl(var(--chart-2))]">
           <h2>Fats</h2>
-          <h3>{calculatedValues.fats}</h3>
+          <h3>{calculatedValues.fats || selectedRecipe.fat}</h3>
         </div>
       </div>
     </div>

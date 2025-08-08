@@ -369,7 +369,6 @@ const EditRecipeForm = () => {
 
     if (initialIngredients.length > 0) {
       const newMacros = calculateMacros(updatedIngredients);
-      console.log("Immediate macro update after amount change:", newMacros);
       setCalculatedMacros(newMacros);
     }
   };

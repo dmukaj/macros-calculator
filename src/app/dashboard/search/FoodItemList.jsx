@@ -180,16 +180,17 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
 
                   {/* Action Buttons */}
                   <div className="flex flex-col sm:flex-row gap-2 lg:flex-col lg:w-32">
-                    {pathname === "/dashboard/search" && (
-                      <Button
-                        onClick={() => handleAddFood(item, firstServing)}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm"
-                        size="sm"
-                      >
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add Food
-                      </Button>
-                    )}
+                    {pathname === "/dashboard/search" ||
+                      (pathname === "/dashboard/myRecipes" && (
+                        <Button
+                          onClick={() => handleAddFood(item, firstServing)}
+                          className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm"
+                          size="sm"
+                        >
+                          <Plus className="w-4 h-4 mr-2" />
+                          Add Food
+                        </Button>
+                      ))}
 
                     {pathname === "/dashboard/createMeal" && (
                       <Button
@@ -206,7 +207,7 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
                       href={{
                         pathname: firstServing
                           ? "/dashboard/foodDetails"
-                          : `/dashboard/editRecipe/${item.id}`,
+                          : `/dashboard/recipeDetails/}`,
                         query: {
                           id: item.id || item.food_id,
                         },
