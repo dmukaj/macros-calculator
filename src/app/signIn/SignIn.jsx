@@ -5,9 +5,6 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -23,10 +20,6 @@ import { signInSchema } from "@/lib/schema";
 
 export default function SignIn() {
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -60,39 +53,9 @@ export default function SignIn() {
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
-    setError("");
-    setIsLoading(true);
-
-    try {
-      const result = await loginWithCreds(data);
-      if (result) {
-        setError(result);
-      } else {
-        console.log("Login successful!");
-      }
-    } catch (err) {
-      console.error("Error signing in user", err);
-      setError("An error occurred. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-8 h-[700px] w-[400px] text-foreground">
-      <div className="w-full max-w-md">
-        {/* Welcome animation area */}
-        <div className="text-center py-4 mb-6">
-          <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
-            <Mail className="w-8 h-8 text-white" />
-          </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Enter your credentials to access your account
-          </p>
     <div className="flex flex-col items-center justify-center p-8 h-[700px] w-[400px] text-foreground">
       <div className="w-full max-w-md">
         {/* Welcome animation area */}
@@ -107,7 +70,6 @@ export default function SignIn() {
 
         <Form {...form}>
           <div className="space-y-4">
-          <div className="space-y-4">
             <FormField
               control={form.control}
               name="email"
@@ -116,20 +78,7 @@ export default function SignIn() {
                   <FormLabel className="text-sm font-medium">
                     Email Address
                   </FormLabel>
-                  <FormLabel className="text-sm font-medium">
-                    Email Address
-                  </FormLabel>
                   <FormControl>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <Input
-                        placeholder="Enter your email"
-                        type="email"
-                        className="pl-10 h-11 border-gray-200 dark:border-gray-700 focus:border-emerald-500 dark:focus:border-emerald-400"
-                        disabled={isLoading}
-                        {...field}
-                      />
-                    </div>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                       <Input
@@ -145,7 +94,6 @@ export default function SignIn() {
                 </FormItem>
               )}
             />
-
 
             <FormField
               control={form.control}
@@ -155,32 +103,7 @@ export default function SignIn() {
                   <FormLabel className="text-sm font-medium">
                     Password
                   </FormLabel>
-                  <FormLabel className="text-sm font-medium">
-                    Password
-                  </FormLabel>
                   <FormControl>
-                    <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <Input
-                        placeholder="Enter your password"
-                        type={showPassword ? "text" : "password"}
-                        className="pl-10 pr-10 h-11 border-gray-200 dark:border-gray-700 focus:border-emerald-500 dark:focus:border-emerald-400"
-                        disabled={isLoading}
-                        {...field}
-                      />
-                      <button
-                        type="button"
-                        onClick={togglePasswordVisibility}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none"
-                        disabled={isLoading}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-4 w-4" />
-                        ) : (
-                          <Eye className="h-4 w-4" />
-                        )}
-                      </button>
-                    </div>
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                       <Input
@@ -214,38 +137,7 @@ export default function SignIn() {
                 {error}
               </div>
             )}
-            {error && (
-              <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-900/20 dark:text-red-400 rounded-lg border border-red-200 dark:border-red-800">
-                {error}
-              </div>
-            )}
 
-            <div className="flex items-center justify-between text-sm">
-              <button
-                type="button"
-                onClick={() => router.push("/forgot-password")}
-                className="text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 font-medium hover:underline focus:outline-none"
-              >
-                Forgot password?
-              </button>
-            </div>
-
-            <Button
-              onClick={form.handleSubmit(handleSubmit)}
-              className="w-full h-11 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                  <span>Signing In...</span>
-                </div>
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <span>Sign In</span>
-                  <ArrowRight className="w-4 h-4" />
-                </div>
-              )}
             <div className="flex items-center justify-between text-sm">
               <button
                 type="button"
@@ -273,7 +165,6 @@ export default function SignIn() {
                 </div>
               )}
             </Button>
-          </div>
           </div>
         </Form>
       </div>

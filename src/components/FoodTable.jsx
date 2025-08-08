@@ -42,7 +42,7 @@ export default function FoodTable({ mealType, date }) {
         Add Food
       </Link>
 
-      <div className="relative shadow-md sm:rounded-lg w-[90dvw] mt-4 bg-secondary/50 h-[25dvh] overflow-y-auto">
+      <div className="relative shadow-md sm:rounded-lg w-[90dvw] lg:w-[35dvw] mt-4 bg-secondary/50 h-[25dvh] overflow-y-auto">
         <Table className="w-full">
           <TableHeader>
             <TableRow>
