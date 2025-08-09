@@ -64,9 +64,7 @@ const ingredientSchema = z.object({
   fats: z
     .union([z.string(), z.number()])
     .transform((val) => safeParseNumber(val)),
-  serving_amount: z
-    .union([z.string(), z.number()])
-    .transform((val) => safeParseNumber(val, 100)),
+  serving_amount: z.number(),
   metric_serving_unit: z.string().optional(),
   serving_description: z.string().optional(),
 });
@@ -294,7 +292,7 @@ const EditRecipeForm = () => {
         carbohydrate: safeParseNumber(ingredient.carbohydrate),
         protein: safeParseNumber(ingredient.protein),
         fats: safeParseNumber(ingredient.fats),
-        serving_amount: safeParseNumber(ingredient.serving_amount, 100),
+        serving_amount: safeParseNumber(ingredient.serving_amount),
       }));
 
       await updateRecipe(

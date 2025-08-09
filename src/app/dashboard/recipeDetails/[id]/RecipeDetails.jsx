@@ -9,6 +9,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
 import { fetchRecipeDetails } from "@/lib/api/fetchRecipeDetails";
+import { useRouter } from "next/navigation";
 
 const RecipeDetails = () => {
   const session = useSession();
@@ -20,6 +21,7 @@ const RecipeDetails = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const [calculatedValues, setCalculatedValues] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const storedMeal = localStorage.getItem("selectedMeal");
@@ -34,8 +36,6 @@ const RecipeDetails = () => {
     const loadFoodDetails = async () => {
       try {
         const rawData = await fetchRecipeDetails(id);
-        console.log(rawData);
-        // Reformat the data to match the required format
         const formattedData = {
           food_id: rawData.id || "",
           food_name: rawData.name || "",
@@ -111,44 +111,61 @@ const RecipeDetails = () => {
             setSelectedFood(newValues);
           }}
         />
-        {/* <div className="flex flex-col gap-4 items-start justify-center mt-10">
-          <h2 className="text-2xl font-semibold flex justify-center ">
+        <div className="flex flex-col gap-4 items-start justify-center mt-10">
+          <h2 className="text-2xl font-semibold flex justify-center">
             Ingredients in this recipe
           </h2>
-          <h3>
+
+          <div className="w-full space-y-3">
             {selectedFood.ingredients &&
               selectedFood?.ingredients.map((item, index) => {
                 if (typeof item === "object" && item !== null) {
                   return (
                     <div
                       key={item.id || index}
-                      className="mb-2 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
+                      className="group relative p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200"
                     >
-                      <p className="font-medium">
-                        -{" "}
-                        {item.foodName ||
-                          item.food_name ||
-                          item.name ||
-                          "Unknown ingredient"}
-                      </p>
-                      {(item.serving_amount || item.servingAmount) && (
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                          Amount: {item.serving_amount || item.servingAmount}{" "}
-                          {item.metric_serving_unit || item.unit || "g"}
-                        </p>
-                      )}
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <p className="font-medium text-gray-900 dark:text-white">
+                            -{" "}
+                            {item.foodName ||
+                              item.food_name ||
+                              item.name ||
+                              "Unknown ingredient"}
+                          </p>
 
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Calories: {item.calories} | Protein: {item.protein}g |
-                        Carbs: {item.carbohydrate}g | Fat:{" "}
-                        {item.fats || item.fat}g
-                      </p>
+                          {(item.serving_amount || item.servingAmount) && (
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                              Amount:{" "}
+                              {item.serving_amount || item.servingAmount}{" "}
+                              {item.metric_serving_unit || item.unit || "g"}
+                            </p>
+                          )}
+
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                            Calories: {item.calories} | Protein: {item.protein}g
+                            | Carbs: {item.carbohydrate}g | Fat:{" "}
+                            {item.fats || item.fat}g
+                          </p>
+                        </div>
+
+                        <button
+                          className="ml-4 px-3 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-600 rounded-md opacity-0 group-hover:opacity-100 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-200 transform translate-x-2 group-hover:translate-x-0"
+                          onClick={() =>
+                            router.replace(`/dashboard/editRecipe/${id}`)
+                          }
+                        >
+                          Edit
+                        </button>
+                      </div>
                     </div>
                   );
                 }
+                return null;
               })}
-          </h3>
-        </div> */}
+          </div>
+        </div>
       </div>
     </div>
   );

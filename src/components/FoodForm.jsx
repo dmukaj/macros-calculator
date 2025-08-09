@@ -31,7 +31,6 @@ export default function FoodForm({
 }) {
   const { selectedFood } = useFood();
   const selectedRecipe = selectedFood;
-  console.log("recipe hereeeeeeee", selectedRecipe);
 
   let firstServing;
   if (selectedFood?.servings?.serving.length > 0) {
@@ -126,7 +125,7 @@ export default function FoodForm({
   };
 
   return (
-    <div className="p-4 ">
+    <div className="p-2">
       <Form {...form}>
         <form onChange={onSubmit}>
           <FormField
@@ -207,28 +206,28 @@ export default function FoodForm({
           />
         </form>
       </Form>
-      <div className="flex flex-row justify-around items-center gap-4">
+      <div className="flex flex-row justify-around items-center gap-2 text-sm">
         <div>
           <PieChartComponent
-            width={120}
-            height={120}
+            width={110}
+            height={110}
             totalCalories={calculatedValues?.calories}
             protein={calculatedValues?.protein}
             carbohydrate={calculatedValues?.carbohydrate}
             fats={calculatedValues?.fats}
           />
         </div>
-        <div className="flex gap-2 py-2 px-4 bg-secondary/20 rounded-lg text-[hsl(var(--chart-1))]">
+        <div className="flex gap-1 p-2  bg-secondary/20 rounded-lg text-[hsl(var(--chart-1))]">
           <h2>Protein</h2>
           <h3>{calculatedValues.protein || selectedRecipe.protein}</h3>
         </div>
-        <div className="flex gap-2 py-2 px-4 bg-secondary/20 rounded-lg text-[hsl(var(--chart-3))]">
+        <div className="flex gap-1 p-2 bg-secondary/20 rounded-lg text-[hsl(var(--chart-3))]">
           <h2>Carbs</h2>
           <h3>
             {calculatedValues.carbohydrate || selectedRecipe.carbohydrate}
           </h3>
         </div>
-        <div className="flex gap-2 py-2 px-4 bg-secondary/20 rounded-lg text-[hsl(var(--chart-2))]">
+        <div className="flex gap-1 p-2 bg-secondary/20 rounded-lg text-[hsl(var(--chart-2))]">
           <h2>Fats</h2>
           <h3>{calculatedValues.fats || selectedRecipe.fat}</h3>
         </div>

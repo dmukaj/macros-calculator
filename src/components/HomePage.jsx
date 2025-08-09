@@ -15,7 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
+import { deleteOldMeals } from "../utils/deleteOldMeal";
 import { calculateMacros, calculateTotalMacros } from "@/utils/calculateMacros";
 import { getUsersData } from "@/utils/usersData";
 import { LoaderCircle } from "lucide-react";
@@ -55,6 +55,13 @@ export default function HomePage() {
   };
 
   const remainingCalories = macros?.calories - (foodData?.totalCalories || 0);
+
+  useEffect(() => {
+    const handleMealCleanUp = async () => {
+      await deleteOldMeals();
+    };
+    handleMealCleanUp();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {

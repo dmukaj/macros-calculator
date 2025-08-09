@@ -186,7 +186,7 @@ const CreateRecipe = () => {
                       <span className="text-gray-600 dark:text-gray-400">
                         Calories:
                       </span>
-                      <Badge variant="secondary">{item.calories}</Badge>
+                      <Badge variant="secondary">{item.calories}</Badge>group
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600 dark:text-gray-400">

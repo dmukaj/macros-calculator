@@ -120,7 +120,6 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
             >
               <CardContent className="p-6">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                  {/* Food Information */}
                   <div className="flex-1 space-y-3">
                     <div>
                       <h4 className="font-semibold text-lg text-gray-900 dark:text-white leading-tight">
@@ -138,7 +137,6 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
                       )}
                     </div>
 
-                    {/* Nutrition Information */}
                     <div className="flex flex-wrap gap-2">
                       <NutritionBadge
                         icon={Flame}
@@ -178,7 +176,6 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
                     className="hidden lg:block h-16"
                   />
 
-                  {/* Action Buttons */}
                   <div className="flex flex-col sm:flex-row gap-2 lg:flex-col lg:w-32">
                     {pathname === "/dashboard/search" ||
                       (pathname === "/dashboard/myRecipes" && (

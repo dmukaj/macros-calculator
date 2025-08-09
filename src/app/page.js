@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 
 export default function Home() {
   const { data: session } = useSession();
-  if (session.user) {
+  if (session?.user) {
     redirect("/dashboard");
   }
   return (

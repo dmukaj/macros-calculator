@@ -31,10 +31,8 @@ export const chartConfig = {
 export default function PieChartComponent({
   width = 180,
   height = 180,
-
   totalCalories,
   remainingCalories,
-
   protein,
   carbohydrate,
   fats,
