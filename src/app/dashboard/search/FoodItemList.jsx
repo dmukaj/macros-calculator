@@ -40,7 +40,6 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
 
   const handleAddFood = (item, firstServing) => {
     const foodName = item.food_name || item.name;
-    console.log("food name", item);
     addFood(firstServing || item, session, meal, foodName, date);
     toast({
       title: "Success!",
