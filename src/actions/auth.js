@@ -15,8 +15,8 @@ export const loginWithCreds = async (credentials) => {
 
   try {
     await signIn("credentials", {
-      email: credentials.email,
-      password: credentials.password,
+      email: credentials.email.toLowerCase().trim(),
+      password: credentials.password.trim(),
       redirectTo: "/dashboard",
     });
   } catch (error) {

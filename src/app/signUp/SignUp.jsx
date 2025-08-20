@@ -52,15 +52,19 @@ export default function SignUp() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          name: data.name.trim(),
+          email: data.email.toLowerCase().trim(),
+          password: data.password.trim(),
+          confirmPassword: data.confirmPassword.trim(),
+        }),
       });
 
       const result = await response.json();
-      console.log("User created successfully", data);
 
       if (response.ok) {
         await loginWithCreds({
-          email: data.email,
+          email: data.email.toLowerCase(),
           password: data.password,
         });
       } else {
@@ -85,9 +89,8 @@ export default function SignUp() {
   return (
     <div className="flex flex-col items-center justify-center p-8 h-[700px] text-foreground w-[400px]">
       <div className="w-full max-w-md">
-        {/* Welcome animation area */}
         <div className="text-center py-4 mb-6">
-          <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
+          <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-teal-600 rounded-full flex items-center justify-center">
             <UserPlus className="w-8 h-8 text-white" />
           </div>
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
@@ -114,7 +117,7 @@ export default function SignUp() {
                       <Input
                         placeholder="Enter your full name"
                         type="text"
-                        className="pl-10 h-11 border-gray-200 dark:border-gray-700 focus:border-emerald-500 dark:focus:border-emerald-400"
+                        className="pl-10 h-11 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400"
                         disabled={isLoading}
                         {...field}
                       />
@@ -139,7 +142,7 @@ export default function SignUp() {
                       <Input
                         placeholder="Enter your email"
                         type="email"
-                        className="pl-10 h-11 border-gray-200 dark:border-gray-700 focus:border-emerald-500 dark:focus:border-emerald-400"
+                        className="pl-10 h-11 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400"
                         disabled={isLoading}
                         {...field}
                       />
@@ -164,7 +167,7 @@ export default function SignUp() {
                       <Input
                         placeholder="Create a password"
                         type={showPassword ? "text" : "password"}
-                        className="pl-10 pr-10 h-11 border-gray-200 dark:border-gray-700 focus:border-emerald-500 dark:focus:border-emerald-400"
+                        className="pl-10 pr-10 h-11 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400"
                         disabled={isLoading}
                         {...field}
                       />
@@ -201,7 +204,7 @@ export default function SignUp() {
                       <Input
                         placeholder="Confirm your password"
                         type={showConfirmPassword ? "text" : "password"}
-                        className="pl-10 pr-10 h-11 border-gray-200 dark:border-gray-700 focus:border-emerald-500 dark:focus:border-emerald-400"
+                        className="pl-10 pr-10 h-11 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400"
                         disabled={isLoading}
                         {...field}
                       />
@@ -232,7 +235,7 @@ export default function SignUp() {
 
             <Button
               onClick={form.handleSubmit(handleSubmit)}
-              className="w-full h-11 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200"
+              className="w-full h-11 bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200"
               disabled={isLoading}
             >
               {isLoading ? (
