@@ -39,7 +39,9 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
   const displayedResults = showAllResults ? result : result?.slice(0, 6);
 
   const handleAddFood = (item, firstServing) => {
-    addFood(firstServing || item, session, meal, item.food_name, date);
+    const foodName = item.food_name || item.name;
+    console.log("food name", item);
+    addFood(firstServing || item, session, meal, foodName, date);
     toast({
       title: "Success!",
       description: "Food added to your meal.",
@@ -177,7 +179,7 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
                   />
 
                   <div className="flex flex-col sm:flex-row gap-2 lg:flex-col lg:w-32">
-                    {pathname === "/dashboard/search" ||
+                    {/* {pathname === "/dashboard/search" ||
                       (pathname === "/dashboard/myRecipes" && (
                         <Button
                           onClick={() => handleAddFood(item, firstServing)}
@@ -187,7 +189,7 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
                           <Plus className="w-4 h-4 mr-2" />
                           Add Food
                         </Button>
-                      ))}
+                      ))} */}
 
                     {pathname === "/dashboard/createMeal" && (
                       <Button
@@ -220,6 +222,14 @@ const FoodItemList = ({ meal, date, result, showAllResults }) => {
                         Edit Food
                       </Button>
                     </Link>
+                    <Button
+                      onClick={() => handleAddFood(item, firstServing)}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm"
+                      size="sm"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Food
+                    </Button>
                   </div>
                 </div>
               </CardContent>

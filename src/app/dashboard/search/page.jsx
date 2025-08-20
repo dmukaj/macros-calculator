@@ -26,7 +26,7 @@ const page = ({ loading }) => {
   }, [getLocalStorage]);
 
   return (
-    <div className=" flex flex-col flex-grow m-6 w-[60dvw] mx-auto">
+    <div className=" flex flex-col flex-grow m-6 w-[80dvw] mx-auto">
       <div className="relative flex flex-row text-lg justify-center items-center p-4 font-semibold mb-10">
         <ToolTipLink
           href={"/dashboard"}
