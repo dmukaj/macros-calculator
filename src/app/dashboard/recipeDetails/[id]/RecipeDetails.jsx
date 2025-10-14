@@ -83,7 +83,7 @@ const RecipeDetails = () => {
         <Link href="/dashboard/myRecipes" className="mr-3">
           <ArrowLeft />
         </Link>
-        <div className="flex flex-row items-center gap-2 justify-center font-semibold">
+        <div className="flex lg:flex-row flex-col items-center gap-2 justify-center font-semibold">
           <p className="text-blue-500  "> {format(date, "LLL dd, y")}</p>
           <h2 className=" mr-3 ">{selectedFood.food_name}</h2>
         </div>
@@ -151,7 +151,7 @@ const RecipeDetails = () => {
                         </div>
 
                         <button
-                          className="ml-4 px-3 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-600 rounded-md opacity-0 group-hover:opacity-100 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-200 transform translate-x-2 group-hover:translate-x-0"
+                          className="ml-4 px-3 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-600 rounded-md opacity-100 lg:opacity-0 group-hover:opacity-100 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-200 transform translate-x-2 group-hover:translate-x-0"
                           onClick={() =>
                             router.replace(`/dashboard/editRecipe/${id}`)
                           }

@@ -42,7 +42,10 @@ export const NewPasswordSchema = z
   });
 
 export const ResetSchema = z.object({
-  email: z.string().email({
-    message: "Email is required",
-  }),
+  email: z
+    .string()
+    .email({
+      message: "Email is required",
+    })
+    .toLowerCase(),
 });

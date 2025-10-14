@@ -6,15 +6,7 @@ import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {
-  Edit,
-  Save,
-  Trash2,
-  ArrowLeft,
-  Calculator,
-  Plus,
-  Minus,
-} from "lucide-react";
+import { Save, Trash2, ArrowLeft, Calculator, Plus, Minus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -420,10 +412,6 @@ const EditRecipeForm = () => {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
-          <h1 className="text-2xl font-bold flex items-center">
-            <Edit className="w-6 h-6 mr-2" />
-            Edit Recipe Amounts
-          </h1>
         </div>
 
         <AlertDialog>
@@ -576,7 +564,7 @@ const EditRecipeForm = () => {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Calculator className="w-5 h-5 mr-2" />
-                Updated Recipe Totals (Real-time)
+                Updated Recipe Totals
               </CardTitle>
             </CardHeader>
             <CardContent>
