@@ -132,7 +132,7 @@ export default function SignIn() {
 
             {error && (
               <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-900/20 dark:text-red-400 rounded-lg border border-red-200 dark:border-red-800">
-                {error}
+                {"Something went wrong ☹️"}
               </div>
             )}
 
