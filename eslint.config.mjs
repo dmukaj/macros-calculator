@@ -1,6 +1,7 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
 import pluginReact from "eslint-plugin-react";
+import nextConfig from "eslint-config-next/core-web-vitals";
 
 export default [
   { files: ["**/*.{js,mjs,cjs,jsx}"] },
@@ -12,6 +13,7 @@ export default [
       "react/react-in-jsx-scope": "off",
       "react/jsx-uses-react": "off",
       "react/prop-types": "off",
+      ...nextConfig,
     },
   },
 ];
