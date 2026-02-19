@@ -25,6 +25,6 @@ export const generatePasswordResetToken = async (email) => {
 
     return passwordResetToken;
   } catch (error) {
-    console.log("nje mut", error);
+    console.error("Error", error);
   }
 };
