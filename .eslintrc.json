@@ -1,3 +1,10 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals"],
+  "settings": { "react": { "version": "detect" } },
+  "overrides": [
+    {
+      "files": ["src/app/api/**/*.{js,ts}", "src/utils/**/*.{js,ts}"],
+      "env": { "node": true }
+    }
+  ]
 }
