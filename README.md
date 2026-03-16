@@ -33,20 +33,23 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Daily Macro Tracking
 Log foods into meal categories:
 
-Breakfast
+<ul>
+ <li>Breakfast</li>
 
-Lunch
+<li>Lunch</li>
 
-Dinner
+<li>Dinner</li>
 
-Snacks
+<li>Snacks</li>
+</ul>
 
 Automatic calculation of total daily calories and macronutrients
 ## Personalized Macro Calculator
 Calculates recommended daily calorie and macro targets based on user inputs
 
 Stores user preferences and goals
-Food Search and Logging
+
+## Food Search and Logging
 
 Search for foods and add them to a daily log
 
