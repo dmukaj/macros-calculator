@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## My Daily Macros
+My Daily Macros is a full-stack nutrition tracking web application that allows users to monitor their daily calorie and macronutrient intake. Users can calculate personalized macro targets, log foods into meal categories, create custom recipes, and review historical intake through a calendar-based dashboard.
+
+The goal of the application is to help users make informed dietary decisions by providing clear insights into their nutritional habits through structured tracking and visual analytics.
 
 ## Getting Started
 
@@ -16,21 +20,105 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<h3>User Authentication</h3>
 
-## Learn More
+<ul><li>Secure account registration and login</li>
 
-To learn more about Next.js, take a look at the following resources:
+<li>Session-based authentication</li>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<li>User-specific data storage</li></ul>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Daily Macro Tracking
+Log foods into meal categories:
 
-## Deploy on Vercel
+Breakfast
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Lunch
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Dinner
+
+Snacks
+
+Automatic calculation of total daily calories and macronutrients
+## Personalized Macro Calculator
+Calculates recommended daily calorie and macro targets based on user inputs
+
+Stores user preferences and goals
+Food Search and Logging
+
+Search for foods and add them to a daily log
+
+Track quantities and nutritional values
+
+## Recipe Management
+
+Create custom recipes
+
+Update and delete recipes
+
+Automatically calculate macros for recipes
+
+## Calendar-Based History
+
+Navigate to any date
+
+View exact food intake for that day
+
+Maintain a full history of meals
+
+## Data Visualization
+
+Charts and summaries for calories, protein, carbs, and fats
+
+Daily macro progress indicators
+
+## Tech Stack
+<h3>Frontend</h3>
+
+Next.js (App Router)
+
+React
+
+Tailwind CSS
+
+shadcn/ui
+
+Recharts
+
+React Hook Form
+
+Zod
+
+<h3>Backend</h3>
+
+Next.js API Routes
+
+NextAuth authentication
+
+Prisma ORM
+
+MongoDB
+
+<h3>Additional Tools</h3>
+
+Docker
+
+Environment-based configuration
+
+Modern UI component libraries
+
+## Getting Started
+1. Clone the repository
+git clone https://github.com/dmukaj/macros-calculator.git
+
+2. Install dependencies
+npm install
+
+3. Run the development server
+npm run dev
+
+
+Open http://localhost:3000
+ in your browser to view the application.
